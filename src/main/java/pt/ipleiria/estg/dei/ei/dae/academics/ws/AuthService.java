@@ -44,7 +44,7 @@ public class AuthService {
     @Path("/user")
     public Response getAuthenticatedUser() {
         var username = securityContext.getUserPrincipal().getName();
-        var user = userBean.findOrFail(username);
+        var user = userBean.findUserSafe(username);
 
         return Response.ok(UserDTO.from(user)).build();
     }

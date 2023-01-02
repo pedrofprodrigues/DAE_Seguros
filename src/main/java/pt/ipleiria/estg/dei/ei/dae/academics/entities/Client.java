@@ -46,6 +46,12 @@ public class Client extends User {
         this.occurrences = new ArrayList<>();
         this.documents = new ArrayList<>();
     }
+    public Client(String username, String name, String email, Policy policy) {
+        super(username, name, email);
+        this.policy = policy;
+        this.occurrences = new ArrayList<>();
+        this.documents = new ArrayList<>();
+    }
 
     public Policy getPolicy() {
         return policy;

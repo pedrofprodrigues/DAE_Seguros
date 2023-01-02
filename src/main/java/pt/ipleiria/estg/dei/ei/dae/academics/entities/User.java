@@ -12,7 +12,7 @@ public class User extends Versionable {
     @Id
     protected String username;
 
-    @NotNull
+
     protected String password;
 
     @NotNull
@@ -28,6 +28,11 @@ public class User extends Versionable {
     public User(String username, String password, String name, String email) {
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.email = email;
+    }
+    public User(String username, String name, String email) {
+        this.username = username;
         this.name = name;
         this.email = email;
     }

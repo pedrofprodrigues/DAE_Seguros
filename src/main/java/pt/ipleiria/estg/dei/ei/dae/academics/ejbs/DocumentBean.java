@@ -21,7 +21,7 @@ public class DocumentBean {
     private EntityManager em;
     
     public Document create(String filepath, String filename, String username) {
-        var student = clientBean.findOrFail(username);
+        var student = clientBean.findClientSafe(username);
         var document = new Document(filepath, filename, student);
 
         em.persist(document);

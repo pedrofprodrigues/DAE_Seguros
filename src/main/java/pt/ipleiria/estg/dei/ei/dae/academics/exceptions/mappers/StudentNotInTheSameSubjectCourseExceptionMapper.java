@@ -22,7 +22,7 @@ public class StudentNotInTheSameSubjectCourseExceptionMapper implements Exceptio
 
     @Override
     public Response toResponse(StudentNotInTheSameSubjectCourseException e) {
-        var student = clientBean.findOrFail(e.getStudentUsername());
+        var student = clientBean.findClientSafe(e.getStudentUsername());
         var subject = occurrenceBean.findOccurrenceSafe(e.getSubjectCode());
 
         var error = new ErrorDTO(

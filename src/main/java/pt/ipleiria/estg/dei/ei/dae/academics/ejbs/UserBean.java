@@ -22,7 +22,7 @@ public class UserBean {
         return em.find(User.class, username);
     }
 
-    public User findOrFail(String username) {
+    public User findUserSafe(String username) {
         var user = em.getReference(User.class, username);
         Hibernate.initialize(user);
 

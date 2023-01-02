@@ -29,18 +29,24 @@ public class ClientBean {
     @Inject
     private Hasher hasher;
 
-    public void create(String username, String password, String name, String email, Long courseCode) {
-        Policy policy = policyBean.findPolicySafe(courseCode);
+    public void create(String username, String password, String name, String email, Long policyCode) {
+        Policy policy = policyBean.findPolicySafe(policyCode);
         Client client = new Client(username, hasher.hash(password), name, email, policy);
+
+        policy.addClient(client);
+        em.persist(client);
+    }public void create(String username, String name, String email, Long policyCode) {
+        Policy policy = policyBean.findPolicySafe(policyCode);
+        Client client = new Client(username, name, email, policy);
 
         policy.addClient(client);
         em.persist(client);
     }
 
-    // the rest of the code ...
+
 
     public void update(String username, String password, String name, String email, Long courseCode) {
-        var student = findOrFail(username);
+        var student = findClientSafe(username);
 
         em.lock(student, LockModeType.OPTIMISTIC);
 
@@ -57,15 +63,15 @@ public class ClientBean {
         return em.find(Client.class, username);
     }
 
-    public Client findOrFail(String username) {
-        var student = em.getReference(Client.class, username);
-        Hibernate.initialize(student);
+    public Client findClientSafe(String username) {
+        Client client = em.getReference(Client.class, username);
+        Hibernate.initialize(client);
 
-        return student;
+        return client;
     }
 
     public List<Client> getAll(int offset, int limit) {
-        return em.createNamedQuery("getAllStudents", Client.class)
+        return em.createNamedQuery("getAllClients", Client.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
@@ -76,7 +82,7 @@ public class ClientBean {
     }
 
     public void enroll(String studentUsername, Long subjectCode) throws StudentNotInTheSameSubjectCourseException {
-        var student = findOrFail(studentUsername);
+        var student = findClientSafe(studentUsername);
         var subject = occurrenceBean.findOccurrenceSafe(subjectCode);
 
         if (! student.getPolicy().equals(subject.getPolicy())) {
@@ -89,7 +95,7 @@ public class ClientBean {
 
     public void unroll(String studentUsername, Long subjectCode) throws StudentNotInTheSameSubjectCourseException {
 
-        var student = findOrFail(studentUsername);
+        var student = findClientSafe(studentUsername);
         var subject = occurrenceBean.findOccurrenceSafe(subjectCode);
 
         if (! student.getPolicy().equals(subject.getPolicy())) {
@@ -101,14 +107,14 @@ public class ClientBean {
     }
 
     public List<Occurrence> enrolled(String username) {
-        var subjects = findOrFail(username).getOccurrences();
+        var subjects = findClientSafe(username).getOccurrences();
         Hibernate.initialize(subjects);
 
         return subjects;
     }
 
     public List<Occurrence> unrolled(String username) {
-        var student = findOrFail(username);
+        var student = findClientSafe(username);
 
         return em.createNamedQuery("getAllSubjectsUnrolled", Occurrence.class)
             .setParameter("username", username)

@@ -38,7 +38,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         // Get token from the HTTP Authorization header
         String token = header.substring("Bearer".length()).trim();
-        var user = userBean.findOrFail(getUsername(token));
+        var user = userBean.findUserSafe(getUsername(token));
 
         requestContext.setSecurityContext(new SecurityContext() {
             @Override

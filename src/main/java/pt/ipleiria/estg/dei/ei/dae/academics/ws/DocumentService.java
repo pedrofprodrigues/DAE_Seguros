@@ -113,7 +113,7 @@ public class DocumentService {
     @Path("/exists")
     public Response hasDocuments() {
         var username = securityContext.getUserPrincipal().getName();
-        var student = clientBean.findOrFail(username);
+        var student = clientBean.findClientSafe(username);
 
         return Response.status(Response.Status.OK).entity(! student.getDocuments().isEmpty()).build();
     }
