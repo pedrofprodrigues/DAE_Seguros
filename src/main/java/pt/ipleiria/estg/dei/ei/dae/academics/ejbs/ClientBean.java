@@ -39,7 +39,7 @@ public class ClientBean {
         Policy policy = policyBean.findPolicySafe(policyCode);
         Client client = new Client(username, name, email, policy);
 
-        policy.addClient(client);
+        policy.addClient(client);//
         em.persist(client);
     }
 
