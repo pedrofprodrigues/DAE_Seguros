@@ -28,16 +28,17 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import javax.ws.rs.core.MultivaluedMap;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.DocumentDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.DocumentBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.ClientBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
 @Path("documents")
 @Authenticated
-@RolesAllowed({"Student", "Administrator"})
+@RolesAllowed({"Client","Expert", "Administrator"})
 public class DocumentService {
     @EJB
-    private ClientBean clientBean;
+    private OccurrenceBean occurrenceBean;
 
     @EJB
     private DocumentBean documentBean;
@@ -52,7 +53,7 @@ public class DocumentService {
     public Response upload(MultipartFormDataInput input) throws IOException {
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 
-        var username = securityContext.getUserPrincipal().getName();
+        String username = securityContext.getUserPrincipal().getName();
 
         List<InputPart> inputParts = uploadForm.get("file");
         var documents = new LinkedList<Document>();
@@ -61,7 +62,6 @@ public class DocumentService {
             MultivaluedMap<String, String> headers = inputPart.getHeaders();
             String filename = getFilename(headers);
 
-            // convert the uploaded file to inputstream
             InputStream inputStream = inputPart.getBody(InputStream.class, null);
 
             byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -73,7 +73,8 @@ public class DocumentService {
             String filepath =  dirpath + File.separator + filename;
             writeFile(bytes, filepath);
 
-            var document = documentBean.create(filepath, filename, username);
+            var document = documentBean.create(filepath, filename, Long.valueOf(username));
+
             documents.add(document);
         }
 
@@ -92,7 +93,7 @@ public class DocumentService {
     @Path("download/{id}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("id") Long id) {
-        var document = documentBean.findOrFail(id);
+        var document = documentBean.findDocumentSafe(id);
         var response = Response.ok(new File(document.getFilepath()));
         
         response.header("Content-Disposition", "attachment;filename=" + document.getFilename());
@@ -105,7 +106,7 @@ public class DocumentService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDocuments() {
         var username = securityContext.getUserPrincipal().getName();
-        var documents = documentBean.getStudentDocuments(username);
+        List<Document> documents = documentBean.getOccurrenceDocuments(Long.valueOf(username));
         return Response.ok(DocumentDTO.from(documents)).build();
     }
 
@@ -113,9 +114,9 @@ public class DocumentService {
     @Path("/exists")
     public Response hasDocuments() {
         var username = securityContext.getUserPrincipal().getName();
-        var student = clientBean.findClientSafe(username);
-
-        return Response.status(Response.Status.OK).entity(! student.getDocuments().isEmpty()).build();
+        Occurrence occurrence = occurrenceBean.findOccurrenceSafe(Long.valueOf(username));
+        // TODO "verificar se encontra a occurrence"
+        return Response.status(Response.Status.OK).entity(! occurrence.getDocuments().isEmpty()).build();
     }
 
     private String getFilename(MultivaluedMap<String, String> headers) {

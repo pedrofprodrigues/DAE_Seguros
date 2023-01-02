@@ -32,25 +32,23 @@ public class Client extends User {
     @ManyToMany(mappedBy = "clients", fetch = FetchType.LAZY)
     private List<Occurrence> occurrences;
 
-    @OneToMany(mappedBy = "client")
-    private List<Document> documents;
+
 
     public Client() {
         this.occurrences = new ArrayList<>();
-        this.documents = new ArrayList<>();
+
     }
 
     public Client(String username, String password, String name, String email, Policy policy) {
         super(username, password, name, email);
         this.policy = policy;
         this.occurrences = new ArrayList<>();
-        this.documents = new ArrayList<>();
+
     }
     public Client(String username, String name, String email, Policy policy) {
         super(username, name, email);
         this.policy = policy;
         this.occurrences = new ArrayList<>();
-        this.documents = new ArrayList<>();
     }
 
     public Policy getPolicy() {
@@ -69,13 +67,7 @@ public class Client extends User {
         this.occurrences = occurrences;
     }
 
-    public List<Document> getDocuments() {
-        return this.documents;
-    }
 
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
 
     public void addOccurrence(Occurrence occurrence) {
         if (! this.occurrences.contains(occurrence)) {
@@ -87,13 +79,5 @@ public class Client extends User {
         this.occurrences.remove(occurrence);
     }
 
-    public void addDocument(Document document) {
-        if (! this.documents.contains(document)) {
-            this.documents.add(document);
-        }
-    }
 
-    public void removeDocument(Document document) {
-        this.documents.remove(document);
-    }
 }

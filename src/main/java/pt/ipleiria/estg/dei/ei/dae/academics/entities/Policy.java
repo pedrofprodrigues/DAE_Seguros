@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "policies", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@Table(name = "policies")
 @NamedQueries({
         @NamedQuery(
                 name = "getAllPolicies",

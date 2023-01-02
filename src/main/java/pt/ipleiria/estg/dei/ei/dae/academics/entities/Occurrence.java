@@ -32,6 +32,9 @@ public class Occurrence extends Versionable {
     @JoinColumn(name = "policy_code")
     private Policy policy;
 
+    @OneToMany(mappedBy = "occurrence")
+    private List<Document> documents;
+
     @ManyToMany
     @JoinTable(
             name = "occurrences_clients",
@@ -51,6 +54,7 @@ public class Occurrence extends Versionable {
     public Occurrence() {
         this.clients = new ArrayList<>();
         this.experts = new ArrayList<>();
+        this.documents = new ArrayList<>();
     }
 
     public Occurrence(Long code, String name, String courseYear, String scholarYear, Policy policy) {
@@ -60,6 +64,7 @@ public class Occurrence extends Versionable {
         this.courseYear = courseYear;
         this.scholarYear = scholarYear;
         this.policy = policy;
+        this.documents = new ArrayList<>();
     }
 
     public Long getCode() {
@@ -137,4 +142,23 @@ public class Occurrence extends Versionable {
     public void removeExpert(Expert expert) {
         this.experts.remove(expert);
     }
+
+
+    public List<Document> getDocuments() {
+        return this.documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+    public void addDocument(Document document) {
+        if (! this.documents.contains(document)) {
+            this.documents.add(document);
+        }
+    }
+
+    public void removeDocument(Document document) {
+        this.documents.remove(document);
+    }
+
 }

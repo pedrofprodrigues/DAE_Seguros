@@ -9,6 +9,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.EmailBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.ClientBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Client;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
 import pt.ipleiria.estg.dei.ei.dae.academics.exceptions.StudentNotInTheSameSubjectCourseException;
 import pt.ipleiria.estg.dei.ei.dae.academics.requests.PageRequest;
@@ -178,9 +179,10 @@ public class ClientService {
                             .build();
                 }
 
+                System.out.println("numero de apolices"+dataObject.size());
+
                 List<PolicyDTO> totalPolicies = new ArrayList<>();
-                List<ClientDTO> totalClients = new ArrayList<>();
-                List<OccurrenceDTO> totalOccurrences = new ArrayList<>();
+
 
                 for (Object o : dataObject) {
 
@@ -205,8 +207,12 @@ public class ClientService {
                             policy
                     );
 
+
+
                     ClientDTO clientDTO = ClientDTO.from(client);
                     clientBean.create(clientDTO.getUsername(),clientDTO.getName(),clientDTO.getEmail(),clientDTO.getPolicyCode());
+
+
 
                 }
                 return Response.ok(totalPolicies).build();
@@ -214,8 +220,8 @@ public class ClientService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Response.status(Response.Status.METHOD_NOT_ALLOWED)
-                .entity("UNKNOWN ERROR")
+        return Response.status(Response.Status.CONFLICT)
+                .entity("ERROR_DUPLICATING_CLIENT")
                 .build();
     }
 

@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "documents")
 @NamedQuery(
-    name = "getClientDocuments",
-    query = "SELECT doc FROM Document doc WHERE doc.client.username = :username"
+    name = "getOccurrenceDocuments",
+    query = "SELECT doc FROM Document doc WHERE doc.occurrence.code = :code"
 )
 public class Document {
     @Id
@@ -28,15 +28,15 @@ public class Document {
     private String filename;
 
     @ManyToOne
-    private Client client;
+    private Occurrence occurrence;
 
     public Document() {
     }
 
-    public Document(String filepath, String filename, Client client) {
+    public Document(String filepath, String filename, Occurrence occurrence) {
         this.filepath = filepath;
         this.filename = filename;
-        this.client = client;
+        this.occurrence = occurrence;
     }
 
     public Long getId() {
@@ -63,11 +63,11 @@ public class Document {
         this.filename = filename;
     }
 
-    public Client getStudent() {
-        return client;
+    public Occurrence getOccurrence() {
+        return occurrence;
     }
 
-    public void setStudent(Client client) {
-        this.client = client;
+    public void setOccurrence(Occurrence occurrence) {
+        this.occurrence = occurrence;
     }
 }

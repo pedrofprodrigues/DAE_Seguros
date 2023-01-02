@@ -39,7 +39,7 @@ public class OccurrenceBean {
     }
 
     public List<Occurrence> all(int offset, int limit) {
-        return em.createNamedQuery("getAllSubjects", Occurrence.class)
+        return em.createNamedQuery("getAllOccurrences", Occurrence.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

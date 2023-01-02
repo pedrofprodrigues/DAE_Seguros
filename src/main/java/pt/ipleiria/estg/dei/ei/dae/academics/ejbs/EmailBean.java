@@ -20,12 +20,8 @@ public class EmailBean {
         var msg = new MimeMessage(mailSession);
 
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
-
-
         msg.setSubject(subject);
-
         msg.setText(text);
-
         var timeStamp = new Date();
         msg.setSentDate(timeStamp);
 

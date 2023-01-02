@@ -10,22 +10,23 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.Hibernate;
 
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 @Stateless
 public class DocumentBean {
     
     @EJB
-    private ClientBean clientBean;
+    private OccurrenceBean occurrenceBean;
 
     @PersistenceContext
     private EntityManager em;
     
-    public Document create(String filepath, String filename, String username) {
-        var student = clientBean.findClientSafe(username);
-        var document = new Document(filepath, filename, student);
+    public Document create(String filepath, String filename, Long code) {
+        Occurrence occurrence = occurrenceBean.findOccurrenceSafe(code);
+        Document document = new Document(filepath, filename, occurrence);
 
         em.persist(document);
-        student.addDocument(document);
+        occurrence.addDocument(document);
 
         return document;
     }
@@ -34,14 +35,14 @@ public class DocumentBean {
         return em.find(Document.class, id);
     }
 
-    public Document findOrFail(Long id) {
+    public Document findDocumentSafe(Long id) {
         var document = em.getReference(Document.class, id);
         Hibernate.initialize(document);
         return document;
     }
     
-    public List<Document> getStudentDocuments(String username){
-        return em.createNamedQuery("getStudentDocuments", Document.class).setParameter("username", username).getResultList();
+    public List<Document> getOccurrenceDocuments(Long code){
+        return em.createNamedQuery("getOccurrenceDocuments", Document.class).setParameter("code", code).getResultList();
     }
 
 }

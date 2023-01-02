@@ -22,7 +22,7 @@ public class PolicyBean {
     }
 
     public List<Policy> all(int offset, int limit) {
-        return em.createNamedQuery("getAllCourses", Policy.class)
+        return em.createNamedQuery("getAllPolicies", Policy.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
