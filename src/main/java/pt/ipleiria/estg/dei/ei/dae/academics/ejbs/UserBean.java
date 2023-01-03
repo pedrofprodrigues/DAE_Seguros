@@ -29,9 +29,11 @@ public class UserBean {
         return user;
     }
 
-    public boolean canLogin(String username, String password) {
-        var user = find(username);
+    public boolean canLogin(String passwordAPI, String passwordReceived) {
 
-        return user != null && user.getPassword().equals(hasher.hash(password));
+        // System.out.println("PASSWORDS \n\n\n" + passwordAPI + "\n\n\n" + passwordReceived + "\n\n");
+        // System.out.println(hasher.hash(passwordReceived)+"\n\n");
+
+        return passwordAPI.equals(hasher.hash(passwordReceived));
     }
 }

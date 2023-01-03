@@ -42,10 +42,10 @@ public class ConfigBean {
         occurrenceBean.create(2L, "Desenvolvimento de Aplicações Distribuidas", "2017/18", "2021/22", 9119L);
         occurrenceBean.create(3L, "Cálculo II", "2017/18", "2021/22", 9738L);
 
-        clientBean.create("foo", "bar", "foo", "foo@bar.com", 9119L);
+
         clientBean.create("student", "secret", "student", "student@my.ipleiria.pt", 9119L);
 
-        clientBean.enroll("foo", 1L);
+        clientBean.enroll("student", 1L);
     }
 
 }
