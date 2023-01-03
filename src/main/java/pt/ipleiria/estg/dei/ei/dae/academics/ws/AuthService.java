@@ -84,6 +84,10 @@ public class AuthService {
                 if (userBean.canLogin((String) data.get("password"), auth.getPassword())) {
                     String token = issuer.issue(auth.getUsername());
 
+                    if (userBean.find((String) data.get("username")) != null){
+                        return Response.ok(token).build();
+                    }
+
                     Policy policy = new Policy(
                             (Long) data.get("pol_num"),
                             (String) data.get("company_name")
