@@ -1,45 +1,34 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class PolicyDTO implements Serializable {
 
     private Long code;
 
-    private String name;
+    private String companyName;
+    private String username;
 
-    public PolicyDTO() {
-    }
-
-    public PolicyDTO(Long code, String name) {
-        this.code = code;
-        this.name = name;
-    }
-
-    public Long getCode() {
-        return code;
-    }
-
-    public void setCode(Long code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private InsuredObject insuredObject;
 
     public static PolicyDTO from(Policy policy) {
         return new PolicyDTO(
                 policy.getCode(),
-                policy.getName()
+                policy.getInsuranceCompany().getName(),
+                policy.getClient().getUsername(),
+                policy.getInsuredObject()
         );
     }
 

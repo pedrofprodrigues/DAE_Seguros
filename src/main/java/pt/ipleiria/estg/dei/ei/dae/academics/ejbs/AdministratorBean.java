@@ -18,8 +18,10 @@ public class AdministratorBean {
     @Inject
     private Hasher hasher;
 
+
+
     public void create(String username, String password, String name, String email) {
-        var admin = new Administrator(username, hasher.hash(password), name, email);
+        Administrator admin = new Administrator(username, hasher.hash(password), name, email);
         em.persist(admin);
     }
 
@@ -27,7 +29,7 @@ public class AdministratorBean {
         return em.find(Administrator.class, username);
     }
 
-    public Administrator findOrFail(String username) {
+    public Administrator findAdminSafe(String username) {
         var admin = em.getReference(Administrator.class, username);
         Hibernate.initialize(admin);
 

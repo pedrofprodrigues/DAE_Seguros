@@ -24,28 +24,28 @@ public class ConfigBean {
     @EJB
     private OccurrenceBean occurrenceBean;
 
+    @EJB
+    private CompanyBean companyBean;
+
     private Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
     @PostConstruct
     public void populateDB() throws StudentNotInTheSameSubjectCourseException {
         System.out.println("Hello Java EE!");
 
-        administratorBean.create("admin", "admin", "admin", "admin@academics.pt");
 
-        policyBean.create(9119L, "EI");
-        policyBean.create(9281L, "EE");
-        policyBean.create(9823L, "EM");
-        policyBean.create(9822L, "EA");
-        policyBean.create(9738L, "ET");
-
-        occurrenceBean.create(1L, "Desenvolvimento de Aplicações Empresariais", "2017/18", "2021/22", 9119L);
-        occurrenceBean.create(2L, "Desenvolvimento de Aplicações Distribuidas", "2017/18", "2021/22", 9119L);
-        occurrenceBean.create(3L, "Cálculo II", "2017/18", "2021/22", 9738L);
+        companyBean.create("niches","sddssdsd@gmail.com");
 
 
-        clientBean.create("student", "secret", "student", "student@my.ipleiria.pt", 9119L);
+/*
+        occurrenceBean.create(1L, "Desenvolvimento de Aplicações Empresariais", 9119L);
+        occurrenceBean.create(2L, "Desenvolvimento de Aplicações Distribuidas", 9119L);
+        occurrenceBean.create(3L, "Cálculo II", 9738L);
 
-        clientBean.enroll("student", 1L);
+
+        administratorBean.create("admin", "admin","admin", "student@my.ipleiria.pt");
+*/
+
     }
 
 }

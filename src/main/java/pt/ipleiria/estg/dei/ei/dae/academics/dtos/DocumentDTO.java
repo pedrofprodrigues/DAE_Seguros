@@ -6,8 +6,15 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class DocumentDTO implements Serializable {
 
     @NotNull
@@ -16,29 +23,6 @@ public class DocumentDTO implements Serializable {
     @NotNull
     private String filename;
 
-    public DocumentDTO() {
-    }
-
-    public DocumentDTO(@NotNull Long id, @NotNull String filename) {
-        this.id = id;
-        this.filename = filename;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
     
     public static DocumentDTO from(Document document) {
         return new DocumentDTO(document.getId(), document.getFilename());

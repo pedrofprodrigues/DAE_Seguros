@@ -42,6 +42,7 @@ public class PolicyService {
         return Response.ok(PolicyDTO.from(policyBean.find(code))).build();
     }
 
+    /*
     @POST
     @Path("")
     @Authenticated
@@ -61,7 +62,7 @@ public class PolicyService {
 
         return Response.ok(policyDTO).build();
     }
-
+*/
     @DELETE
     @Path("{code}")
     public Response delete(@PathParam("code") Long code) {

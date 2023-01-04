@@ -30,9 +30,9 @@ public class OccurrenceBean {
         return occurrence;
     }
 
-    public void create(Long code, String name, String courseYear, String scholarYear, Long courseCode) {
-        Policy policy = policyBean.findPolicySafe(courseCode);
-        Occurrence occurrence = new Occurrence(code, name, courseYear, scholarYear, policy);
+    public void create(Long code, String name, Long policyCode) {
+        Policy policy = policyBean.findPolicySafe(policyCode);
+        Occurrence occurrence = new Occurrence(code, name, policy);
 
         em.persist(occurrence);
         policy.addOccurrence(occurrence);

@@ -1,5 +1,8 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -16,6 +19,9 @@ import javax.validation.constraints.NotNull;
     name = "getOccurrenceDocuments",
     query = "SELECT doc FROM Document doc WHERE doc.occurrence.code = :code"
 )
+
+@Data
+@NoArgsConstructor
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,44 +36,11 @@ public class Document {
     @ManyToOne
     private Occurrence occurrence;
 
-    public Document() {
-    }
-
     public Document(String filepath, String filename, Occurrence occurrence) {
         this.filepath = filepath;
         this.filename = filename;
         this.occurrence = occurrence;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public Occurrence getOccurrence() {
-        return occurrence;
-    }
-
-    public void setOccurrence(Occurrence occurrence) {
-        this.occurrence = occurrence;
-    }
 }

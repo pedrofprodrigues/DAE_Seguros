@@ -8,9 +8,12 @@ import pt.ipleiria.estg.dei.ei.dae.academics.dtos.ClientDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.UserDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.ClientBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.CompanyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Client;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Company;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.TokenIssuer;
@@ -25,8 +28,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 @Path("auth")
@@ -45,6 +46,8 @@ public class AuthService {
     private ClientBean clientBean;
 
 
+    @EJB
+    private CompanyBean companyBean;
 
     @Context
     private SecurityContext securityContext;
@@ -84,30 +87,31 @@ public class AuthService {
                 if (userBean.canLogin((String) data.get("password"), auth.getPassword())) {
                     String token = issuer.issue(auth.getUsername());
 
-                    if (userBean.find((String) data.get("username")) != null){
+                    //caso cliente ja tenha sido puxado para a database TODO limpar DB depois de logout
+                    if (userBean.findUserSafe((String) data.get("username")) != null){
                         return Response.ok(token).build();
                     }
-
-                    Policy policy = new Policy(
-                            (Long) data.get("pol_num"),
-                            (String) data.get("company_name")
-                    );
-
-                    PolicyDTO policyDTO = PolicyDTO.from(policy);
-                    policyBean.create(policyDTO.getCode(), policyDTO.getName());
-
 
                     Client client = new Client(
                             (String) data.get("username"),
                             (String) data.get("name"),
-                            (String) data.get("email"),
-                            policy
+                            (String) data.get("email")
                     );
 
+                    Company company = companyBean.findCompanySafe((String) data.get("company_name"));
 
+                    Policy policy = new Policy(
+                            (Long) data.get("policy_number"),
+                            companyBean.findCompanySafe((String) data.get("company_name")),
+                            client,
+                            InsuredObject.valueOf((String) data.get("insured_object"))
+                    );
+
+                    PolicyDTO policyDTO = PolicyDTO.from(policy);
+                    policyBean.create(policyDTO.getCode(), policyDTO.getCompanyName(),policyDTO.getUsername(),policyDTO.getInsuredObject());
 
                     ClientDTO clientDTO = ClientDTO.from(client);
-                    clientBean.create(clientDTO.getUsername(),clientDTO.getName(),clientDTO.getEmail(),clientDTO.getPolicyCode());
+                    clientBean.create(clientDTO.getUsername(),clientDTO.getName(),clientDTO.getEmail());
 
                     return Response.ok(token).build();
                 }

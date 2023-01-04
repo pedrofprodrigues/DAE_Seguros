@@ -1,5 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -21,62 +23,37 @@ import java.util.List;
                         "AND s.policy.code = :policyCode"
         )
 })
+
+@Data
+
 public class Client extends User {
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "policy_code")
-    @NotNull
-    private Policy policy;
-
-    @ManyToMany(mappedBy = "clients", fetch = FetchType.LAZY)
-    private List<Occurrence> occurrences;
-
+    @OneToMany
+    private List<Policy> policies;
 
 
     public Client() {
-        this.occurrences = new ArrayList<>();
+        this.policies = new ArrayList<>();
 
     }
 
-    public Client(String username, String password, String name, String email, Policy policy) {
-        super(username, password, name, email);
-        this.policy = policy;
-        this.occurrences = new ArrayList<>();
-
-    }
-    public Client(String username, String name, String email, Policy policy) {
+    public Client(String username, String name, String email) {
         super(username, name, email);
-        this.policy = policy;
-        this.occurrences = new ArrayList<>();
-    }
-
-    public Policy getPolicy() {
-        return policy;
-    }
-
-    public void setPolicy(Policy policy) {
-        this.policy = policy;
-    }
-
-    public List<Occurrence> getOccurrences() {
-        return occurrences;
-    }
-
-    public void setOccurrences(List<Occurrence> occurrences) {
-        this.occurrences = occurrences;
+        this.policies = new ArrayList<>();
     }
 
 
 
-    public void addOccurrence(Occurrence occurrence) {
-        if (! this.occurrences.contains(occurrence)) {
-            this.occurrences.add(occurrence);
+
+    public void AddPolicy(Policy policy) {
+        if (! this.policies.contains(policy)) {
+            this.policies.add(policy);
         }
     }
 
-    public void removeOccurrence(Occurrence occurrence) {
-        this.occurrences.remove(occurrence);
+    public void removePolicy(Policy policy) {
+        this.policies.remove(policy);
     }
 
 

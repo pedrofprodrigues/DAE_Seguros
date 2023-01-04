@@ -1,46 +1,40 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import lombok.Data;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 public class Expert extends User {
 
-    @NotNull
-    private String company;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    private Company company;
 
     @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)
     private List<Occurrence> occurrences;
+
+    private String password;
+
+
 
     public Expert() {
         this.occurrences = new ArrayList<>();
     }
 
-    public Expert(String username, String password, String name, String email, String company) {
-        super(username, password, name, email);
+    public Expert(String username, String password, String name, String email, Company company) {
+        super(username, name, email);
+        this.password = password;
         this.company = company;
         this.occurrences = new ArrayList<>();
     }
 
-    public String getCompany() {
-        return company;
-    }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
 
-    public List<Occurrence> getOccurrences() {
-        return occurrences;
-    }
-
-    public void setOccurrences(List<Occurrence> occurrences) {
-        this.occurrences = occurrences;
-    }
 
     public void addOccurrence(Occurrence occurrence) {
         if (! this.occurrences.contains(occurrence)) {
