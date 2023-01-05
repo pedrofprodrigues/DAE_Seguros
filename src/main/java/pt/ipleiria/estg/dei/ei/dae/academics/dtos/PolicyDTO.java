@@ -3,7 +3,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.InsuredObject;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
 
 import java.io.Serializable;

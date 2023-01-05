@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 import java.io.Serializable;
@@ -16,9 +17,11 @@ import java.util.stream.Collectors;
 public class OccurrenceDTO implements Serializable {
     private Long code;
 
-    private String name;
+    private String description;
 
     private Long policyCode;
+
+    private OccurrenceState occurrenceState;
 
 
 
@@ -26,8 +29,9 @@ public class OccurrenceDTO implements Serializable {
     public static OccurrenceDTO from(Occurrence occurrence) {
         return new OccurrenceDTO(
                 occurrence.getCode(),
-                occurrence.getName(),
-                occurrence.getPolicy().getCode()
+                occurrence.getDescription(),
+                occurrence.getPolicy().getCode(),
+                occurrence.getOccurrenceState()
         );
     }
 

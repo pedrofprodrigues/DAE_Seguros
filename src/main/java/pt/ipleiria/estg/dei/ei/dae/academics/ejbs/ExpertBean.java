@@ -1,7 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Administrator;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Company;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Expert;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
@@ -24,9 +23,10 @@ public class ExpertBean {
     @Inject
     private Hasher hasher;
 
-    public void create(String username, String password, String name, String email, Long companyID) {
-        Company company = em.find(Company.class, companyID);
+    public void create(String username, String password, String name, String email, String companyName) {
+        Company company = em.find(Company.class, companyName);
         Expert expert = new Expert(username, hasher.hash(password), name, email, company);
+        company.addExpert(expert);
         em.persist(expert);
     }
 

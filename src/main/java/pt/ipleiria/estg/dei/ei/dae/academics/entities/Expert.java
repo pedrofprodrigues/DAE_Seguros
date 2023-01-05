@@ -15,12 +15,10 @@ public class Expert extends User {
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Company company;
 
-    @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Occurrence> occurrences;
 
     private String password;
-
-
 
     public Expert() {
         this.occurrences = new ArrayList<>();

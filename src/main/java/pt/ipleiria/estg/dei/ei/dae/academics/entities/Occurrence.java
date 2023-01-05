@@ -1,15 +1,18 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
 import lombok.Data;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(
         name = "occurrences",
-        uniqueConstraints = @UniqueConstraint(columnNames = { "name", "policy_code" })
+        uniqueConstraints = @UniqueConstraint(columnNames = { "description", "policy_code" })
 )
 @NamedQueries({
         @NamedQuery(
@@ -25,7 +28,12 @@ public class Occurrence extends Versionable {
     @Id
     private Long code;
 
-    private String name;
+    @NotNull
+    private String description;
+
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    private OccurrenceState occurrenceState;
 
     @ManyToOne
     @JoinColumn(name = "policy_code")
@@ -48,10 +56,11 @@ public class Occurrence extends Versionable {
         this.documents = new ArrayList<>();
     }
 
-    public Occurrence(Long code, String name, Policy policy) {
+    public Occurrence(Long code, String description, Policy policy, OccurrenceState occurrenceState) {
         this();
         this.code = code;
-        this.name = name;
+        this.description = description;
+        this.occurrenceState = occurrenceState;
         this.policy = policy;
         this.documents = new ArrayList<>();
         this.experts = new ArrayList<>();

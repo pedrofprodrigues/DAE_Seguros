@@ -1,12 +1,13 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
 import lombok.Data;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "policies")
@@ -39,9 +40,10 @@ public class Policy extends Versionable {
     private List<Cover> covers;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "client_username")
     private Client client;
 
-    @OneToMany(mappedBy = "policy", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "policy")
     private List<Occurrence> occurrences;
 
 

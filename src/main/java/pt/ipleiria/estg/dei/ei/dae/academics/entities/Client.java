@@ -13,14 +13,6 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllClients",
                 query = "SELECT s FROM Client s ORDER BY s.name"
-        ),
-
-        // SOLUTION 1
-        @NamedQuery(
-                name = "getAllOccurrencesUnrolled",
-                query = "SELECT s FROM Occurrence s WHERE s.code NOT IN" +
-                        "    (SELECT ss.subjectCode FROM SubjectStudent ss WHERE ss.studentUsername = :username) " +
-                        "AND s.policy.code = :policyCode"
         )
 })
 
@@ -29,7 +21,8 @@ import java.util.List;
 public class Client extends User {
 
     @NotNull
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinTable
     private List<Policy> policies;
 
 

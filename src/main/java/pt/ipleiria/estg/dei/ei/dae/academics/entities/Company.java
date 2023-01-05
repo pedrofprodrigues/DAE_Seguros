@@ -19,7 +19,7 @@ public class Company {
     private String name;
 
     @NotNull
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Expert> experts;
 
     @NotNull

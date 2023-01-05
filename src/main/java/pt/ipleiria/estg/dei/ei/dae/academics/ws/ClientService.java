@@ -10,14 +10,9 @@ import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.EmailBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.ClientBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.*;
-import pt.ipleiria.estg.dei.ei.dae.academics.exceptions.StudentNotInTheSameSubjectCourseException;
-import pt.ipleiria.estg.dei.ei.dae.academics.requests.PageRequest;
-import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.mail.MessagingException;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;

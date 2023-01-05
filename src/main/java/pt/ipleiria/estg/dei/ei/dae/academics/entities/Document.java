@@ -3,13 +3,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -34,6 +28,7 @@ public class Document {
     private String filename;
 
     @ManyToOne
+    @JoinColumn(name = "occurrence_id")
     private Occurrence occurrence;
 
     public Document(String filepath, String filename, Occurrence occurrence) {

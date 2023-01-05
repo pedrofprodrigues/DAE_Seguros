@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
 
@@ -32,8 +33,8 @@ public class OccurrenceBean {
 
     public void create(Long code, String name, Long policyCode) {
         Policy policy = policyBean.findPolicySafe(policyCode);
-        Occurrence occurrence = new Occurrence(code, name, policy);
-
+        OccurrenceState occurrenceState = OccurrenceState.opened;
+        Occurrence occurrence = new Occurrence(code, name, policy, occurrenceState);
         em.persist(occurrence);
         policy.addOccurrence(occurrence);
     }

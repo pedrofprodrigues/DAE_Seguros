@@ -13,7 +13,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Client;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Company;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.InsuredObject;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.TokenIssuer;

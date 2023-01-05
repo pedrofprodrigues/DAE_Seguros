@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.exceptions.StudentNotInTheSameSubjectCourseException;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,9 @@ public class ConfigBean {
     private ClientBean clientBean;
 
     @EJB
+    private ExpertBean expertBean;
+
+    @EJB
     private PolicyBean policyBean;
 
     @EJB
@@ -35,6 +39,12 @@ public class ConfigBean {
 
 
         companyBean.create("niches","sddssdsd@gmail.com");
+        expertBean.create("expert","expert","expert","expert@gmail.com", "niches");
+        clientBean.create("joao","joao","joao@gmail.com");
+        policyBean.create(1L, "niches", "joao", InsuredObject.appliance);
+
+        occurrenceBean.create(10L,"danos",1L);
+
 
 
 /*
