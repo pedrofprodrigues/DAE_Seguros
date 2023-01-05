@@ -5,20 +5,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.*;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.EmailBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.ClientBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Client;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
-import pt.ipleiria.estg.dei.ei.dae.academics.exceptions.StudentNotInTheSameSubjectCourseException;
-import pt.ipleiria.estg.dei.ei.dae.academics.requests.PageRequest;
-import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.mail.MessagingException;
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -47,6 +39,11 @@ public class ClientService {
 
     @EJB
     private PolicyBean policyBean;
+    @EJB
+    private CompanyBean companyBean;
+
+    @EJB
+    private OccurrenceBean occurrenceBean;
 
 
     @Context
@@ -79,35 +76,12 @@ public class ClientService {
         return Response.ok(ClientDTO.from(clientBean.findClientSafe(username))).build();
     }
 
-
-    @GET
-    @Authenticated
-    @RolesAllowed({"Client"})
-    @Path("{username}/subjects")
-    public Response enrolled(@PathParam("username") String username) {
-        return Response.ok(OccurrenceDTO.from(clientBean.enrolled(username))).build();
-    }
-
     @GET
     @Authenticated
     @RolesAllowed({"Client"})
     @Path("{username}/subjects/unrolled")
     public Response unrolled(@PathParam("username") String username) {
         return Response.ok(OccurrenceDTO.from(clientBean.unrolled(username))).build();
-    }
-
-    @PATCH
-    @Path("{username}/occurrences/{code}/enroll")
-    public Response enroll(@PathParam("username") String studentUsername, @PathParam("code") Long subjectCode) throws StudentNotInTheSameSubjectCourseException {
-        clientBean.enroll(studentUsername, subjectCode);
-        return Response.noContent().build();
-    }
-
-    @PATCH
-    @Path("{username}/occurrences/{code}/unroll")
-    public Response unroll(@PathParam("username") String studentUsername, @PathParam("code") Long subjectCode) throws StudentNotInTheSameSubjectCourseException {
-        clientBean.unroll(studentUsername, subjectCode);
-        return Response.noContent().build();
     }
 
     @POST
@@ -120,25 +94,6 @@ public class ClientService {
     }
 
 
-
-
-
-
-    @POST
-    @Path("/")
-    public Response create(ClientCreateDTO studentDTO) {
-        clientBean.create(
-                studentDTO.getUsername(),
-                studentDTO.getPassword(),
-                studentDTO.getName(),
-                studentDTO.getEmail(),
-                studentDTO.getPolicyCode()
-        );
-
-        var student = clientBean.find(studentDTO.getUsername());
-        return Response.status(Response.Status.CREATED).entity(ClientDTO.from(student)).build();
-    }
-
  */
 
 
@@ -150,18 +105,13 @@ public class ClientService {
 
         try{
             URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/seguroAPI?nif="+nif);
-
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
-
             int responseCode = connection.getResponseCode();
-
             if (responseCode != 200) {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
-
             } else {
-
                 StringBuilder informationString = new StringBuilder();
                 Scanner scanner = new Scanner(url.openStream());
 
@@ -179,7 +129,7 @@ public class ClientService {
                             .build();
                 }
 
-                System.out.println("numero de apolices"+dataObject.size());
+
 
                 List<PolicyDTO> totalPolicies = new ArrayList<>();
 
@@ -188,32 +138,34 @@ public class ClientService {
 
                     JSONObject data = (JSONObject) o;
 
-
-                    Policy policy = new Policy(
-                            (Long) data.get("pol_num"),
-                            (String) data.get("company_name")
-                    );
-
-                    PolicyDTO policyDTO = PolicyDTO.from(policy);
-                    policyBean.create(policyDTO.getCode(), policyDTO.getName());
-                    totalPolicies.add(policyDTO);
-
-
-
                     Client client = new Client(
                             (String) data.get("username"),
                             (String) data.get("name"),
-                            (String) data.get("email"),
-                            policy
+                            (String) data.get("email")
                     );
 
-
-
                     ClientDTO clientDTO = ClientDTO.from(client);
-                    clientBean.create(clientDTO.getUsername(),clientDTO.getName(),clientDTO.getEmail(),clientDTO.getPolicyCode());
+                    clientBean.create(clientDTO.getUsername(),clientDTO.getName(),clientDTO.getEmail());
 
+                    Policy policy = new Policy(
+                            (Long) data.get("policy_number"),
+                            companyBean.findCompanySafe((String) data.get("company_name")),
+                            client,
+                            InsuredObject.valueOf((String) data.get("insured_object"))
+                    );
 
+                    JSONArray cover = (JSONArray) data.get("covers");
 
+                    PolicyDTO policyDTO = PolicyDTO.from(policy);
+                    policyBean.create(policyDTO.getCode(), policyDTO.getCompanyName(),policyDTO.getUsername(),policyDTO.getInsuredObject());
+
+                    for (Object obj: cover)
+                    {
+                        policyBean.addCoverOnPolicy((Long) data.get("policy_number"),Cover.valueOf((String) obj));
+                    }
+
+                    totalPolicies.add(policyDTO);
+                    companyBean.addPolicyOnCompany((String) data.get("company_name"),(Long) data.get("policy_number"));
                 }
                 return Response.ok(totalPolicies).build();
             }

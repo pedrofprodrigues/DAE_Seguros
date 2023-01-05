@@ -1,12 +1,9 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +13,9 @@ import javax.validation.constraints.NotNull;
     name = "getOccurrenceDocuments",
     query = "SELECT doc FROM Document doc WHERE doc.occurrence.code = :code"
 )
+
+@Data
+@NoArgsConstructor
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,10 +28,8 @@ public class Document {
     private String filename;
 
     @ManyToOne
+    @JoinColumn(name = "occurrence_code")
     private Occurrence occurrence;
-
-    public Document() {
-    }
 
     public Document(String filepath, String filename, Occurrence occurrence) {
         this.filepath = filepath;
@@ -39,35 +37,5 @@ public class Document {
         this.occurrence = occurrence;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public void setFilepath(String filepath) {
-        this.filepath = filepath;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public Occurrence getOccurrence() {
-        return occurrence;
-    }
-
-    public void setOccurrence(Occurrence occurrence) {
-        this.occurrence = occurrence;
-    }
 }

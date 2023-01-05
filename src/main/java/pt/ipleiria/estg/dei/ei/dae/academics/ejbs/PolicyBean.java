@@ -1,9 +1,9 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Client;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,9 +16,12 @@ public class PolicyBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(Long code, String name) {
-        var course = new Policy(code, name);
-        em.persist(course);
+    public void create(Long code, String companyName, String username, InsuredObject insuredObject) {
+        Client client = em.getReference(Client.class,username);
+        Company company = em.getReference(Company.class,companyName);
+        Policy policy = new Policy(code, company , client, insuredObject);
+
+        em.persist(policy);
     }
 
     public List<Policy> all(int offset, int limit) {
@@ -43,6 +46,14 @@ public class PolicyBean {
         return policy;
     }
 
+    public void addCoverOnPolicy(Long code, Cover cover){
+        Policy policy = findPolicySafe(code);
+        policy.addCover(cover);
+
+    }
+
+
+/*
     public void updatePolicy(Long code, String name) {
         Policy policy = findPolicySafe(code);
         policy.setName(name);
@@ -53,6 +64,8 @@ public class PolicyBean {
     // Hibernate doesn't allow that modification.
     // The workaround is to delete the old one (be careful with cascade operations)
     // and create a new one.
+
+
     public void updatePolicy(Long oldCode, Long newCode, String name) {
         Policy previousPolicy = findPolicySafe(oldCode);
 
@@ -83,6 +96,8 @@ public class PolicyBean {
         newPolicy.setName(name);
         em.merge(newPolicy);
     }
+
+     */
 
     public void remove(Long code) {
         em.remove(findPolicySafe(code));

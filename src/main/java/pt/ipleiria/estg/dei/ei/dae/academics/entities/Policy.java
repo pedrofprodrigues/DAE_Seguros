@@ -1,85 +1,65 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
+import lombok.Data;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "policies")
+
+
 @NamedQueries({
         @NamedQuery(
                 name = "getAllPolicies",
-                query = "SELECT policy FROM Policy policy ORDER BY policy.name"
+                query = "SELECT policy FROM Policy policy ORDER BY policy.insuranceCompany"
         )
 })
+
+@Data
 public class Policy extends Versionable {
 
     @Id
     private Long code;
 
     @NotNull
-    private String name;
+    @ManyToOne
+    private Company insuranceCompany;
 
-    @OneToMany(mappedBy = "policy", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Client> clients;
+    @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    private InsuredObject insuredObject;
 
-    @OneToMany(mappedBy = "policy", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @NotNull
+    @ElementCollection
+    @Enumerated(EnumType.ORDINAL)
+    private List<Cover> covers;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "client_username")
+    private Client client;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "policy")
     private List<Occurrence> occurrences;
 
-    public Policy() {
-        this.clients = new ArrayList<>();
-        this.occurrences = new ArrayList<>();
-    }
 
-    public Policy(Long code, String name) {
+
+    public Policy(Long code, Company insuranceCompany, Client client, InsuredObject insuredObject) {
         this();
         this.code = code;
-        this.name = name;
+        this.insuranceCompany = insuranceCompany;
+        this.client = client;
+        this.insuredObject = insuredObject;
+    }
+    public Policy() {
+        this.occurrences = new ArrayList<>();
+        this.covers = new ArrayList<>();
     }
 
-    public Long getCode() {
-        return code;
-    }
-
-    public void setCode(Long code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
-    public List<Occurrence> getOccurrences() {
-        return occurrences;
-    }
-
-    public void setOccurrences(List<Occurrence> occurrences) {
-        this.occurrences = occurrences;
-    }
-
-    public void addClient(Client client) {
-        if (! this.clients.contains(client)) {
-            this.clients.add(client);
-        }
-    }
-
-    public void removeClient(Client client) {
-        this.clients.remove(client);
-    }
 
     public void addOccurrence(Occurrence occurrence) {
         if (! this.occurrences.contains(occurrence)) {
@@ -91,13 +71,15 @@ public class Policy extends Versionable {
         this.occurrences.remove(occurrence);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Policy && Objects.equals(((Policy) obj).code, this.code);
+    public void addCover(Cover cover) {
+        if (! this.covers.contains(cover)) {
+            this.covers.add(cover);
+        }
+
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, name);
+    public void removeCover(Cover cover) {
+        this.covers.remove(cover);
     }
+
 }

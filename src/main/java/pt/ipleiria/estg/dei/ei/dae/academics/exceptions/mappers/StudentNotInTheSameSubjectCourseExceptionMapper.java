@@ -28,7 +28,7 @@ public class StudentNotInTheSameSubjectCourseExceptionMapper implements Exceptio
         var error = new ErrorDTO(
                 Client.class.getSimpleName() + " '" + student.getName() + "'" +
                 " can't enroll in " +
-                Occurrence.class.getSimpleName() + " '" + subject.getName() + "'. " +
+                Occurrence.class.getSimpleName() + " '" + subject.getDescription() + "'. " +
                 "Different course."
         );
 
