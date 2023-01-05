@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.exceptions.StudentNotInTheSameSubjectCourseException;
 
 import javax.annotation.PostConstruct;
@@ -43,7 +44,7 @@ public class ConfigBean {
         clientBean.create("joao","joao","joao@gmail.com");
         policyBean.create(1L, "niches", "joao", InsuredObject.appliance);
 
-        occurrenceBean.create(10L,"danos",1L);
+        occurrenceBean.create(10L,"danos",1L, OccurrenceState.in_analysis);
 
 
 

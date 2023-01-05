@@ -31,12 +31,11 @@ public class OccurrenceBean {
         return occurrence;
     }
 
-    public void create(Long code, String name, Long policyCode) {
+    public void create(Long code, String description, Long policyCode,OccurrenceState occurrenceState) {
         Policy policy = policyBean.findPolicySafe(policyCode);
-        OccurrenceState occurrenceState = OccurrenceState.opened;
-        Occurrence occurrence = new Occurrence(code, name, policy, occurrenceState);
-        em.persist(occurrence);
+        Occurrence occurrence = new Occurrence(code, description, policy, occurrenceState);
         policy.addOccurrence(occurrence);
+        em.persist(occurrence);
     }
 
     public List<Occurrence> all(int offset, int limit) {

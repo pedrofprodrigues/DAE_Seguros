@@ -3,7 +3,6 @@ package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 

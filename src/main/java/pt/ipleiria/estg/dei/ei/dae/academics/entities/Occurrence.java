@@ -1,7 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
 import lombok.Data;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 
 import javax.persistence.*;

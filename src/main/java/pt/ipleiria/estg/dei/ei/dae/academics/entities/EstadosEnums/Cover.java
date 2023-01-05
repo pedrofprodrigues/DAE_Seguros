@@ -6,8 +6,4 @@ public enum Cover {
     steal,
     all_cover,
     glass,
-
-
-
-
 }

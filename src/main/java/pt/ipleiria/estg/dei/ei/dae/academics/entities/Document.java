@@ -28,7 +28,7 @@ public class Document {
     private String filename;
 
     @ManyToOne
-    @JoinColumn(name = "occurrence_id")
+    @JoinColumn(name = "occurrence_code")
     private Occurrence occurrence;
 
     public Document(String filepath, String filename, Occurrence occurrence) {

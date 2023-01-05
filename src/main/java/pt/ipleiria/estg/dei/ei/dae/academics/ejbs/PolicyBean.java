@@ -2,6 +2,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
 import javax.ejb.Stateless;
@@ -19,6 +20,7 @@ public class PolicyBean {
         Client client = em.getReference(Client.class,username);
         Company company = em.getReference(Company.class,companyName);
         Policy policy = new Policy(code, company , client, insuredObject);
+
         em.persist(policy);
     }
 
@@ -43,6 +45,13 @@ public class PolicyBean {
 
         return policy;
     }
+
+    public void addCoverOnPolicy(Long code, Cover cover){
+        Policy policy = findPolicySafe(code);
+        policy.addCover(cover);
+
+    }
+
 
 /*
     public void updatePolicy(Long code, String name) {
