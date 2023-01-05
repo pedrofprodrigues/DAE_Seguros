@@ -51,6 +51,7 @@ public class ClientService {
 
     @Context
     private SecurityContext securityContext;
+
 /*
     @GET
     @Path("/")
@@ -225,5 +226,86 @@ public class ClientService {
                 .build();
     }
 
+
+    @GET
+    @Path("/")
+    public Response getAllClients() {
+
+        try{
+            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/seguroAPI/");
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode != 200) {
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+
+            } else {
+
+                StringBuilder informationString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    informationString.append(scanner.nextLine());
+                }
+                scanner.close();
+
+                JSONParser parse = new JSONParser();
+                JSONArray dataObject = (JSONArray) parse.parse(String.valueOf(informationString));
+
+                if (dataObject.size() == 0){
+                    return Response.status(Response.Status.NOT_FOUND)
+                            .entity("ERROR_FINDING_CLIENT")
+                            .build();
+                }
+
+                System.out.println("numero de apolices"+dataObject.size());
+
+                List<PolicyDTO> totalPolicies = new ArrayList<>();
+
+
+                for (Object o : dataObject) {
+
+                    JSONObject data = (JSONObject) o;
+
+
+                    Policy policy = new Policy(
+                            (Long) data.get("pol_num"),
+                            (String) data.get("company_name")
+                    );
+
+                    PolicyDTO policyDTO = PolicyDTO.from(policy);
+                    policyBean.create(policyDTO.getCode(), policyDTO.getName());
+                    totalPolicies.add(policyDTO);
+
+
+
+                    Client client = new Client(
+                            (String) data.get("username"),
+                            (String) data.get("name"),
+                            (String) data.get("email"),
+                            policy
+                    );
+
+
+
+                    ClientDTO clientDTO = ClientDTO.from(client);
+                    clientBean.create(clientDTO.getUsername(),clientDTO.getName(),clientDTO.getEmail(),clientDTO.getPolicyCode());
+
+
+
+                }
+                return Response.ok(totalPolicies).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.status(Response.Status.CONFLICT)
+                .entity("ERROR_DUPLICATING_CLIENT")
+                .build();
+    }
 
 }
