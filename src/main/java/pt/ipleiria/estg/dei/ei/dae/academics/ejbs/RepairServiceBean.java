@@ -1,9 +1,9 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Client;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Policy;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,37 +11,46 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Stateless
-public class PolicyBean {
+public class RepairServiceBean {
 
     @PersistenceContext
     private EntityManager em;
 
-    public void create(Long code, String name) {
-        var course = new Policy(code, name);
-        em.persist(course);
+    public void create(String companyName, String username, InsuredObject insuredObject) {
+
+        RepairService policy = new RepairService( companyName , username, insuredObject);
+        em.persist(policy);
     }
 
-    public List<Policy> all(int offset, int limit) {
-        return em.createNamedQuery("getAllPolicies", Policy.class)
+    public List<RepairService> all(int offset, int limit) {
+        return em.createNamedQuery("getAllPolicies", RepairService.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
     }
 
     public Long count() {
-        return em.createQuery("SELECT COUNT(*) FROM " + Policy.class.getSimpleName(), Long.class).getSingleResult();
+        return em.createQuery("SELECT COUNT(*) FROM " + RepairService.class.getSimpleName(), Long.class).getSingleResult();
     }
 
-    public Policy find(Long code) {
-        return em.find(Policy.class, code);
+    public RepairService find(Long code) {
+        return em.find(RepairService.class, code);
     }
 
-    public Policy findPolicySafe(Long code) {
-        Policy policy = em.getReference(Policy.class, code);
+    public RepairService findPolicySafe(Long code) {
+        RepairService policy = em.getReference(RepairService.class, code);
         Hibernate.initialize(policy);
 
         return policy;
     }
+/*
+    public void addCoverOnPolicy(Long code, Cover cover){
+        Policy policy = findPolicySafe(code);
+        policy.addCover(cover);
+
+    }
+
+
 
     public void updatePolicy(Long code, String name) {
         Policy policy = findPolicySafe(code);
@@ -53,6 +62,8 @@ public class PolicyBean {
     // Hibernate doesn't allow that modification.
     // The workaround is to delete the old one (be careful with cascade operations)
     // and create a new one.
+
+
     public void updatePolicy(Long oldCode, Long newCode, String name) {
         Policy previousPolicy = findPolicySafe(oldCode);
 
@@ -83,6 +94,8 @@ public class PolicyBean {
         newPolicy.setName(name);
         em.merge(newPolicy);
     }
+
+     */
 
     public void remove(Long code) {
         em.remove(findPolicySafe(code));

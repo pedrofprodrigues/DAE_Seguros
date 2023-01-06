@@ -18,17 +18,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 
-/*
-In the following cases, the method level annotations take precedence over the class level annotation:
-
-@PermitAll is specified at the class level and @RolesAllowed or @DenyAll are specified on methods of the same class;
-
-@DenyAll is specified at the class level and @PermitAll or @RolesAllowed are specified on methods of the same class;
-
-@RolesAllowed is specified at the class level and @PermitAll or @DenyAll are specified on methods of the same class.
-
-* */
-
 @Provider
 @Authenticated
 @Priority(Priorities.AUTHORIZATION)
