@@ -9,14 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(
-        name = "occurrences",
-        uniqueConstraints = @UniqueConstraint(columnNames = { "description", "policy_code" })
-)
+
 @NamedQueries({
         @NamedQuery(
                 name = "getAllOccurrences",
-                query = "SELECT s FROM Occurrence s ORDER BY s.policy.insuranceCompany.name"
+                query = "SELECT s FROM Occurrence s ORDER BY s.repairService"
         )
 })
 
@@ -25,7 +22,8 @@ import java.util.List;
 public class Occurrence extends Versionable {
 
     @Id
-    private Long code;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @NotNull
     private String description;
@@ -35,46 +33,27 @@ public class Occurrence extends Versionable {
     private OccurrenceState occurrenceState;
 
     @ManyToOne
-    @JoinColumn(name = "policy_code")
-    private Policy policy;
+    @JoinColumn(name = "repair_id")
+    private RepairService repairService;
 
     @OneToMany(mappedBy = "occurrence")
     private List<Document> documents;
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "occurrences_experts",
-            joinColumns = @JoinColumn(name = "occurrence_code", referencedColumnName = "code"),
-            inverseJoinColumns = @JoinColumn(name = "expert_username", referencedColumnName = "username")
-    )
-    private List<Expert> experts;
-
     public Occurrence() {
-        this.experts = new ArrayList<>();
+
         this.documents = new ArrayList<>();
     }
 
-    public Occurrence(Long code, String description, Policy policy, OccurrenceState occurrenceState) {
+    public Occurrence(Long code, String description, RepairService repairService, OccurrenceState occurrenceState) {
         this();
-        this.code = code;
         this.description = description;
         this.occurrenceState = occurrenceState;
-        this.policy = policy;
+        this.repairService = repairService;
         this.documents = new ArrayList<>();
-        this.experts = new ArrayList<>();
+
     }
 
-
-    public void addExpert(Expert expert) {
-        if (! this.experts.contains(expert)) {
-            this.experts.add(expert);
-        }
-    }
-
-    public void removeExpert(Expert expert) {
-        this.experts.remove(expert);
-    }
 
 
     public void addDocument(Document document) {

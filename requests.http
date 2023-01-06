@@ -1,6 +1,6 @@
 
 ### get policies from specific client
-GET http://localhost:8080/academics/api/clients/992013587
+GET http://localhost:8080/academics/api/clients/997909748
 Accept: application/json
 
 

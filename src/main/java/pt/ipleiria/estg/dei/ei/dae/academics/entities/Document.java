@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "documents")
 @NamedQuery(
     name = "getOccurrenceDocuments",
-    query = "SELECT doc FROM Document doc WHERE doc.occurrence.code = :code"
+    query = "SELECT doc FROM Document doc WHERE doc.occurrence.id = :id"
 )
 
 @Data

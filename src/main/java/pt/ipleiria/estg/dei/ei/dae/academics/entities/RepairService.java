@@ -10,54 +10,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "policies")
+@Table(name = "repairServices")
 
 
 @NamedQueries({
         @NamedQuery(
-                name = "getAllPolicies",
-                query = "SELECT policy FROM Policy policy ORDER BY policy.insuranceCompany"
+                name = "getAllrepairServices",
+                query = "SELECT repairService FROM RepairService repairService ORDER BY repairService.id"
         )
 })
 
 @Data
-public class Policy extends Versionable {
+public class RepairService extends Versionable {
 
     @Id
-    private Long code;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @NotNull
-    @ManyToOne
-    private Company insuranceCompany;
+
+    private String insuranceCompany;
 
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private InsuredObject insuredObject;
 
     @NotNull
-    @ElementCollection
-    @Enumerated(EnumType.ORDINAL)
-    private List<Cover> covers;
+    String client;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "client_username")
-    private Client client;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "policy")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "repairService")
     private List<Occurrence> occurrences;
 
 
 
-    public Policy(Long code, Company insuranceCompany, Client client, InsuredObject insuredObject) {
+    public RepairService(String insuranceCompany, String client, InsuredObject insuredObject) {
         this();
-        this.code = code;
         this.insuranceCompany = insuranceCompany;
         this.client = client;
         this.insuredObject = insuredObject;
     }
-    public Policy() {
+    public RepairService() {
         this.occurrences = new ArrayList<>();
-        this.covers = new ArrayList<>();
+
     }
 
 
@@ -71,15 +66,5 @@ public class Policy extends Versionable {
         this.occurrences.remove(occurrence);
     }
 
-    public void addCover(Cover cover) {
-        if (! this.covers.contains(cover)) {
-            this.covers.add(cover);
-        }
-
-    }
-
-    public void removeCover(Cover cover) {
-        this.covers.remove(cover);
-    }
 
 }
