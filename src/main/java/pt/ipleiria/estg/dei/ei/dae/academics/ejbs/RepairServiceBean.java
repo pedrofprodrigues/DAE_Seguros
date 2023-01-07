@@ -1,11 +1,15 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
+import jakarta.persistence.LockModeType;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
+import pt.ipleiria.estg.dei.ei.dae.academics.security.Hasher;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -16,14 +20,56 @@ public class RepairServiceBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String companyName, String username, InsuredObject insuredObject) {
+    @EJB
+    private OccurrenceBean occurrenceBean;
 
-        RepairService policy = new RepairService( companyName , username, insuredObject);
-        em.persist(policy);
+
+    public void create(String insuranceCompany, String client, InsuredObject insuredObject, Long occurrenceId) {
+        var occurrence = occurrenceBean.findOrFail(occurrenceId);
+        var repairService = new RepairService(insuranceCompany, client, insuredObject);
+
+        occurrence.addRepairService(repairService);
+        em.persist(repairService);
     }
 
-    public List<RepairService> all(int offset, int limit) {
+    public void update(String insuranceCompany, String client, InsuredObject insuredObject, Long repairServiceId, Long occurrenceId) {
+        var repairService = findOrFail(repairServiceId);
+        var occurrence = occurrenceBean.findOrFail(occurrenceId);
+
+        repairService.setInsuranceCompany(insuranceCompany);
+        repairService.setClient(client);
+        repairService.setInsuredObject(insuredObject);
+
+        em.merge(repairService);
+    }
+
+    public RepairService findOrFail(Long repairServiceId) {
+        var repairService = em.getReference(RepairService.class, repairServiceId);
+        Hibernate.initialize(repairService);
+
+        return repairService;
+    }
+
+    public RepairService find(Long repairServiceId) {
+        return em.find(RepairService.class, repairServiceId);
+    }
+
+    public List<RepairService> allAllPolicies(int offset, int limit) {
         return em.createNamedQuery("getAllPolicies", RepairService.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<RepairService> allRepairServiceNotClosed(int offset, int limit) {
+        return em.createNamedQuery("getAllRepairServicesNotFinished", RepairService.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<RepairService> allRepairServiceByState(int offset, int limit) {
+        return em.createNamedQuery("getRepairServiceByState", RepairService.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
@@ -31,10 +77,6 @@ public class RepairServiceBean {
 
     public Long count() {
         return em.createQuery("SELECT COUNT(*) FROM " + RepairService.class.getSimpleName(), Long.class).getSingleResult();
-    }
-
-    public RepairService find(Long code) {
-        return em.find(RepairService.class, code);
     }
 
     public RepairService findPolicySafe(Long code) {

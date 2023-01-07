@@ -1,18 +1,16 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums;
 
-public enum OccurrenceState {
-    opened("Opened"),
-    in_analysis("In Analysis"),
-    accepted("Accepted"),
-    in_repair("In Repair"),
-    repaired("Repaired"),
+public enum RepairState {
+    waiting("Waiting for approval"),
+    progress("Repair in progress"),
+    completed("Repair completed"),
     delivered("Delivered"),
     rejected("Rejected"),
     closed("Closed");
 
     private final String label;
 
-    OccurrenceState(String label) {
+    RepairState(String label) {
         this.label = label;
     }
 }

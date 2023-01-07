@@ -41,7 +41,6 @@ public class Occurrence extends Versionable {
 
 
     public Occurrence() {
-
         this.documents = new ArrayList<>();
     }
 
@@ -66,4 +65,9 @@ public class Occurrence extends Versionable {
         this.documents.remove(document);
     }
 
+    public void addRepairService(RepairService repairService) {
+        if (this.repairService != repairService) {
+            this.repairService = repairService;
+        }
+    }
 }
