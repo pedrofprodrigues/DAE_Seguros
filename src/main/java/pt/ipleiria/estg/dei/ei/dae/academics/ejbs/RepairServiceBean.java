@@ -1,17 +1,15 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
-import jakarta.persistence.LockModeType;
-import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
-import pt.ipleiria.estg.dei.ei.dae.academics.security.Hasher;
-
 import javax.ejb.EJB;
+import org.hibernate.Hibernate;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 import java.util.List;
 
 @Stateless

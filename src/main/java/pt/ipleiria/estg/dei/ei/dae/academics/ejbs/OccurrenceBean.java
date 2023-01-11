@@ -1,10 +1,11 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
-import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+
+import javax.ejb.EJB;
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;

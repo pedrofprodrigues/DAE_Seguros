@@ -10,6 +10,7 @@ public enum InsuredObject {
 
     private final String label;
 
+
     InsuredObject(String label) {
         this.label = label;
     }

@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.net.URL;
 import java.util.List;
 
 
@@ -30,10 +31,14 @@ public class ClientService {
     public Response getClientDetails(@PathParam("nif") Long nif) {
 
         List<MockAPIBean> list = mockAPIBean.getOnMockAPI("?nif="+nif);
-       // System.out.println("\n\n\n\n" + list.get(0).getCovers().get(1) + "\n\n\n\n" );
+      // URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/seguroAPI/?nif=" + nif);
+
+        if(list==null || list.size() == 0) {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
 
         return Response.status(Response.Status.OK)
-                .entity(list.get(0).toString())
+                .entity(list.toString())
                 .build();
     }
 

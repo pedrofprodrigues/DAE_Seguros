@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-
+@Table(name = "occurrences", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
 @NamedQueries({
         @NamedQuery(
                 name = "getAllOccurrences",
-                query = "SELECT s FROM Occurrence s ORDER BY s.repairService"
+                query = "SELECT o FROM Occurrence o ORDER BY o.id"
         )
 })
-
 
 @Data
 public class Occurrence extends Versionable {
@@ -53,6 +52,13 @@ public class Occurrence extends Versionable {
 
     }
 
+    public List<Document> getDocuments() {
+        return this.documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
 
 
     public void addDocument(Document document) {
