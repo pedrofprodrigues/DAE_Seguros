@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -24,12 +25,9 @@ import java.util.Scanner;
 public class MockAPIBean {
 
 
-
-
-
     private String company_name;
     private String password;
-    private Long nif;
+    private String nif;
     private Long ID;
 
     private Long policy_number;
@@ -68,14 +66,20 @@ public class MockAPIBean {
             }
 
             return mockAPIBean;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;}
 
 
+    public String MockAPItoJSON(List<MockAPIBean> mockAPIBean) throws JsonProcessingException {
 
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(mockAPIBean);
 
+        return json;
+    }
 
 
 

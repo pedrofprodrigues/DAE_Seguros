@@ -21,6 +21,12 @@ public class UserBean {
     public User find(String username) {
         return em.find(User.class, username);
     }
+    public void create(String username, String password, String name) {
+        User user = new User(username,hasher.hash(password), name);
+
+        em.persist(user);
+
+    }
 
     public User findUserSafe(String username) {
         var user = em.getReference(User.class, username);
@@ -31,8 +37,8 @@ public class UserBean {
 
     public boolean canLogin(String passwordAPI, String passwordReceived) {
 
-        // System.out.println("PASSWORDS \n\n\n" + passwordAPI + "\n\n\n" + passwordReceived + "\n\n");
-        // System.out.println(hasher.hash(passwordReceived)+"\n\n");
+         System.out.println("PASSWORDS \n\n\n" + passwordAPI + "\n\n\n" + passwordReceived + "\n\n");
+        System.out.println(hasher.hash(passwordReceived)+"\n\n");
 
         return passwordAPI.equals(hasher.hash(passwordReceived));
     }

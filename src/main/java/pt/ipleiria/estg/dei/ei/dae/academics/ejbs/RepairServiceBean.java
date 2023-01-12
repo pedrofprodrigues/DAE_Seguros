@@ -1,7 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
@@ -37,7 +36,7 @@ public class RepairServiceBean {
         return em.find(RepairService.class, code);
     }
 
-    public RepairService findPolicySafe(Long code) {
+    public RepairService findRepairServiceSafe(Long code) {
         RepairService policy = em.getReference(RepairService.class, code);
         Hibernate.initialize(policy);
 
@@ -98,6 +97,6 @@ public class RepairServiceBean {
      */
 
     public void remove(Long code) {
-        em.remove(findPolicySafe(code));
+        em.remove(findRepairServiceSafe(code));
     }
 }

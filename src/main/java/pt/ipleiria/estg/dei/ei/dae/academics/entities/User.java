@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name="users")
 
 
 @Data
@@ -26,7 +26,7 @@ public class User extends Versionable {
     @NotNull
     protected String name;
 
-    @Email
+
     @NotNull
     protected String email;
 

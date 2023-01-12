@@ -16,7 +16,7 @@ public class TokenIssuer {
 
     public static final long EXPIRY_MINS = 60L;
 
-    public String issue(String username) {
+    public String issue(String nif) {
         var expiryPeriod = LocalDateTime.now().plusMinutes(EXPIRY_MINS);
 
         var expirationDateTime = Date.from(
@@ -26,7 +26,8 @@ public class TokenIssuer {
         Key key = new SecretKeySpec(SECRET_KEY, ALGORITHM);
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(nif)
+
                 .signWith(SignatureAlgorithm.HS256, key)
                 .setIssuedAt(new Date())
                 .setExpiration(expirationDateTime)

@@ -2,8 +2,10 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 
 
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 
@@ -17,8 +19,8 @@ import java.util.List;
 
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
-//@RolesAllowed({"Expert", "Administrator"})
+@Authenticated
+@RolesAllowed({"User"})
 
 public class ClientService {
 
@@ -27,15 +29,22 @@ public class ClientService {
 
     @GET
     @Path("{nif}")
-    public Response getClientDetails(@PathParam("nif") Long nif) {
+    public Response getUserDetails(@PathParam("nif") Long nif) {
 
         List<MockAPIBean> list = mockAPIBean.getOnMockAPI("?nif="+nif);
-        System.out.println("\n\n\n\n" + list.get(0).getCovers().get(1) + "\n\n\n\n" );
+
+        try{
+            String Json = mockAPIBean.MockAPItoJSON(list);
+            System.out.println(Json);
+
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         return Response.status(Response.Status.OK)
                 .entity(list.get(0).toString())
                 .build();
     }
-
 
 }
