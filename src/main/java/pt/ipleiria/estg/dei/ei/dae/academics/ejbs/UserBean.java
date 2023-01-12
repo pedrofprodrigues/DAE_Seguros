@@ -35,11 +35,5 @@ public class UserBean {
         return user;
     }
 
-    public boolean canLogin(String passwordAPI, String passwordReceived) {
 
-         System.out.println("PASSWORDS \n\n\n" + passwordAPI + "\n\n\n" + passwordReceived + "\n\n");
-        System.out.println(hasher.hash(passwordReceived)+"\n\n");
-
-        return passwordAPI.equals(hasher.hash(passwordReceived));
-    }
 }

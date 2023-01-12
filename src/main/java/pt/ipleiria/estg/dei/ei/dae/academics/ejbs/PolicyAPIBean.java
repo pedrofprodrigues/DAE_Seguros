@@ -1,19 +1,18 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
+
 
 @Data
 @AllArgsConstructor
@@ -22,29 +21,30 @@ import java.util.Scanner;
 
 
 @JsonIgnoreProperties({"ID"})
-public class MockAPIBean {
+
+public class PolicyAPIBean {
+
 
 
     private String company_name;
-    private String password;
+
     private String nif;
     private Long ID;
 
     private Long policy_number;
-    private String name;
-    private String email;
+
     private String insured_object;
     private List<String> covers;
 
 
 
 
-    public List<MockAPIBean> getOnMockAPI(String way) {
+    public List<PolicyAPIBean> getPolicyMockAPI(String way) {
 
-        List<MockAPIBean> mockAPIBean;
+        List<PolicyAPIBean> policyAPIBeans;
 
         try{
-            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/seguroAPI"+way);
+            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/policies"+way);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -61,33 +61,16 @@ public class MockAPIBean {
                 scanner.close();
 
                 ObjectMapper mapper = new ObjectMapper();
-                mockAPIBean = mapper.readValue(informationString.toString(), new TypeReference<List<MockAPIBean>>(){});
+                policyAPIBeans = mapper.readValue(informationString.toString(), new TypeReference<List<PolicyAPIBean>>(){});
 
             }
 
-            return mockAPIBean;
+            return policyAPIBeans;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;}
-
-
-    public String MockAPItoJSON(MockAPIBean mockAPIBean)  {
-
-        ObjectMapper mapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = mapper.writeValueAsString(mockAPIBean);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        return json;
-    }
-
-
-
 
 
 

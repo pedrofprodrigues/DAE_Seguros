@@ -12,7 +12,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserBean;
+
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
+
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -23,7 +25,7 @@ import java.security.Principal;
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
     @EJB
-    private UserBean userBean;
+    private UserAPIBean userAPIBean;
 
     @Context
     private UriInfo uriInfo;
@@ -36,19 +38,21 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             throw new NotAuthorizedException("Authorization header must be provided");
         }
 
-        // Get token from the HTTP Authorization header
         String token = header.substring("Bearer".length()).trim();
-        var user = userBean.findUserSafe(getUsername(token));
+
+        UserAPIBean validatedUser = userAPIBean.getUserMockAPI("?nif="+getUsername(token));
+
+
 
         requestContext.setSecurityContext(new SecurityContext() {
             @Override
             public Principal getUserPrincipal() {
-                return user::getUsername;
+                return validatedUser::getNif;
             }
 
             @Override
             public boolean isUserInRole(String s) {
-                return org.hibernate.Hibernate.getClass(user).getSimpleName().equals(s);
+                return validatedUser.getRole().equals(s);
             }
 
             @Override
@@ -68,7 +72,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         try {
             return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
         } catch (Exception e) {
-            throw new NotAuthorizedException("Invalid JWT"); // don't trust the JWT!
+            throw new NotAuthorizedException("Invalid JWT");
         }
     }
 }

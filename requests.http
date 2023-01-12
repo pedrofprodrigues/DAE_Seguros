@@ -10,7 +10,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nif": "997909748",
+  "nif": "640446626",
   "password": "password"
 }
 

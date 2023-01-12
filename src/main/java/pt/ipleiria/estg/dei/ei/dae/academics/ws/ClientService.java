@@ -20,31 +20,22 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"User"})
+@RolesAllowed({"MockAPIBean"})
 
 public class ClientService {
 
     @EJB
-    private MockAPIBean mockAPIBean;
+    private UserAPIBean userAPIBean;
 
     @GET
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
 
-        List<MockAPIBean> list = mockAPIBean.getOnMockAPI("?nif="+nif);
+        UserAPIBean userMockAPI = userAPIBean.getUserMockAPI("?nif="+nif);
 
-        try{
-            for (MockAPIBean apiBean : list) {
-                System.out.println(apiBean);
-            }
-
-
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
 
         return Response.status(Response.Status.OK)
-                .entity(list.get(0).toString())
+                .entity(userMockAPI.toString())
                 .build();
     }
 

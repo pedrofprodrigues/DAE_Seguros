@@ -5,39 +5,33 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MockAPIDTO {
+public class PolicyAPIDTO {
 
     private String company_name;
     private String nif;
-
     private Long policy_number;
-    private String name;
-    private String email;
     private String insured_object;
     private List<String> covers;
 
 
-    public static MockAPIDTO from(MockAPIDTO mockAPIDTO) {
-        return new MockAPIDTO(
+    public static PolicyAPIDTO from(PolicyAPIDTO mockAPIDTO) {
+        return new PolicyAPIDTO(
                 mockAPIDTO.getCompany_name(),
                 mockAPIDTO.getNif(),
                 mockAPIDTO.getPolicy_number(),
-                mockAPIDTO.getName(),
-                mockAPIDTO.getEmail(),
                 mockAPIDTO.getInsured_object(),
                 mockAPIDTO.getCovers()
         );
     }
 
-    public static List<MockAPIDTO> from(List<MockAPIDTO> mockAPIDTOList) {
-        return mockAPIDTOList.stream().map(MockAPIDTO::from).collect(Collectors.toList());
+    public static List<PolicyAPIDTO> from(List<PolicyAPIDTO> mockAPIDTOList) {
+        return mockAPIDTOList.stream().map(PolicyAPIDTO::from).collect(Collectors.toList());
     }
 
 
