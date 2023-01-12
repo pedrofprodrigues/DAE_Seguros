@@ -40,11 +40,10 @@ public class AuthService {
 
         List<MockAPIBean> list = mockAPIBean.getOnMockAPI("?nif=" + auth.getNif());
 
-        System.out.println(list.get(0).getNif());
 
 
         if (userBean.canLogin(list.get(0).getPassword(), auth.getPassword())) {
-            String token = issuer.issue(auth.getNif());
+            String token = issuer.issue(list.get(0));
             return Response.ok(token).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();

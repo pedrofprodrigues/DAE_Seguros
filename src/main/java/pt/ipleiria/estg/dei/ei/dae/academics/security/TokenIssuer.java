@@ -1,8 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.security;
 
 import io.jsonwebtoken.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.MockAPIBean;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.ejb.EJB;
 
 import java.security.Key;
 import java.time.LocalDateTime;
@@ -16,7 +18,7 @@ public class TokenIssuer {
 
     public static final long EXPIRY_MINS = 60L;
 
-    public String issue(String nif) {
+    public String issue(MockAPIBean mockAPIBean) {
         var expiryPeriod = LocalDateTime.now().plusMinutes(EXPIRY_MINS);
 
         var expirationDateTime = Date.from(
@@ -26,8 +28,7 @@ public class TokenIssuer {
         Key key = new SecretKeySpec(SECRET_KEY, ALGORITHM);
 
         return Jwts.builder()
-                .setSubject(nif)
-
+                .setSubject(mockAPIBean.MockAPItoJSON(mockAPIBean))
                 .signWith(SignatureAlgorithm.HS256, key)
                 .setIssuedAt(new Date())
                 .setExpiration(expirationDateTime)

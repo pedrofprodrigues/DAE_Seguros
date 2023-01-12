@@ -34,8 +34,9 @@ public class ClientService {
         List<MockAPIBean> list = mockAPIBean.getOnMockAPI("?nif="+nif);
 
         try{
-            String Json = mockAPIBean.MockAPItoJSON(list);
-            System.out.println(Json);
+            for (MockAPIBean apiBean : list) {
+                System.out.println(apiBean);
+            }
 
 
         }catch (Exception e) {

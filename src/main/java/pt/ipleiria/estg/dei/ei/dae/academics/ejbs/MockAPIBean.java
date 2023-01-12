@@ -73,10 +73,15 @@ public class MockAPIBean {
         return null;}
 
 
-    public String MockAPItoJSON(List<MockAPIBean> mockAPIBean) throws JsonProcessingException {
+    public String MockAPItoJSON(MockAPIBean mockAPIBean)  {
 
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(mockAPIBean);
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(mockAPIBean);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         return json;
     }
