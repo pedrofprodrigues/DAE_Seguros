@@ -13,7 +13,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "getAllOccurrences",
-                query = "SELECT s FROM Occurrence s ORDER BY s.repairService"
+                query = "SELECT s FROM Occurrence s ORDER BY s.policyNumber"
         )
 })
 
@@ -24,6 +24,9 @@ public class Occurrence extends Versionable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull
+    private Long policyNumber;
 
     @NotNull
     private String description;
@@ -39,22 +42,29 @@ public class Occurrence extends Versionable {
     @OneToMany(mappedBy = "occurrence")
     private List<Document> documents;
 
+    @NotNull
+    private String expertNif;
+
+
+
+
+
 
     public Occurrence() {
 
         this.documents = new ArrayList<>();
     }
 
-    public Occurrence(Long code, String description, RepairService repairService, OccurrenceState occurrenceState) {
+    public Occurrence(  Long policyNumber, String description, String expertNif, RepairService repairService, OccurrenceState occurrenceState) {
         this();
+        this.expertNif = expertNif;
         this.description = description;
         this.occurrenceState = occurrenceState;
         this.repairService = repairService;
+        this.policyNumber = policyNumber;
         this.documents = new ArrayList<>();
 
     }
-
-
 
     public void addDocument(Document document) {
         if (! this.documents.contains(document)) {

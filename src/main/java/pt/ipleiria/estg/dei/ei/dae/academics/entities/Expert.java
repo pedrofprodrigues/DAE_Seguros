@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -17,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class User extends Versionable {
+public class Expert extends Versionable {
 
     @Id
     protected String username;
@@ -26,8 +25,9 @@ public class User extends Versionable {
     @NotNull
     protected String name;
 
-
     @NotNull
     protected String email;
+
+
 
 }

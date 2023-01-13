@@ -20,7 +20,7 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"MockAPIBean"})
+@RolesAllowed({"All"})
 
 public class ClientService {
 

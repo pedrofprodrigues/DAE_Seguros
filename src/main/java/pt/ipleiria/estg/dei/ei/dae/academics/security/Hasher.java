@@ -1,6 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.security;
 
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.User;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Expert;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -22,7 +22,7 @@ public class Hasher {
             char[] encoded = new BigInteger(1, mdEnc.digest()).toString(16).toCharArray();
             return new String(encoded);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(User.class.getName()).severe(ex.getMessage());
+            Logger.getLogger(Expert.class.getName()).severe(ex.getMessage());
 
             return "";
         }

@@ -21,11 +21,11 @@ public class UserAPIDTO {
 
 
 
-    public static UserAPIDTO from(UserAPIBean userAPIDTO) {
+    public static UserAPIDTO from(UserAPIBean userAPIbean) {
         return new UserAPIDTO(
-                userAPIDTO.getNif(),
-                userAPIDTO.getName(),
-                userAPIDTO.getEmail()
+                userAPIbean.getNif(),
+                userAPIbean.getName(),
+                userAPIbean.getEmail()
         );
     }
 

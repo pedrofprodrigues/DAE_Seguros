@@ -36,7 +36,7 @@ public class RepairService extends Versionable {
     private InsuredObject insuredObject;
 
     @NotNull
-    String client;
+    private String client;
 
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "repairService")

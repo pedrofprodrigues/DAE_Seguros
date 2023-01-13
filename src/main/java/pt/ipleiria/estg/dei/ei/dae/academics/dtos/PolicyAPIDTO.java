@@ -4,6 +4,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,18 +21,18 @@ public class PolicyAPIDTO {
     private List<String> covers;
 
 
-    public static PolicyAPIDTO from(PolicyAPIDTO mockAPIDTO) {
+    public static PolicyAPIDTO from(PolicyAPIBean policyAPIBean) {
         return new PolicyAPIDTO(
-                mockAPIDTO.getCompany_name(),
-                mockAPIDTO.getNif(),
-                mockAPIDTO.getPolicy_number(),
-                mockAPIDTO.getInsured_object(),
-                mockAPIDTO.getCovers()
+                policyAPIBean.getCompany_name(),
+                policyAPIBean.getNif(),
+                policyAPIBean.getPolicy_number(),
+                policyAPIBean.getInsured_object(),
+                policyAPIBean.getCovers()
         );
     }
 
-    public static List<PolicyAPIDTO> from(List<PolicyAPIDTO> mockAPIDTOList) {
-        return mockAPIDTOList.stream().map(PolicyAPIDTO::from).collect(Collectors.toList());
+    public static List<PolicyAPIDTO> from(List<PolicyAPIBean> policyAPIBeans) {
+        return policyAPIBeans.stream().map(PolicyAPIDTO::from).collect(Collectors.toList());
     }
 
 

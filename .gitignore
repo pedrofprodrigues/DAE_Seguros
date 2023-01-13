@@ -253,7 +253,7 @@ nbdist/
 *.tmPreferences.cache
 *.stTheme.cache
 
-# Workspace files are user-specific
+# Workspace files are expert-specific
 *.sublime-workspace
 
 # Project files should be checked into the repository, unless a significant
@@ -272,7 +272,7 @@ Package Control.system-ca-bundle
 Package Control.cache/
 Package Control.ca-certs/
 Package Control.merged-ca-bundle
-Package Control.user-ca-bundle
+Package Control.expert-ca-bundle
 oscrypto-ca-bundle.crt
 bh_unicode_properties.cache
 

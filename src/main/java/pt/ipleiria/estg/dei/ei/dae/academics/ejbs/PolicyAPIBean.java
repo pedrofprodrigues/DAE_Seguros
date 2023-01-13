@@ -39,9 +39,9 @@ public class PolicyAPIBean {
 
 
 
-    public List<PolicyAPIBean> getPolicyMockAPI(String way) {
+    public PolicyAPIBean getPolicyMockAPI(String way) {
 
-        List<PolicyAPIBean> policyAPIBeans;
+        PolicyAPIBean[] policyAPIBeans;
 
         try{
             URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/policies"+way);
@@ -61,11 +61,11 @@ public class PolicyAPIBean {
                 scanner.close();
 
                 ObjectMapper mapper = new ObjectMapper();
-                policyAPIBeans = mapper.readValue(informationString.toString(), new TypeReference<List<PolicyAPIBean>>(){});
+                policyAPIBeans = mapper.readValue(informationString.toString(), PolicyAPIBean[].class);
 
             }
 
-            return policyAPIBeans;
+            return policyAPIBeans[0];
 
         } catch (Exception e) {
             e.printStackTrace();

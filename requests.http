@@ -1,6 +1,6 @@
 
 ### get policies from specific client
-GET http://localhost:8080/academics/api/clients/997909748
+GET http://localhost:8080/academics/api/clients/1
 Accept: application/json
 
 
@@ -10,7 +10,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nif": "640446626",
+  "nif": "1",
   "password": "password"
 }
 
