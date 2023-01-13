@@ -43,6 +43,8 @@ public class ConfigBean {
      expertBean.create("a","password","a");
      repairServiceBean.create("as","as",house);
      occurrenceBean.create(1L,"joao","2",1L,OccurrenceState.opened);
+     occurrenceBean.create(1L,"joa3o","2",1L,OccurrenceState.delivered);
+     occurrenceBean.create(1L,"joa2o","2",1L,OccurrenceState.accepted);
 
     }
 

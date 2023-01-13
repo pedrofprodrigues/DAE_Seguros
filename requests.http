@@ -1,7 +1,12 @@
 
 ### get policies from specific client
-GET http://localhost:8080/academics/api/clients/1
+GET http://localhost:8080/academics/api/clients/1/policies
 Accept: application/json
+
+### get occurrences from specific policy from specific client
+GET http://localhost:8080/academics/api/clients/1/1/occurrences
+Accept: application/json
+
 
 
 ### REQUEST JWT TOKEN

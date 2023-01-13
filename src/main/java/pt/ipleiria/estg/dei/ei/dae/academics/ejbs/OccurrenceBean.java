@@ -39,6 +39,8 @@ public class OccurrenceBean {
         return occurrence;
     }
 
+
+
     public void create( Long policyCode, String description, String expertCode,  Long repairServiceCode, OccurrenceState occurrenceState) {
 
         PolicyAPIBean occurrencePolicy = policyAPIBean.getPolicyMockAPI("?policy_number="+policyCode);

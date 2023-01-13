@@ -10,12 +10,20 @@ import java.util.List;
 
 @Entity
 
+
+@Table(
+        name = "occurrences")
+
 @NamedQueries({
         @NamedQuery(
                 name = "getAllOccurrences",
                 query = "SELECT s FROM Occurrence s ORDER BY s.policyNumber"
         )
-})
+        ,
+        @NamedQuery(
+                name = "getAllPolicyOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.policyNumber = : policy"
+        )})
 
 
 @Data
@@ -26,6 +34,7 @@ public class Occurrence extends Versionable {
     private Long id;
 
     @NotNull
+
     private Long policyNumber;
 
     @NotNull

@@ -2,48 +2,54 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Hasher;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
+import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.PersistenceContext;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
+
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Stateless
-
-
-
-
 @JsonIgnoreProperties({"ID"})
 public class UserAPIBean {
 
     @Inject
     private Hasher hasher;
-
     private String password;
     private String nif;
     private Long ID;
-
     private String name;
     private String email;
-
     private String role;
+
+    @EJB
+    PolicyAPIBean policyAPIBean;
+
+    @PersistenceContext
+    private EntityManager em;
 
 
 
     public UserAPIBean getUserMockAPI(String way) {
-
-
 
         UserAPIBean[] list;
 
@@ -68,16 +74,7 @@ public class UserAPIBean {
                 list = mapper.readValue(informationString.toString(), UserAPIBean[].class);
 
 
-                System.out.println("\n\n\n "+list+"\n\n\n");
-
-
-
-
                 return list[0];
-
-
-
-
 
             }
 
@@ -104,12 +101,21 @@ public class UserAPIBean {
 
 
     public boolean canLogin(String passwordAPI, String passwordReceived) {
-
-        System.out.println("PASSWORDS \n\n\n" + passwordAPI + "\n\n\n" + passwordReceived + "\n\n");
-        System.out.println(hasher.hash(passwordReceived)+"\n\n");
-
         return passwordAPI.equals(hasher.hash(passwordReceived));
     }
+
+
+    public PolicyAPIBean[] clientPolicies(Long nif) {
+        return policyAPIBean.getAllPoliciesMockAPI("?nif="+nif);
+    }
+
+    public List<Occurrence> clientPolicyOccurrences(Long policy) {
+
+        return em.createNamedQuery("getAllPolicyOccurrences", Occurrence.class)
+                .setParameter("policy", policy)
+                .getResultList();
+    }
+
 
 
 
