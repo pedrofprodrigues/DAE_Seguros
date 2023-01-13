@@ -20,8 +20,7 @@ public class ClientService {
 
     @EJB
     private UserAPIBean userAPIBean;
-     @EJB
-    private OccurrenceBean occurrenceBean;
+
 
     @GET
     //  @Authenticated
@@ -51,6 +50,9 @@ public class ClientService {
     public Response clientPolicyOccurrences(@PathParam("nif") Long nif,@PathParam("policy") Long policy) {
         return Response.ok(OccurrenceDTO.from(userAPIBean.clientPolicyOccurrences(policy))).build();
     }
+
+
+
 
 
 

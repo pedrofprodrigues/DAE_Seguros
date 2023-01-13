@@ -22,7 +22,7 @@ public class RepairServiceBean {
     }
 
     public List<RepairService> all(int offset, int limit) {
-        return em.createNamedQuery("getAllPolicies", RepairService.class)
+        return em.createNamedQuery("getAllrepairServices", RepairService.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();

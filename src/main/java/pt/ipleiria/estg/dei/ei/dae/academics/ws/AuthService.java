@@ -45,7 +45,6 @@ public class AuthService {
     public Response getAuthenticatedUser() {
         String nif = securityContext.getUserPrincipal().getName();
         UserAPIBean authedUser = userAPIBean.getUserMockAPI("?nif="+nif);
-
         return Response.ok(UserAPIDTO.from(authedUser)).build();
     }
 }

@@ -37,13 +37,13 @@ public class OccurrenceBean {
 
 
 
-    public void create( Long policyCode, String description, String expertCode,  Long repairServiceCode, OccurrenceState occurrenceState) {
+    public void create( Long policyCode, String description, String expertCode,  Long repairServiceCode) {
 
         PolicyAPIBean occurrencePolicy = policyAPIBean.getPolicyMockAPI("?policy_number="+policyCode);
         RepairService occurrenceRepairService = repairServiceBean.findRepairServiceSafe(repairServiceCode);
         UserAPIBean expertNif = userAPIBean.getUserMockAPI("?nif="+expertCode);
 
-        Occurrence occurrence = new Occurrence(occurrencePolicy.getPolicy_number(),description,expertNif.getNif(), occurrenceRepairService , occurrenceState);
+        Occurrence occurrence = new Occurrence(occurrencePolicy.getPolicy_number(),description,expertNif.getNif(), occurrenceRepairService , OccurrenceState.opened);
 
         em.persist(occurrence);
     }
