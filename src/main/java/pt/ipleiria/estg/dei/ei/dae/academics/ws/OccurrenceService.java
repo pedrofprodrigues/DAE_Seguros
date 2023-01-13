@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairServiceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
 import javax.annotation.security.RolesAllowed;
@@ -38,6 +39,14 @@ public class OccurrenceService {
         return Response.ok(OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID))).build();
 
     }
+    @PUT
+    @Path("{occurrenceID}")
+    public Response updateOccurrenceStatus(@PathParam("occurrenceID") Long occurrenceID, String occurrenceState) {
+        occurrenceBean.updateOccurrence(occurrenceID, occurrenceState);
+        return Response.ok(OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID))).build();
+    }
+
+
 
 
 }

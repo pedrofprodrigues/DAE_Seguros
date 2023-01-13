@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
+import com.fasterxml.jackson.core.JsonParser;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
@@ -7,9 +8,13 @@ import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
 import java.util.List;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Stateless
 public class OccurrenceBean {
@@ -57,5 +62,23 @@ public class OccurrenceBean {
 
     public Long count() {
         return em.createQuery("SELECT COUNT(*) FROM " + Occurrence.class.getSimpleName(), Long.class).getSingleResult();
+    }
+
+    public void updateOccurrence(Long occurrenceID, String occurrenceState) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = null;
+        try {
+            json = mapper.readTree(occurrenceState);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String status = json.get("occurrenceState").asText();
+
+
+        Occurrence occurrence = findOccurrenceSafe(occurrenceID);
+        occurrence.setOccurrenceState(OccurrenceState.valueOf(status));
+        em.merge(occurrence);
+
     }
 }

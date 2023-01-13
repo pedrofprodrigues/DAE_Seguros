@@ -26,6 +26,14 @@ Accept: application/json
 
 
 
+### get Occurrence details
+PUT http://localhost:8080/academics/api/occurrence/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "occurrenceState": "cancelled"
+}
 
 
 ###
