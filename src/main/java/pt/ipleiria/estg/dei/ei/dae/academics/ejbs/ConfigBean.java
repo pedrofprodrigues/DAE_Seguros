@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 
 
@@ -9,25 +10,14 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.util.logging.Logger;
 
-import static pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject.house;
-
 @Startup
 @Singleton
 public class ConfigBean {
 
-
     @EJB
     private ExpertBean expertBean;
-
-
   @EJB
     private OccurrenceBean occurrenceBean;
-
-
-  @EJB
-    private PolicyAPIBean policyAPIBean;
-
-
   @EJB
     private RepairServiceBean repairServiceBean;
 
@@ -37,14 +27,16 @@ public class ConfigBean {
 
     @PostConstruct
     public void populateDB()  {
- ;
-
 
      expertBean.create("a","password","a");
-     repairServiceBean.create("as","as",house);
+     expertBean.create("b","password1","b");
+     repairServiceBean.create("as","as", InsuredObject.house);
      occurrenceBean.create(1L,"joao","2",1L,OccurrenceState.opened);
      occurrenceBean.create(1L,"joa3o","2",1L,OccurrenceState.delivered);
      occurrenceBean.create(1L,"joa2o","2",1L,OccurrenceState.accepted);
+     occurrenceBean.create(2L,"joa3o","3",1L,OccurrenceState.accepted);
+     occurrenceBean.create(2L,"joa4o","3",1L,OccurrenceState.accepted);
+     occurrenceBean.create(2L,"joa25o","3",1L,OccurrenceState.accepted);
 
     }
 

@@ -32,8 +32,9 @@ public class RepairService extends Versionable {
     private String insuranceCompany;
 
     @NotNull
+    @ElementCollection
     @Enumerated(EnumType.ORDINAL)
-    private InsuredObject insuredObject;
+    private List<InsuredObject> insuredObjects;
 
     @NotNull
     private String client;
@@ -48,10 +49,11 @@ public class RepairService extends Versionable {
         this();
         this.insuranceCompany = insuranceCompany;
         this.client = client;
-        this.insuredObject = insuredObject;
+
     }
     public RepairService() {
         this.occurrences = new ArrayList<>();
+        this.insuredObjects = new ArrayList<>();
 
     }
 

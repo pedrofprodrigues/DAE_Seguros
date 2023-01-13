@@ -26,7 +26,6 @@ import java.security.Principal;
 public class AuthenticationFilter implements ContainerRequestFilter {
     @EJB
     private UserAPIBean userAPIBean;
-
     @Context
     private UriInfo uriInfo;
 

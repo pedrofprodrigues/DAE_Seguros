@@ -22,7 +22,6 @@ import javax.ws.rs.core.SecurityContext;
 public class AuthService {
     @Inject
     private TokenIssuer issuer;
-
     @Context
     private SecurityContext securityContext;
     @EJB
@@ -31,9 +30,7 @@ public class AuthService {
     @POST
     @Path("/login")
     public Response authenticate(@Valid Auth auth) {
-
         UserAPIBean loggedUser = userAPIBean.getUserMockAPI("?nif=" + auth.getNif());
-
         if (userAPIBean.canLogin(loggedUser.getPassword(), auth.getPassword())) {
             String token = issuer.issue(loggedUser);
             return Response.ok(token).build();

@@ -19,7 +19,6 @@ public class RepairServiceDTO {
     private Long id;
 
     private String insuranceCompany;
-    private String insuredObject;
 
     private String client;
 
@@ -28,7 +27,6 @@ public class RepairServiceDTO {
         return new RepairServiceDTO(
                 repairService.getId(),
                 repairService.getInsuranceCompany(),
-                repairService.getInsuredObject().name(),
                 repairService.getClient()
         );
     }

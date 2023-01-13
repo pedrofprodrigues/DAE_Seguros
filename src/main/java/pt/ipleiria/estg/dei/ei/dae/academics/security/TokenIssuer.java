@@ -14,9 +14,7 @@ public class TokenIssuer {
 
     protected static final byte[] SECRET_KEY = "secret".getBytes();
     protected static final String ALGORITHM = "DES";
-
     public static final long EXPIRY_MINS = 60L;
-
     public String issue(UserAPIBean userAPIBean) {
         var expiryPeriod = LocalDateTime.now().plusMinutes(EXPIRY_MINS);
 

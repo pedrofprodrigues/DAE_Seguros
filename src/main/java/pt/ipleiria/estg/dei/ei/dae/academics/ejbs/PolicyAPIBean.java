@@ -38,7 +38,6 @@ public class PolicyAPIBean {
 
 
 
-
     public PolicyAPIBean getPolicyMockAPI(String way) {
 
         PolicyAPIBean[] policyAPIBeans;

@@ -16,8 +16,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import java.net.URL;
 import java.util.List;
@@ -73,13 +71,8 @@ public class UserAPIBean {
                 ObjectMapper mapper = new ObjectMapper();
                 list = mapper.readValue(informationString.toString(), UserAPIBean[].class);
 
-
                 return list[0];
-
             }
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,6 +98,13 @@ public class UserAPIBean {
     }
 
 
+
+
+
+
+
+
+
     public PolicyAPIBean[] clientPolicies(Long nif) {
         return policyAPIBean.getAllPoliciesMockAPI("?nif="+nif);
     }
@@ -113,6 +113,18 @@ public class UserAPIBean {
 
         return em.createNamedQuery("getAllPolicyOccurrences", Occurrence.class)
                 .setParameter("policy", policy)
+                .getResultList();
+    }
+    public List<Occurrence> expertOccurrences(Long expertNif) {
+
+        return em.createNamedQuery("getAllExpertOccurrences", Occurrence.class)
+                .setParameter("expertNif", expertNif.toString())
+                .getResultList();
+    }
+    public List<Occurrence> repairServiceOccurrences(Long repairID) {
+
+        return em.createNamedQuery("getAllRepairServiceOccurrences", Occurrence.class)
+                .setParameter("repairID", repairID)
                 .getResultList();
     }
 

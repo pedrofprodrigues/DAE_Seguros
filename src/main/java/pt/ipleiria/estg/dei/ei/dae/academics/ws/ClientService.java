@@ -23,16 +23,12 @@ public class ClientService {
      @EJB
     private OccurrenceBean occurrenceBean;
 
-
     @GET
     //  @Authenticated
     //  @RolesAllowed({"client"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
-
         UserAPIBean userMockAPI = userAPIBean.getUserMockAPI("?nif=" + nif);
-
-
         return Response.status(Response.Status.OK)
                 .entity(userMockAPI.toString())
                 .build();
@@ -44,7 +40,6 @@ public class ClientService {
    // @RolesAllowed({"client"})
     @Path("{nif}/policies")
     public Response clientPolicies(@PathParam("nif") Long nif) {
-
         return Response.ok(PolicyAPIDTO.from(List.of(userAPIBean.clientPolicies(nif)))).build();
     }
 

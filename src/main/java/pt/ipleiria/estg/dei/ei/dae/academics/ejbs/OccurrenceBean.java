@@ -24,10 +24,6 @@ public class OccurrenceBean {
      @EJB
     UserAPIBean userAPIBean;
 
-
-
-
-
     public Occurrence find(Long code) {
         return em.find(Occurrence.class, code);
     }

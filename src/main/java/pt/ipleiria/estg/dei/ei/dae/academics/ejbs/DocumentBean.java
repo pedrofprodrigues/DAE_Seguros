@@ -12,18 +12,16 @@ import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-
 @Stateless
 public class DocumentBean {
-
     @EJB
     private OccurrenceBean occurrenceBean;
 
     @PersistenceContext
     private EntityManager em;
 
-    public Document create(String filepath, String filename, Long code) {
-        Occurrence occurrence = occurrenceBean.findOccurrenceSafe(code);
+    public Document create(String filepath, String filename, Long occurrenceCode) {
+        Occurrence occurrence = occurrenceBean.findOccurrenceSafe(occurrenceCode);
         Document document = new Document(filepath, filename, occurrence);
 
         em.persist(document);

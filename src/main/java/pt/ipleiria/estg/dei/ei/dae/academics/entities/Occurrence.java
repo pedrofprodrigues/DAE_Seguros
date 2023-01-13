@@ -11,19 +11,22 @@ import java.util.List;
 @Entity
 
 
-@Table(
-        name = "occurrences")
+@Table(name = "occurrences")
 
 @NamedQueries({
         @NamedQuery(
-                name = "getAllOccurrences",
-                query = "SELECT s FROM Occurrence s ORDER BY s.policyNumber"
-        )
-        ,
-        @NamedQuery(
                 name = "getAllPolicyOccurrences",
                 query = "SELECT s FROM Occurrence s WHERE s.policyNumber = : policy"
-        )})
+        ),
+        @NamedQuery(
+                name = "getAllExpertOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.expertNif = : expertNif"
+        ),
+        @NamedQuery(
+                name = "getAllRepairServiceOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.repairService.id = : repairID"
+        )
+})
 
 
 @Data
@@ -53,9 +56,6 @@ public class Occurrence extends Versionable {
 
     @NotNull
     private String expertNif;
-
-
-
 
 
 

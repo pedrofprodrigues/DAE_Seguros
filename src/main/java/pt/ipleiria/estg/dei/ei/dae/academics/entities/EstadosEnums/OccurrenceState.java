@@ -9,4 +9,5 @@ public enum OccurrenceState {
     delivered,
     rejected,
     closed,
+    cancelled,
 }

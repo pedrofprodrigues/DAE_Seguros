@@ -1,11 +1,35 @@
 
 ### get policies from specific client
-GET http://localhost:8080/academics/api/clients/1/policies
+GET http://localhost:8080/academics/api/clients/111111111/policies
 Accept: application/json
 
 ### get occurrences from specific policy from specific client
-GET http://localhost:8080/academics/api/clients/1/1/occurrences
+GET http://localhost:8080/academics/api/clients/111111111/1/occurrences
 Accept: application/json
+
+
+### get information from specific expert
+GET http://localhost:8080/academics/api/expert/222222222
+Accept: application/json
+### get occurrences from specific policy from specific expert
+GET http://localhost:8080/academics/api/expert/222222222/occurrences
+Accept: application/json
+
+
+### get repairService occurrences
+GET http://localhost:8080/academics/api/repairService/1/occurrences
+Accept: application/json
+
+
+
+###
+POST http://localhost:8080/academics/api/documents/2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTExMTExMTEiLCJpYXQiOjE2NzM2Mzk0NjIsImV4cCI6MTY3MzY0MzA2Mn0.Mi3TAJgA6gakrtLsQ2Y4hIa05Q-hGTZcZrqSqj2xXm8
+Content-Type: multipart/form-data; boundary=boundary
+--boundary
+Content-Disposition: form-data; name="file"; filename="message.txt"
+< C:\Users\pedro\Downloads\message.txt
+--boundary
 
 
 
@@ -15,7 +39,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "nif": "1",
+  "nif": "111111111",
   "password": "password"
 }
 
