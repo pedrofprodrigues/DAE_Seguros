@@ -1,9 +1,14 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 
+import lombok.val;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
+import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrencePolicyDTO;
+import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairServiceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
 import javax.annotation.security.RolesAllowed;
@@ -18,6 +23,9 @@ import javax.ws.rs.core.Response;
 public class OccurrenceService {
     @EJB
     private OccurrenceBean occurrenceBean;
+
+    @EJB
+    private PolicyAPIBean policyAPIBean;
 
     @POST
     @Path("")
@@ -36,7 +44,12 @@ public class OccurrenceService {
     //@Authenticated
     //@RolesAllowed({"client,repair,expert"})
     public Response getOccurrenceDetails(@PathParam("occurrenceID") Long occurrenceID) {
-        return Response.ok(OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID))).build();
+        Occurrence occurrenceSafe = occurrenceBean.findOccurrenceSafe(occurrenceID);
+        PolicyAPIBean policyMockAPI = policyAPIBean.getPolicyMockAPI("?policy_number=" + occurrenceSafe.getPolicyNumber());
+
+
+        return Response.ok(OccurrencePolicyDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID),
+                policyAPIBean.getPolicyMockAPI("?policy_number=" + occurrenceSafe.getPolicyNumber()))).build();
 
     }
     @PUT

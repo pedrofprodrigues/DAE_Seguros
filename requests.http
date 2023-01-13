@@ -7,14 +7,13 @@ Accept: application/json
 GET http://localhost:8080/academics/api/clients/1/1/occurrences
 Accept: application/json
 
-
 ### get information from specific expert
 GET http://localhost:8080/academics/api/expert/2
 Accept: application/json
+
 ### get occurrences from specific policy from specific expert
 GET http://localhost:8080/academics/api/expert/2/occurrences
 Accept: application/json
-
 
 ### get repairService occurrences
 GET http://localhost:8080/academics/api/repairService/1/occurrences
@@ -24,9 +23,7 @@ Accept: application/json
 GET http://localhost:8080/academics/api/occurrence/2
 Accept: application/json
 
-
-
-### get Occurrence details
+### change Occurrence status
 PUT http://localhost:8080/academics/api/occurrence/2
 Content-Type: application/json
 Accept: application/json

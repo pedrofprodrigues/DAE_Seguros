@@ -21,6 +21,9 @@ public class UserAPIDTO {
     private String name;
     @NotNull
     private String email;
+    @NotNull
+    private String role;
+
 
 
 
@@ -28,7 +31,8 @@ public class UserAPIDTO {
         return new UserAPIDTO(
                 userAPIbean.getNif(),
                 userAPIbean.getName(),
-                userAPIbean.getEmail()
+                userAPIbean.getEmail(),
+                userAPIbean.getRole()
         );
     }
 

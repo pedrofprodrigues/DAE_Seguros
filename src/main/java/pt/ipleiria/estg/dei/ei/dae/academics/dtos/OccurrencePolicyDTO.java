@@ -6,21 +6,16 @@ import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class OccurrenceDTO implements Serializable {
+@AllArgsConstructor
+public class OccurrencePolicyDTO {
 
-    @NotNull
-    private Long id;
     @NotNull
     private Long policyNumber;
     @NotNull
@@ -32,22 +27,22 @@ public class OccurrenceDTO implements Serializable {
     @NotNull
     private String expertNif;
 
+    @NotNull
+    private Long policy_number;
 
-    public static OccurrenceDTO from(Occurrence occurrence) {
-        return new OccurrenceDTO(
-                occurrence.getId(),
+    private String insured_object;
+    private List<String> covers;
+
+    public static OccurrencePolicyDTO from(Occurrence occurrence, PolicyAPIBean policyAPIBean) {
+        return new OccurrencePolicyDTO(
                 occurrence.getPolicyNumber(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
                 occurrence.getRepairService().getInsuranceCompany(),
-                occurrence.getExpertNif()
+                occurrence.getExpertNif(),
+                policyAPIBean.getPolicy_number(),
+                policyAPIBean.getInsured_object(),
+                policyAPIBean.getCovers()
         );
-    }
-
-
-
-
-    public static List<OccurrenceDTO> from(List<Occurrence> occurrences) {
-        return occurrences.stream().map(OccurrenceDTO::from).collect(Collectors.toList());
     }
 }

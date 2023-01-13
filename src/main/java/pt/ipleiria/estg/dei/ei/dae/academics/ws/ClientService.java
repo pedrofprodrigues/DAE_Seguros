@@ -2,7 +2,6 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.*;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
