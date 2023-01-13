@@ -8,6 +8,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairServiceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 @Data
@@ -17,9 +18,9 @@ public class RepairServiceDTO {
 
 
     private Long id;
-
+    @NotNull
     private String insuranceCompany;
-
+    @NotNull
     private String client;
 
 

@@ -30,7 +30,7 @@ public class ConfigBean {
 
      expertBean.create("a","password","a");
      expertBean.create("b","password1","b");
-     repairServiceBean.create("as","as", InsuredObject.house);
+     repairServiceBean.create("as","as");
      occurrenceBean.create(1L,"joao","2",1L);
      occurrenceBean.create(1L,"joa3o","2",1L);
      occurrenceBean.create(1L,"joa2o","2",1L);

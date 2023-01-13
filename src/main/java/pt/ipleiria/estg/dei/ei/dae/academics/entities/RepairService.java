@@ -45,7 +45,7 @@ public class RepairService extends Versionable {
 
 
 
-    public RepairService(String insuranceCompany, String client, InsuredObject insuredObject) {
+    public RepairService(String insuranceCompany, String client) {
         this();
         this.insuranceCompany = insuranceCompany;
         this.client = client;

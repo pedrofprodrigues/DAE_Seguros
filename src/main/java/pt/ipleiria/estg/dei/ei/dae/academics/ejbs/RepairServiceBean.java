@@ -15,9 +15,9 @@ public class RepairServiceBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String companyName, String username, InsuredObject insuredObject) {
+    public void create(String companyName, String username) {
 
-        RepairService policy = new RepairService( companyName , username, insuredObject);
+        RepairService policy = new RepairService( companyName , username);
         em.persist(policy);
     }
 

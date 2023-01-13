@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,13 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class PolicyAPIDTO {
 
+    @NotNull
     private String company_name;
+    @NotNull
     private String nif;
+    @NotNull
     private Long policy_number;
+
     private String insured_object;
     private List<String> covers;
 

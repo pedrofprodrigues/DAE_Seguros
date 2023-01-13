@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAPIDTO {
-
+    @NotNull
     private String nif;
+    @NotNull
     private String name;
+    @NotNull
     private String email;
 
 

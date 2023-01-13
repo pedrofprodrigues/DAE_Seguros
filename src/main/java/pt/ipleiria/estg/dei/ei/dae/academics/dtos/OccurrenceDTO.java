@@ -7,6 +7,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceSta
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,14 +18,17 @@ import java.util.stream.Collectors;
 @Data
 public class OccurrenceDTO implements Serializable {
 
+    @NotNull
     private Long id;
+    @NotNull
     private Long policyNumber;
-
+    @NotNull
     private String description;
+
     private OccurrenceState occurrenceState;
-
+    @NotNull
     private String repairServiceName;
-
+    @NotNull
     private String expertNif;
 
 
