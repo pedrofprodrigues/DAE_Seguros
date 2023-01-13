@@ -30,13 +30,11 @@ public class DocumentService {
     private SecurityContext securityContext;
 
     @POST
-    @Path("/{occurrence}")
+    @Path("{occurrence}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response upload(MultipartFormDataInput input, @PathParam("occurrence") Long occurrenceCode) throws IOException {
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-
-        String nif = securityContext.getUserPrincipal().getName();
 
         List<InputPart> inputParts = uploadForm.get("file");
         var documents = new LinkedList<Document>();

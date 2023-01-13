@@ -9,7 +9,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @NoArgsConstructor
 @Data
@@ -26,7 +26,6 @@ public class OccurrencePolicyDTO {
     private String repairServiceName;
     @NotNull
     private String expertNif;
-
     @NotNull
     private Long policy_number;
 
@@ -35,7 +34,7 @@ public class OccurrencePolicyDTO {
 
     public static OccurrencePolicyDTO from(Occurrence occurrence, PolicyAPIBean policyAPIBean) {
         return new OccurrencePolicyDTO(
-                occurrence.getPolicyNumber(),
+                occurrence.getId(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
                 occurrence.getRepairService().getInsuranceCompany(),

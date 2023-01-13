@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -43,9 +42,6 @@ public class OccurrenceDTO implements Serializable {
                 occurrence.getExpertNif()
         );
     }
-
-
-
 
     public static List<OccurrenceDTO> from(List<Occurrence> occurrences) {
         return occurrences.stream().map(OccurrenceDTO::from).collect(Collectors.toList());

@@ -47,7 +47,6 @@ public class OccurrenceService {
         Occurrence occurrenceSafe = occurrenceBean.findOccurrenceSafe(occurrenceID);
         PolicyAPIBean policyMockAPI = policyAPIBean.getPolicyMockAPI("?policy_number=" + occurrenceSafe.getPolicyNumber());
 
-
         return Response.ok(OccurrencePolicyDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID),
                 policyAPIBean.getPolicyMockAPI("?policy_number=" + occurrenceSafe.getPolicyNumber()))).build();
 

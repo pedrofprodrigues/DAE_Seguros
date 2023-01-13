@@ -24,8 +24,6 @@ public class RepairServiceService {
     @EJB
     private RepairServiceBean repairServiceBean;
 
-
-
     @GET
     // @Authenticated
     // @RolesAllowed({"expert"})
@@ -33,7 +31,6 @@ public class RepairServiceService {
     public Response repairServiceOccurrences(@PathParam("repairID") Long repairID) {
         return Response.ok(OccurrenceDTO.from(userAPIBean.repairServiceOccurrences(repairID))).build();
     }
-
 
     @POST
     @Path("")
