@@ -57,13 +57,4 @@ public class RepairService {
         return Response.ok(OccurrenceDTO.from(userAPIBean.clientPolicyOccurrences(policy))).build();
     }
 
-    @POST
-    @Path("/{nif}/email/send")
-    public Response sendEmail(@PathParam("nif") Long nif, EmailDTO email) throws MessagingException {
-        UserAPIBean user = userAPIBean.getUserMockAPI("?nif=" + nif);
-        emailBean.send(user.getEmail(), email.getSubject(), email.getMessage());
-        return Response.noContent().build();
-    }
-
-
 }

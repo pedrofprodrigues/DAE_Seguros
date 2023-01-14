@@ -4,8 +4,10 @@ import pt.ipleiria.estg.dei.ei.dae.academics.dtos.EmailDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.EmailBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairCompanyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairCompany;
 
 import javax.ejb.EJB;
 import javax.mail.MessagingException;
@@ -25,6 +27,8 @@ public class ClientService {
     @EJB
     private UserAPIBean userAPIBean;
 
+    @EJB
+    private RepairCompanyBean repairCompanyBean;
     @EJB
     private EmailBean emailBean;
 
@@ -70,10 +74,11 @@ public class ClientService {
     }
 
     @POST
-    @Path("/{nif}/email/send")
-    public Response sendEmail(@PathParam("nif") Long nif, EmailDTO email) throws MessagingException {
-        UserAPIBean user = userAPIBean.getUserMockAPI("?nif=" + nif);
-        emailBean.send(user.getEmail(), email.getSubject(), email.getMessage());
+    @Path("/{companyID}/{occurrenceID}")
+    public Response sendEmail(@PathParam("companyID") Long companyID, @PathParam("occurrenceID") Long occurrenceID, EmailDTO email) throws MessagingException {
+
+        RepairCompany repairCompany = repairCompanyBean.findRepairCompanySafe(companyID);
+        emailBean.send(repairCompany.getEmail(),occurrenceID);
         return Response.noContent().build();
     }
 }
