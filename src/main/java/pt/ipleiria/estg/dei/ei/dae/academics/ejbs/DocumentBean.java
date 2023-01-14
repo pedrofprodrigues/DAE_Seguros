@@ -47,14 +47,13 @@ public class DocumentBean {
     }
 
 
-    public void importOccurrencesFromCSV(byte[] file){
+    public void importOccurrencesFromCSV(InputStream stream){
 
         BufferedReader reader = null;
 
-        InputStream is = new ByteArrayInputStream(file);
 
         try {
-            reader = new BufferedReader(new InputStreamReader(is));
+            reader = new BufferedReader(new InputStreamReader(stream));
 
             String line;
             while (true) {

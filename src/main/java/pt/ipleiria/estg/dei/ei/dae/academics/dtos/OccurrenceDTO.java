@@ -17,13 +17,14 @@ import java.util.stream.Collectors;
 public class OccurrenceDTO implements Serializable {
 
 
+    private Long id;
     @NotNull
     private Long policyNumber;
     @NotNull
     private String description;
 
     private OccurrenceState occurrenceState;
-    @NotNull
+
     private String repairCompanyName;
     @NotNull
     private String expertNif;
@@ -31,7 +32,7 @@ public class OccurrenceDTO implements Serializable {
 
     public static OccurrenceDTO from(Occurrence occurrence) {
         return new OccurrenceDTO(
-
+                occurrence.getId(),
                 occurrence.getPolicyNumber(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
