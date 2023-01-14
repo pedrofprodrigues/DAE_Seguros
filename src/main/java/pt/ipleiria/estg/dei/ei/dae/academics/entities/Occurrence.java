@@ -10,10 +10,21 @@ import java.util.List;
 
 @Entity
 
+
+@Table(name = "occurrences")
+
 @NamedQueries({
         @NamedQuery(
-                name = "getAllOccurrences",
-                query = "SELECT s FROM Occurrence s ORDER BY s.repairService"
+                name = "getAllPolicyOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.policyNumber = : policy"
+        ),
+        @NamedQuery(
+                name = "getAllExpertOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.expertNif = : expertNif"
+        ),
+        @NamedQuery(
+                name = "getAllRepairCompanyOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.repairCompany.id = : repairID"
         )
 })
 
@@ -26,6 +37,10 @@ public class Occurrence extends Versionable {
     private Long id;
 
     @NotNull
+
+    private Long policyNumber;
+
+    @NotNull
     private String description;
 
     @NotNull
@@ -34,26 +49,31 @@ public class Occurrence extends Versionable {
 
     @ManyToOne
     @JoinColumn(name = "repair_id")
-    private RepairService repairService;
+    private RepairCompany repairCompany;
 
     @OneToMany(mappedBy = "occurrence")
     private List<Document> documents;
 
+    @NotNull
+    private String expertNif;
+
+
 
     public Occurrence() {
+
         this.documents = new ArrayList<>();
     }
 
-    public Occurrence(Long code, String description, RepairService repairService, OccurrenceState occurrenceState) {
+    public Occurrence(Long policyNumber, String description, String expertNif, OccurrenceState occurrenceState) {
         this();
+        this.expertNif = expertNif;
         this.description = description;
         this.occurrenceState = occurrenceState;
-        this.repairService = repairService;
+        this.repairCompany = null;
+        this.policyNumber = policyNumber;
         this.documents = new ArrayList<>();
 
     }
-
-
 
     public void addDocument(Document document) {
         if (! this.documents.contains(document)) {
@@ -65,9 +85,4 @@ public class Occurrence extends Versionable {
         this.documents.remove(document);
     }
 
-    public void addRepairService(RepairService repairService) {
-        if (this.repairService != repairService) {
-            this.repairService = repairService;
-        }
-    }
 }

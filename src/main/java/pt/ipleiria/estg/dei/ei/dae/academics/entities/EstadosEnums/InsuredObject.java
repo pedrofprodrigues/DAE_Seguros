@@ -2,15 +2,10 @@ package pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums;
 
 public enum InsuredObject {
 
-    house("House"),
-    car("Car"),
-    appliance("Appliance"),
-    medical("Medical"),
-    extended_warranty("Extended Warranty");
+    house,
+    car,
+    appliance,
+    medical,
+    extended_warranty
 
-    private final String label;
-
-    InsuredObject(String label) {
-        this.label = label;
-    }
 }

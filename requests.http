@@ -1,6 +1,86 @@
 
 ### get policies from specific client
-GET http://localhost:8080/academics/api/clients/997909748
+GET http://localhost:8080/academics/api/clients/1/policies
 Accept: application/json
+
+### get occurrences from specific policy from specific client
+GET http://localhost:8080/academics/api/clients/1/1/occurrences
+Accept: application/json
+
+### get information from specific expert
+GET http://localhost:8080/academics/api/expert/2
+Accept: application/json
+
+### get information all repair
+GET http://localhost:8080/academics/api/repair
+Accept: application/json
+
+### get information all expert
+GET http://localhost:8080/academics/api/expert
+Accept: application/json
+
+### get occurrences from specific policy from specific expert
+GET http://localhost:8080/academics/api/expert/2/occurrences
+Accept: application/json
+
+### get repairCompany occurrences
+GET http://localhost:8080/academics/api/repairCompany/1/occurrences
+Accept: application/json
+
+### get Occurrence details
+GET http://localhost:8080/academics/api/occurrence/2
+Accept: application/json
+
+
+
+
+
+
+
+### change Occurrence status
+PUT http://localhost:8080/academics/api/occurrence/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "occurrenceState": "cancelled"
+}
+
+### change Company name
+PUT http://localhost:8080/academics/api/repairCompany/3
+Content-Type: application/json
+Accept: application/json
+
+{
+  "repairCompany": "lolada"
+}
+
+
+
+
+
+
+
+###
+POST http://localhost:8080/academics/api/documents/4 HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="message.txt"
+
+< C:\Users\pedro\Downloads\message.txt
+
+--boundary
+
+
+### REQUEST JWT TOKEN
+POST http://localhost:8080/academics/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nif": "1",
+  "password": "password"
+}
 
 
