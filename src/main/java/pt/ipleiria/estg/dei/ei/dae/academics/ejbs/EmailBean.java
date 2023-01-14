@@ -25,6 +25,7 @@ public class EmailBean {
 
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
 
+        msg.setSubject("NEW OCCURRENCE!");
 
         String message = "You just received an occurrence: Please check : ";
 
