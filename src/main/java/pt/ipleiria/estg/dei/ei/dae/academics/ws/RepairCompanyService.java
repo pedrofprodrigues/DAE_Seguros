@@ -40,8 +40,8 @@ public class RepairCompanyService {
     @Authenticated
     @RolesAllowed({"client"})
     public Response createRepairCompany(RepairCompanyDTO repairCompany) {
-        repairCompanyBean.create(repairCompany.getRepairCompany(), repairCompany.getEmail());
-        RepairCompanyDTO dto = RepairCompanyDTO.from(repairCompanyBean.findRepairCompanySafe(repairCompany.getId()));
+        Long newCompanyId = repairCompanyBean.create(repairCompany.getRepairCompany(), repairCompany.getEmail());
+        RepairCompanyDTO dto = RepairCompanyDTO.from(repairCompanyBean.findRepairCompanySafe(newCompanyId));
         return Response.status(Response.Status.CREATED).entity(dto).build();
     }
 

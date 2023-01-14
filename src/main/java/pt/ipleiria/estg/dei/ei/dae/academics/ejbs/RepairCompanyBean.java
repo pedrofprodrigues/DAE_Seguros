@@ -15,10 +15,12 @@ public class RepairCompanyBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String companyName, String email) {
+    public Long create(String companyName, String email) {
 
         RepairCompany repairCompany = new RepairCompany( companyName, email);
+
         em.persist(repairCompany);
+        return  repairCompany.getCompanyID();
     }
 
     public List<RepairCompany> all() {
