@@ -32,7 +32,7 @@ public class RepairCompany extends Versionable {
     private String repairCompany;
     @NotNull
     private String email;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<RepairMan> repairNIFs;
 
     @NotNull
@@ -60,13 +60,13 @@ public class RepairCompany extends Versionable {
     }
 
 
-    public void AddNif(RepairMan nif) {
+    public void AddRepair(RepairMan nif) {
         if (! this.repairNIFs.contains(nif)) {
             this.repairNIFs.add(nif);
         }
     }
 
-    public void removeNif(RepairMan nif) {
+    public void removeRepair(RepairMan nif) {
         this.repairNIFs.remove(nif);
     }
 

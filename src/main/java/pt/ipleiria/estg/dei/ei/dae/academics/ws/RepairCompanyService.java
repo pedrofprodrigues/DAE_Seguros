@@ -5,6 +5,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairCompanyDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairCompanyBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairManBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
@@ -26,6 +27,9 @@ public class RepairCompanyService {
 
     @EJB
     private OccurrenceBean occurrenceBean;
+
+    @EJB
+    RepairManBean repairManBean;
 
     @GET
     // @Authenticated
@@ -60,12 +64,27 @@ public class RepairCompanyService {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(company))).build();
     }
 
+    @GET
+    // @Authenticated
+    // @RolesAllowed({"expert"})
+    @Path("/repair/{nif}")
+    public Response getAllOccurrenceFromRepairCompany(@PathParam("nif") Long nif) {
+        return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(repairManBean.findRepairSafe(nif).getNif()))).build();
+    }
+
+
+
     @PUT
     @Path("{occurrenceID}")
     public Response updateRepairCompany(@PathParam("occurrenceID") Long occurrenceID, String companyName) {
         occurrenceBean.updateRepairCompany(occurrenceID, companyName);
         return Response.ok(OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID))).build();
     }
+
+
+
+
+
 
 
 }

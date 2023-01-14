@@ -18,13 +18,9 @@ public class RepairCompanyDTO {
     private Long id;
     @NotNull
     private String repairCompany;
-
     @NotNull
     private String email;
     private List<Long> repairNifs;
-
-
-
 
 
     public static RepairCompanyDTO from(RepairCompany repairCompany) {
@@ -38,11 +34,6 @@ public class RepairCompanyDTO {
     public static List<RepairCompanyDTO> from(List<RepairCompany> repairCompanies) {
         return repairCompanies.stream().map(RepairCompanyDTO::from).collect(Collectors.toList());
     }
-
-
-
-
-
 
 
 }

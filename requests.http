@@ -43,7 +43,7 @@ Accept: application/json
 
 
 ### get Occurrence from a company
-GET http://localhost:8080/academics/api/repairCompany/
+GET http://localhost:8080/academics/api/repairCompany/repair/2
 Accept: application/json
 
 

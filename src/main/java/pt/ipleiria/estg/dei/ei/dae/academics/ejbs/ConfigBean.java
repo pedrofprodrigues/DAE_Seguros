@@ -19,6 +19,11 @@ public class ConfigBean {
     private OccurrenceBean occurrenceBean;
     @EJB
     private RepairCompanyBean repairCompanyBean;
+    @EJB
+    private RepairManBean repairManBean;
+
+    @EJB
+    private UserAPIBean userAPIBean;
 
 
 
@@ -42,6 +47,14 @@ public class ConfigBean {
         occurrenceBean.create(2L,"joa4o","3");
         occurrenceBean.create(2L,"joa25o","3");
 
+        repairManBean.create(2L,1L );
+        repairManBean.create(3L,1L );
+        repairManBean.create(4L,2L );
+        repairManBean.create(5L,2L );
+        repairManBean.create(6L,3L );
+        repairManBean.create(7L,2L );
+
+
         occurrenceBean.findOccurrenceSafe(5L).setOccurrenceState(OccurrenceState.accepted);
 
         occurrenceBean.findOccurrenceSafe(5L).setRepairCompany(repairCompanyBean.find(2L));
@@ -50,6 +63,9 @@ public class ConfigBean {
         occurrenceBean.findOccurrenceSafe(8L).setRepairCompany(repairCompanyBean.find(1L));
         occurrenceBean.findOccurrenceSafe(4L).setRepairCompany(repairCompanyBean.find(3L));
 
+
+       repairCompanyBean.findRepairCompanySafe(1L).AddRepair(repairManBean.findRepairSafe(2L));
+        repairCompanyBean.findRepairCompanySafe(1L).AddRepair(repairManBean.findRepairSafe(3L));
 
 
     }

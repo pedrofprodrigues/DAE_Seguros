@@ -17,8 +17,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class RepairMan {
 
-
-
     @Id
     private Long nif;
     @ManyToOne
