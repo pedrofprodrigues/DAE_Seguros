@@ -32,7 +32,7 @@ public class OccurrencePolicyDTO {
 
     private String insured_object;
     private List<String> covers;
-    private List<Document> documents;
+    private List<Long> documents;
 
     public static OccurrencePolicyDTO from(Occurrence occurrence, PolicyAPIBean policyAPIBean) {
         return new OccurrencePolicyDTO(
@@ -44,7 +44,7 @@ public class OccurrencePolicyDTO {
                 policyAPIBean.getPolicy_number(),
                 policyAPIBean.getInsured_object(),
                 policyAPIBean.getCovers(),
-                occurrence.getDocuments()
+                occurrence.getDocumentsId()
         );
     }
 }

@@ -85,4 +85,14 @@ public class Occurrence extends Versionable {
         this.documents.remove(document);
     }
 
+
+    public ArrayList<Long> getDocumentsId(){
+        ArrayList<Long>list = new ArrayList<>();
+        for (Document document : documents) {
+            list.add(document.getId());
+        }
+        return list;
+
+    }
+
 }

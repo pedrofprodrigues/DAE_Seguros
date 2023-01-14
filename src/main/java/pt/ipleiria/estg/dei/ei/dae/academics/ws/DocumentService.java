@@ -79,8 +79,10 @@ public class DocumentService {
             // convert the uploaded file to inputstream
             InputStream inputStream = inputPart.getBody(InputStream.class, null);
 
+            byte[] bytes = IOUtils.toByteArray(inputStream);
 
-            documentBean.importOccurrencesFromCSV(inputStream);
+            documentBean.importOccurrencesFromCSV(bytes);
+
         }
 
         return Response.ok().build();

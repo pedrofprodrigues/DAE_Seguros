@@ -47,29 +47,25 @@ public class DocumentBean {
     }
 
 
-    public void importOccurrencesFromCSV(InputStream stream){
-
+    public void importOccurrencesFromCSV(byte[] bytes){
         BufferedReader reader = null;
-
-
         try {
-            reader = new BufferedReader(new InputStreamReader(stream));
-
+            InputStream is = new ByteArrayInputStream(bytes);
+            reader = new BufferedReader(new InputStreamReader(is));
             String line;
-            while (true) {
-
-                if (!((line = reader.readLine()) != null)) break;
+            while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
 
-                occurrenceBean.create(Long.getLong(values[0]), values[1], values[2]);
+
+                System.out.println("\n\n\n\n "+Long.parseLong(values[0])+"\n\n\n\n ");
+
+                occurrenceBean.create(Long.parseLong(values[0]), values[1], values[2]);
             }
             reader.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         System.out.println("CSV file imported successfully!");
-
     }
 
 }
