@@ -61,7 +61,7 @@ Accept: application/json
 
 
 
-###
+### upload ficheiro
 POST http://localhost:8080/academics/api/documents/4 HTTP/1.1
 Content-Type: multipart/form-data; boundary=boundary
 
@@ -71,6 +71,33 @@ Content-Disposition: form-data; name="file"; filename="message.txt"
 < C:\Users\pedro\Downloads\message.txt
 
 --boundary
+
+
+
+### upload CSV
+POST http://localhost:8080/academics/api/documents/importCSV HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="occurrences.csv"
+
+< C:\Users\pedro\Desktop\occurrences.csv
+
+--boundary
+
+
+### REQUEST create occurrence
+POST http://localhost:8080/academics/api/occurrence
+Content-Type: application/json
+Accept: application/json
+
+{
+  "policyNumber": "1",
+  "description": "coisas a corrigir",
+  "repairCompanyName": "worten",
+  "expertNif": "2"
+}
+
 
 
 ### REQUEST JWT TOKEN

@@ -1,5 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
+import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -42,6 +44,33 @@ public class DocumentBean {
 
     public List<Document> getOccurrenceDocuments(Long code){
         return em.createNamedQuery("getOccurrenceDocuments", Document.class).setParameter("code", code).getResultList();
+    }
+
+
+    public void importOccurrencesFromCSV(byte[] file){
+
+        BufferedReader reader = null;
+
+        InputStream is = new ByteArrayInputStream(file);
+
+        try {
+            reader = new BufferedReader(new InputStreamReader(is));
+
+            String line;
+            while (true) {
+
+                if (!((line = reader.readLine()) != null)) break;
+                String[] values = line.split(",");
+
+                occurrenceBean.create(Long.getLong(values[0]), values[1], values[2]);
+            }
+            reader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("CSV file imported successfully!");
+
     }
 
 }

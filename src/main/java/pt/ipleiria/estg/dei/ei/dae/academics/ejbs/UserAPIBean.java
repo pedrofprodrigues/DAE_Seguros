@@ -21,8 +21,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
 
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,7 +42,6 @@ public class UserAPIBean {
 
     @PersistenceContext
     private EntityManager em;
-
 
 
     public UserAPIBean[] getUserMockAPIList(String way) {
@@ -78,14 +75,10 @@ public class UserAPIBean {
         }
         return null;}
 
-
-
     public UserAPIBean getUserMockAPI(String way) {
         UserAPIBean[] list = getUserMockAPIList( way);
         return list[0];
     }
-
-
 
     public String MockAPItoJSON(UserAPIBean userAPIBean)  {
 
@@ -96,7 +89,6 @@ public class UserAPIBean {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
         return json;
     }
 
@@ -104,8 +96,6 @@ public class UserAPIBean {
     public boolean canLogin(String passwordAPI, String passwordReceived) {
         return passwordAPI.equals(hasher.hash(passwordReceived));
     }
-
-
 
     public PolicyAPIBean[] clientPolicies(Long nif) {
         return policyAPIBean.getAllPoliciesMockAPI("?nif="+nif);
@@ -123,14 +113,12 @@ public class UserAPIBean {
                 .setParameter("expertNif", expertNif.toString())
                 .getResultList();
     }
+
     public List<Occurrence> repairCompanyOccurrences(Long repairID) {
 
         return em.createNamedQuery("getAllRepairCompanyOccurrences", Occurrence.class)
                 .setParameter("repairID", repairID)
                 .getResultList();
     }
-
-
-
 
 }

@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class OccurrenceDTO implements Serializable {
 
 
-    private Long id;
     @NotNull
     private Long policyNumber;
     @NotNull
@@ -32,7 +31,7 @@ public class OccurrenceDTO implements Serializable {
 
     public static OccurrenceDTO from(Occurrence occurrence) {
         return new OccurrenceDTO(
-                occurrence.getId(),
+
                 occurrence.getPolicyNumber(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),

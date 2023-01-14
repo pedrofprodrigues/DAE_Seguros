@@ -9,6 +9,8 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -42,7 +44,7 @@ public class OccurrenceBean {
 
 
 
-    public void create( Long policyCode, String description, String expertCode) {
+    public Long create( Long policyCode, String description, String expertCode) {
 
         PolicyAPIBean occurrencePolicy = policyAPIBean.getPolicyMockAPI("?policy_number="+policyCode);
        // RepairCompany occurrenceRepairCompany = repairCompanyBean.findRepairCompanySafe(repairCompanyCode);
@@ -51,6 +53,7 @@ public class OccurrenceBean {
         Occurrence occurrence = new Occurrence(occurrencePolicy.getPolicy_number(),description,expertNif.getNif(), OccurrenceState.opened);
 
         em.persist(occurrence);
+        return occurrence.getId();
     }
 
     public List<Occurrence> all(int offset, int limit) {
@@ -82,35 +85,7 @@ public class OccurrenceBean {
 
     }
 
-    public void importOccurrencesFromCSV(){
 
-
-        String filePath = "path/to/your.csv";
-
-        String homedir = System.getProperty("user.home");
-
-        System.out.println(homedir);
-/*
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(filePath));
-
-            String line;
-            while (true) {
-
-                if (!((line = reader.readLine()) != null)) break;
-                String[] values = line.split(",");
-
-                occurrenceBean.create(Long.getLong(values[0]), values[1], values[2], Long.getLong(values[3]));
-            }
-            reader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-*/
-        System.out.println("CSV file imported successfully!");
-
-    }
 
     public void updateRepairCompany(Long occurrenceID, String companyName) {
 

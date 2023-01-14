@@ -26,8 +26,8 @@ public class OccurrenceService {
     //@Authenticated
     //@RolesAllowed({"client"})
     public Response createOccurrence(OccurrenceDTO occurrence) {
-        occurrenceBean.create(occurrence.getPolicyNumber(), occurrence.getDescription(), occurrence.getExpertNif());
-        OccurrenceDTO dto = OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrence.getId()));
+        Long newID = occurrenceBean.create(occurrence.getPolicyNumber(), occurrence.getDescription(), occurrence.getExpertNif());
+        OccurrenceDTO dto = OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(newID));
         return Response.status(Response.Status.CREATED).entity(dto).build();
     }
 
@@ -37,7 +37,6 @@ public class OccurrenceService {
     //@RolesAllowed({"client,repair,expert"})
     public Response getOccurrenceDetails(@PathParam("occurrenceID") Long occurrenceID) {
         Occurrence occurrenceSafe = occurrenceBean.findOccurrenceSafe(occurrenceID);
-        PolicyAPIBean policyMockAPI = policyAPIBean.getPolicyMockAPI("?policy_number=" + occurrenceSafe.getPolicyNumber());
 
         return Response.ok(OccurrencePolicyDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID),
                 policyAPIBean.getPolicyMockAPI("?policy_number=" + occurrenceSafe.getPolicyNumber()))).build();

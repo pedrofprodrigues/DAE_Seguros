@@ -6,7 +6,6 @@ import java.io.Serializable;
 public class Auth implements Serializable {
     @NotBlank
     private String nif;
-
     @NotBlank
     private String password;
 

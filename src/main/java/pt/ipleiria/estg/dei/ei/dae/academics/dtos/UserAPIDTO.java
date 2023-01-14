@@ -30,7 +30,6 @@ public class UserAPIDTO {
     }
 
 
-
     public static UserAPIDTO from (UserAPIBean userAPIbean) {
         return new UserAPIDTO(
                 userAPIbean.getNif(),

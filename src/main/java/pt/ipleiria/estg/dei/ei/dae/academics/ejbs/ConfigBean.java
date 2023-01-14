@@ -13,9 +13,9 @@ public class ConfigBean {
 
     @EJB
     private ExpertBean expertBean;
-  @EJB
+    @EJB
     private OccurrenceBean occurrenceBean;
-  @EJB
+    @EJB
     private RepairCompanyBean repairCompanyBean;
 
 
@@ -31,6 +31,7 @@ public class ConfigBean {
      repairCompanyBean.create("worten");
      repairCompanyBean.create("lolada");
      repairCompanyBean.create("fnac");
+
 
      occurrenceBean.create(1L,"joao","2");
      occurrenceBean.create(1L,"joa3o","2");

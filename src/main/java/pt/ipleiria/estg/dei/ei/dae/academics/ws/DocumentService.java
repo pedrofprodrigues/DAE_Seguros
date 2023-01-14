@@ -62,6 +62,33 @@ public class DocumentService {
         return Response.ok(DocumentDTO.from(documents)).build();
     }
 
+    @POST
+    @Path("importCSV")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response uploadCSV(MultipartFormDataInput input) throws IOException {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+
+        List<InputPart> inputParts = uploadForm.get("file");
+        Document documents = new Document();
+
+        for (InputPart inputPart : inputParts) {
+            MultivaluedMap<String, String> headers = inputPart.getHeaders();
+            String filename = getFilename(headers);
+
+            // convert the uploaded file to inputstream
+            InputStream inputStream = inputPart.getBody(InputStream.class, null);
+
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            documentBean.importOccurrencesFromCSV(bytes);
+        }
+
+        return Response.ok().build();
+    }
+
+
+
+
     private void mkdirIfNotExists(String path) {
         File file = new File(path);
 
