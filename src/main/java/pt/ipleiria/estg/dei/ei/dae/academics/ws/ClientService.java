@@ -1,8 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ws;
+
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.EmailDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.EmailBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 import javax.ejb.EJB;
@@ -43,23 +45,25 @@ public class ClientService {
                 .entity(userMockAPI.toString())
                 .build();
     }
+
     @GET
-   // @Authenticated
-   // @RolesAllowed({"client"})
+    // @Authenticated
+    // @RolesAllowed({"client"})
     @Path("{nif}/policies")
     public Response clientPolicies(@PathParam("nif") Long nif) {
         return Response.ok(PolicyAPIDTO.from(List.of(userAPIBean.clientPolicies(nif)))).build();
     }
+
     @GET
     // @Authenticated
     // @RolesAllowed({"client"})
     @Path("{nif}/{policy}/occurrences")
-    public Response clientPolicyOccurrences(@PathParam("nif") Long nif,@PathParam("policy") Long policy) {
-        if(List.of(userAPIBean.clientPolicies(nif)).isEmpty()){
+    public Response clientPolicyOccurrences(@PathParam("nif") Long nif, @PathParam("policy") Long policy) {
+        if (List.of(userAPIBean.clientPolicies(nif)).isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).entity("No User found").build();
         }
-        List <Occurrence> exists = userAPIBean.clientPolicyOccurrences(policy);
-        if(exists.isEmpty()){
+        List<Occurrence> exists = userAPIBean.clientPolicyOccurrences(policy);
+        if (exists.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).entity("No policy found").build();
         }
         return Response.ok(OccurrenceDTO.from(exists)).build();
@@ -68,7 +72,7 @@ public class ClientService {
     @POST
     @Path("/{nif}/email/send")
     public Response sendEmail(@PathParam("nif") Long nif, EmailDTO email) throws MessagingException {
-        UserAPIBean user = userAPIBean.getUserMockAPI("?nif="+nif);
+        UserAPIBean user = userAPIBean.getUserMockAPI("?nif=" + nif);
         emailBean.send(user.getEmail(), email.getSubject(), email.getMessage());
         return Response.noContent().build();
     }

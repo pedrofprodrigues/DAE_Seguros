@@ -20,10 +20,7 @@ public class SimpleUserAPIDTO {
     private String name;
 
 
-
-
-
-    public static SimpleUserAPIDTO from (UserAPIBean userAPIbean) {
+    public static SimpleUserAPIDTO from(UserAPIBean userAPIbean) {
         return new SimpleUserAPIDTO(
                 userAPIbean.getNif(),
                 userAPIbean.getName()

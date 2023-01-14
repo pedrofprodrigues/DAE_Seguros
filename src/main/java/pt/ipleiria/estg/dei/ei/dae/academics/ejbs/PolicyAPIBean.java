@@ -30,20 +30,18 @@ public class PolicyAPIBean {
     private List<String> covers;
 
 
-
     public PolicyAPIBean getPolicyMockAPI(String way) {
         PolicyAPIBean[] policyAPIBeans = getAllPoliciesMockAPI(way);
         return policyAPIBeans[0];
     }
 
 
-
     public PolicyAPIBean[] getAllPoliciesMockAPI(String way) {
 
         PolicyAPIBean[] policyAPIBeans;
 
-        try{
-            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/policies"+way);
+        try {
+            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/policies" + way);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -69,8 +67,8 @@ public class PolicyAPIBean {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;}
-
+        return null;
+    }
 
 
 }

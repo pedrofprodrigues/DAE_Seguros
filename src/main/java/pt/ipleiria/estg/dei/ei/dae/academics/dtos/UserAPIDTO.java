@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +29,7 @@ public class UserAPIDTO {
     }
 
 
-    public static UserAPIDTO from (UserAPIBean userAPIbean) {
+    public static UserAPIDTO from(UserAPIBean userAPIbean) {
         return new UserAPIDTO(
                 userAPIbean.getNif(),
                 userAPIbean.getName(),
@@ -50,10 +49,10 @@ public class UserAPIDTO {
                 userAPIbean.getName()
         );
     }
+
     public static List<UserAPIDTO> from2(List<UserAPIBean> mockAPIDTOList) {
         return mockAPIDTOList.stream().map(UserAPIDTO::from2).collect(Collectors.toList());
     }
-
 
 
 }

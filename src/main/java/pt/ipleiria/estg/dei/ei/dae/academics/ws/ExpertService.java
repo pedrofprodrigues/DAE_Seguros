@@ -4,6 +4,9 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.SimpleUserAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
+
+import javax.annotation.security.RolesAllowed;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -21,8 +24,8 @@ public class ExpertService {
 
 
     @GET
-    //  @Authenticated
-    //  @RolesAllowed({"expert"})
+    @Authenticated
+    @RolesAllowed({"expert"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
         UserAPIBean userMockAPI = null;
@@ -37,18 +40,17 @@ public class ExpertService {
                 .build();
     }
 
-
     @GET
-    // @Authenticated
-    // @RolesAllowed({"expert"})
+    @Authenticated
+    @RolesAllowed({"expert"})
     @Path("{nif}/occurrences")
     public Response expertOccurrences(@PathParam("nif") Long nif) {
         return Response.ok(OccurrenceDTO.from(userAPIBean.expertOccurrences(nif))).build();
     }
 
     @GET
-    // @Authenticated
-    // @RolesAllowed({"client"})
+    @Authenticated
+    @RolesAllowed({"client"})
     @Path("")
     public Response getAllRepair() {
         UserAPIBean[] userMockAPI = userAPIBean.getUserMockAPIList("?role=expert");

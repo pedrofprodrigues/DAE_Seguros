@@ -1,10 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 
 import javax.crypto.spec.SecretKeySpec;
-
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,9 +12,10 @@ import java.util.Date;
 
 public class TokenIssuer {
 
+    public static final long EXPIRY_MINS = 60L;
     protected static final byte[] SECRET_KEY = "secret".getBytes();
     protected static final String ALGORITHM = "DES";
-    public static final long EXPIRY_MINS = 60L;
+
     public String issue(UserAPIBean userAPIBean) {
         var expiryPeriod = LocalDateTime.now().plusMinutes(EXPIRY_MINS);
 

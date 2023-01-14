@@ -1,5 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@AllArgsConstructor
+@Data
 public class ErrorDTO {
 
     private String key;
@@ -12,33 +17,4 @@ public class ErrorDTO {
         this.reason = reason;
     }
 
-    public ErrorDTO(String key, String value, String reason) {
-        this(reason);
-        this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
 }

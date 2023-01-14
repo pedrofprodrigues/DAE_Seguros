@@ -61,7 +61,6 @@ public class Occurrence extends Versionable {
     private String expertNif;
 
 
-
     public Occurrence() {
 
         this.documents = new ArrayList<>();
@@ -79,7 +78,7 @@ public class Occurrence extends Versionable {
     }
 
     public void addDocument(Document document) {
-        if (! this.documents.contains(document)) {
+        if (!this.documents.contains(document)) {
             this.documents.add(document);
         }
     }
@@ -89,8 +88,8 @@ public class Occurrence extends Versionable {
     }
 
 
-    public ArrayList<Long> getDocumentsId(){
-        ArrayList<Long>list = new ArrayList<>();
+    public ArrayList<Long> getDocumentsId() {
+        ArrayList<Long> list = new ArrayList<>();
         for (Document document : documents) {
             list.add(document.getId());
         }

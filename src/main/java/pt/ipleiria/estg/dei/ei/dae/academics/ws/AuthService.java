@@ -1,11 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ws;
+
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.Auth;
-
-
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.UserAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.security.TokenIssuer;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
+import pt.ipleiria.estg.dei.ei.dae.academics.security.TokenIssuer;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -44,7 +43,7 @@ public class AuthService {
     @Path("/user")
     public Response getAuthenticatedUser() {
         String nif = securityContext.getUserPrincipal().getName();
-        UserAPIBean authedUser = userAPIBean.getUserMockAPI("?nif="+nif);
+        UserAPIBean authedUser = userAPIBean.getUserMockAPI("?nif=" + nif);
         return Response.ok(UserAPIDTO.from(authedUser)).build();
     }
 }

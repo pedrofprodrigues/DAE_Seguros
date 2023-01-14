@@ -1,15 +1,14 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor

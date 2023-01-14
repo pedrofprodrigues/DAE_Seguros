@@ -1,19 +1,16 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
-import java.io.*;
-import java.util.Arrays;
-import java.util.List;
+import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.*;
+import java.util.List;
 
-import org.hibernate.Hibernate;
-
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 @Stateless
 public class DocumentBean {
     @EJB
@@ -42,12 +39,12 @@ public class DocumentBean {
         return document;
     }
 
-    public List<Document> getOccurrenceDocuments(Long code){
+    public List<Document> getOccurrenceDocuments(Long code) {
         return em.createNamedQuery("getOccurrenceDocuments", Document.class).setParameter("id", code).getResultList();
     }
 
 
-    public void importOccurrencesFromCSV(byte[] bytes){
+    public void importOccurrencesFromCSV(byte[] bytes) {
         BufferedReader reader = null;
         try {
             InputStream is = new ByteArrayInputStream(bytes);
@@ -57,7 +54,7 @@ public class DocumentBean {
                 String[] values = line.split(",");
 
 
-                System.out.println("\n\n\n\n "+Long.parseLong(values[0])+"\n\n\n\n ");
+                System.out.println("\n\n\n\n " + Long.parseLong(values[0]) + "\n\n\n\n ");
 
                 occurrenceBean.create(Long.parseLong(values[0]), values[1], values[2]);
             }

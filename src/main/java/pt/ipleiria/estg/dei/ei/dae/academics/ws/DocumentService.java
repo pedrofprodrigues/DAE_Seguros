@@ -6,7 +6,9 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.DocumentDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.DocumentBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
+import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -19,8 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 @Path("documents")
-//@Authenticated
-//@RolesAllowed({"client", "repair","expert"})
+@Authenticated
+@RolesAllowed({"client", "repair","expert"})
 public class DocumentService {
 
     @EJB
@@ -52,7 +54,7 @@ public class DocumentService {
             String dirpath = homedir + File.separator + "uploads" + File.separator + occurrenceCode;
             mkdirIfNotExists(dirpath);
 
-            String filepath =  dirpath + File.separator + filename;
+            String filepath = dirpath + File.separator + filename;
             writeFile(bytes, filepath);
 
             Document document = documentBean.create(filepath, filename, occurrenceCode);
@@ -75,8 +77,6 @@ public class DocumentService {
         for (InputPart inputPart : inputParts) {
             MultivaluedMap<String, String> headers = inputPart.getHeaders();
             String filename = getFilename(headers);
-
-            // convert the uploaded file to inputstream
             InputStream inputStream = inputPart.getBody(InputStream.class, null);
 
             byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -89,12 +89,10 @@ public class DocumentService {
     }
 
 
-
-
     private void mkdirIfNotExists(String path) {
         File file = new File(path);
 
-        if (! file.exists()) {
+        if (!file.exists()) {
             file.mkdirs();
         }
     }
@@ -105,7 +103,7 @@ public class DocumentService {
     public Response download(@PathParam("id") Long id) {
         var document = documentBean.findDocumentSafe(id);
         var response = Response.ok(new File(document.getFilepath()));
-        
+
         response.header("Content-Disposition", "attachment;filename=" + document.getFilename());
 
         return response.build();
@@ -144,7 +142,7 @@ public class DocumentService {
         if (!file.exists()) {
             file.createNewFile();
         }
-        
+
         FileOutputStream fop = new FileOutputStream(file);
 
         fop.write(content);

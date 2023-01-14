@@ -45,23 +45,22 @@ public class RepairCompany extends Versionable {
     private List<Occurrence> occurrences;
 
 
-
-
-    public RepairCompany(String repairCompany,String email) {
+    public RepairCompany(String repairCompany, String email) {
         this();
         this.repairCompany = repairCompany;
         this.email = email;
     }
+
     public RepairCompany() {
-       repairNIFs = new ArrayList<>();
-       insuredObjects = new ArrayList<>();
-       occurrences = new ArrayList<>();
+        repairNIFs = new ArrayList<>();
+        insuredObjects = new ArrayList<>();
+        occurrences = new ArrayList<>();
 
     }
 
 
     public void AddRepair(RepairMan nif) {
-        if (! this.repairNIFs.contains(nif)) {
+        if (!this.repairNIFs.contains(nif)) {
             this.repairNIFs.add(nif);
         }
     }
@@ -70,8 +69,8 @@ public class RepairCompany extends Versionable {
         this.repairNIFs.remove(nif);
     }
 
-        public void AddOccurrence(Occurrence occurrence) {
-        if (! this.occurrences.contains(occurrence)) {
+    public void AddOccurrence(Occurrence occurrence) {
+        if (!this.occurrences.contains(occurrence)) {
             this.occurrences.add(occurrence);
         }
     }
@@ -80,8 +79,8 @@ public class RepairCompany extends Versionable {
         this.occurrences.remove(occurrence);
     }
 
-        public void AddInsuredObject(InsuredObject insuredObject) {
-        if (! this.insuredObjects.contains(insuredObject)) {
+    public void AddInsuredObject(InsuredObject insuredObject) {
+        if (!this.insuredObjects.contains(insuredObject)) {
             this.insuredObjects.add(insuredObject);
         }
     }
@@ -91,8 +90,8 @@ public class RepairCompany extends Versionable {
     }
 
 
-    public ArrayList<Long> getRepairNIFs(){
-        ArrayList<Long>list = new ArrayList<>();
+    public ArrayList<Long> getRepairNIFs() {
+        ArrayList<Long> list = new ArrayList<>();
         for (RepairMan repairMan : repairNIFs) {
             list.add(repairMan.getNif());
         }
@@ -100,7 +99,6 @@ public class RepairCompany extends Versionable {
         return list;
 
     }
-
 
 
 }

@@ -1,7 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.security;
 
 import io.jsonwebtoken.Jwts;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
+
 import javax.annotation.Priority;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ejb.EJB;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Priorities;
@@ -12,11 +15,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
-
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
-
-
-import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.security.Principal;
 
@@ -39,8 +37,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         String token = header.substring("Bearer".length()).trim();
 
-        UserAPIBean validatedUser = userAPIBean.getUserMockAPI("?nif="+getUsername(token));
-
+        UserAPIBean validatedUser = userAPIBean.getUserMockAPI("?nif=" + getUsername(token));
 
 
         requestContext.setSecurityContext(new SecurityContext() {

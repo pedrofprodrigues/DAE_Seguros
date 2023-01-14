@@ -17,10 +17,10 @@ public class RepairCompanyBean {
 
     public Long create(String companyName, String email) {
 
-        RepairCompany repairCompany = new RepairCompany( companyName, email);
+        RepairCompany repairCompany = new RepairCompany(companyName, email);
 
         em.persist(repairCompany);
-        return  repairCompany.getCompanyID();
+        return repairCompany.getCompanyID();
     }
 
     public List<RepairCompany> all() {
@@ -44,13 +44,13 @@ public class RepairCompanyBean {
         return repairCompany;
     }
 
-        public List<Occurrence> repairCompanyOccurrences(Long repairID) {
+    public List<Occurrence> repairCompanyOccurrences(Long repairID) {
         findRepairCompanySafe(repairID);
 
         return em.createNamedQuery("getAllRepairCompanyOccurrences", Occurrence.class)
-                    .setParameter("repairID", repairID)
-                    .getResultList();
-        }
+                .setParameter("repairID", repairID)
+                .getResultList();
+    }
 
 
     public void remove(Long id) {

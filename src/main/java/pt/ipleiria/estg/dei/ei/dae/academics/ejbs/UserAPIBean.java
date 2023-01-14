@@ -2,12 +2,10 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Hasher;
 
@@ -28,6 +26,8 @@ import java.util.Scanner;
 @JsonIgnoreProperties({"ID"})
 public class UserAPIBean {
 
+    @EJB
+    PolicyAPIBean policyAPIBean;
     @Inject
     private Hasher hasher;
     private String password;
@@ -36,10 +36,6 @@ public class UserAPIBean {
     private String name;
     private String email;
     private String role;
-
-    @EJB
-    PolicyAPIBean policyAPIBean;
-
     @PersistenceContext
     private EntityManager em;
 
@@ -48,8 +44,8 @@ public class UserAPIBean {
 
         UserAPIBean[] list;
 
-        try{
-            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/users"+way);
+        try {
+            URL url = new URL("https://63a3873e471b38b20611069a.mockapi.io/users" + way);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -73,14 +69,15 @@ public class UserAPIBean {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;}
+        return null;
+    }
 
     public UserAPIBean getUserMockAPI(String way) {
-        UserAPIBean[] list = getUserMockAPIList( way);
+        UserAPIBean[] list = getUserMockAPIList(way);
         return list[0];
     }
 
-    public String MockAPItoJSON(UserAPIBean userAPIBean)  {
+    public String MockAPItoJSON(UserAPIBean userAPIBean) {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = null;
@@ -98,23 +95,22 @@ public class UserAPIBean {
     }
 
     public PolicyAPIBean[] clientPolicies(Long nif) {
-        return policyAPIBean.getAllPoliciesMockAPI("?nif="+nif);
+        return policyAPIBean.getAllPoliciesMockAPI("?nif=" + nif);
     }
 
     public List<Occurrence> clientPolicyOccurrences(Long policy) {
-
 
         return em.createNamedQuery("getAllPolicyOccurrences", Occurrence.class)
                 .setParameter("policy", policy)
                 .getResultList();
     }
+
     public List<Occurrence> expertOccurrences(Long expertNif) {
 
         return em.createNamedQuery("getAllExpertOccurrences", Occurrence.class)
                 .setParameter("expertNif", expertNif.toString())
                 .getResultList();
     }
-
 
 
 }

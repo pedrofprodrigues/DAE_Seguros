@@ -1,16 +1,16 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.security;
 
-import javax.annotation.Priority;
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Priorities;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import org.jboss.resteasy.core.ResourceMethodInvoker;
 
+import javax.annotation.Priority;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.lang.reflect.Method;
@@ -48,7 +48,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
                 var roles = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
 
                 //Is user valid?
-                if(roles.stream().anyMatch(securityContext::isUserInRole)) {
+                if (roles.stream().anyMatch(securityContext::isUserInRole)) {
                     return;
                 }
 
@@ -58,7 +58,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         }
 
         // Access denied for all
-        if(resource.isAnnotationPresent(DenyAll.class)) {
+        if (resource.isAnnotationPresent(DenyAll.class)) {
             if (method.isAnnotationPresent(PermitAll.class)) {
                 return;
             }
@@ -69,7 +69,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
                 var roles = new HashSet<>(Arrays.asList(beanRolesAnnotation.value()));
 
                 //Is user valid?
-                if(roles.stream().anyMatch(securityContext::isUserInRole)) {
+                if (roles.stream().anyMatch(securityContext::isUserInRole)) {
                     return;
                 }
             }
@@ -98,7 +98,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             }
 
             //Is user valid?
-            if(roles.stream().anyMatch(securityContext::isUserInRole)) {
+            if (roles.stream().anyMatch(securityContext::isUserInRole)) {
                 return;
             }
 
@@ -120,7 +120,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             var roles = new HashSet<>(Arrays.asList(method.getAnnotation(RolesAllowed.class).value()));
 
             //Is user valid?
-            if(roles.stream().anyMatch(securityContext::isUserInRole)) {
+            if (roles.stream().anyMatch(securityContext::isUserInRole)) {
                 return;
             }
 

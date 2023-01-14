@@ -21,8 +21,9 @@ public class ExpertBean {
     public Expert find(String username) {
         return em.find(Expert.class, username);
     }
+
     public void create(String username, String password, String name) {
-        Expert expert = new Expert(username,hasher.hash(password), name);
+        Expert expert = new Expert(username, hasher.hash(password), name);
 
         em.persist(expert);
 

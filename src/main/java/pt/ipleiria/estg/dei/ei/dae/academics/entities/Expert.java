@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
 
-@Table(name="users")
+@Table(name = "users")
 
 
 @Data
@@ -27,7 +29,6 @@ public class Expert extends Versionable {
 
     @NotNull
     protected String email;
-
 
 
 }

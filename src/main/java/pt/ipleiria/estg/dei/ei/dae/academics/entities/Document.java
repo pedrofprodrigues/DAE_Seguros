@@ -4,14 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "documents")
 @NamedQuery(
-    name = "getOccurrenceDocuments",
-    query = "SELECT doc FROM Document doc WHERE doc.occurrence.id = :id"
+        name = "getOccurrenceDocuments",
+        query = "SELECT doc FROM Document doc WHERE doc.occurrence.id = :id"
 )
 
 @Data
@@ -36,9 +35,6 @@ public class Document {
         this.filename = filename;
         this.occurrence = occurrence;
     }
-
-
-
 
 
 }

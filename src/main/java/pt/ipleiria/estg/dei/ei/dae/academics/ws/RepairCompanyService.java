@@ -6,7 +6,6 @@ import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairCompanyDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairCompanyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairManBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
 import javax.annotation.security.RolesAllowed;
@@ -21,19 +20,15 @@ import javax.ws.rs.core.Response;
 public class RepairCompanyService {
 
     @EJB
-    private UserAPIBean userAPIBean;
+    RepairManBean repairManBean;
     @EJB
     private RepairCompanyBean repairCompanyBean;
-
     @EJB
     private OccurrenceBean occurrenceBean;
 
-    @EJB
-    RepairManBean repairManBean;
-
     @GET
-    // @Authenticated
-    // @RolesAllowed({"expert"})
+    @Authenticated
+    @RolesAllowed({"expert,repair"})
     @Path("{repairID}/occurrences")
     public Response repairCompanyOccurrences(@PathParam("repairID") Long repairID) {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(repairID))).build();
@@ -50,28 +45,28 @@ public class RepairCompanyService {
     }
 
     @GET
-    // @Authenticated
-    // @RolesAllowed({"expert"})
+    @Authenticated
+    @RolesAllowed({"client,repair"})
     @Path("")
     public Response getAllRepairCompanies() {
         return Response.ok(RepairCompanyDTO.from(repairCompanyBean.all())).build();
     }
+
     @GET
-    // @Authenticated
-    // @RolesAllowed({"expert"})
+    @Authenticated
+    @RolesAllowed({"expert,repair"})
     @Path("{companyId}")
     public Response getAllRepairFromCompanies(@PathParam("companyId") Long company) {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(company))).build();
     }
 
     @GET
-    // @Authenticated
-    // @RolesAllowed({"expert"})
+    @Authenticated
+    @RolesAllowed({"expert,repair"})
     @Path("/repair/{nif}")
     public Response getAllOccurrenceFromRepairCompany(@PathParam("nif") Long nif) {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(repairManBean.findRepairSafe(nif).getNif()))).build();
     }
-
 
 
     @PUT
@@ -80,11 +75,6 @@ public class RepairCompanyService {
         occurrenceBean.updateRepairCompany(occurrenceID, companyName);
         return Response.ok(OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID))).build();
     }
-
-
-
-
-
 
 
 }

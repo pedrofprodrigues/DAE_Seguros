@@ -23,6 +23,4 @@ public class RepairMan {
     private RepairCompany repairCompany;
 
 
-
-
 }

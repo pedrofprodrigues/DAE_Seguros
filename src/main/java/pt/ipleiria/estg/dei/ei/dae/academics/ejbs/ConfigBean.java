@@ -26,33 +26,32 @@ public class ConfigBean {
     private UserAPIBean userAPIBean;
 
 
-
-    private Logger logger = Logger.getLogger("ejbs.ConfigBean");
+    private final Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
     @PostConstruct
-    public void populateDB()  {
+    public void populateDB() {
 
-     expertBean.create("a","password","a");
-     expertBean.create("b","password1","b");
+        expertBean.create("a", "password", "a");
+        expertBean.create("b", "password1", "b");
 
-     repairCompanyBean.create("worten", "worten@worten.com");
-     repairCompanyBean.create("lolada","lolada@lolada.com");
-     repairCompanyBean.create("fnac","fnac@fnac.com");
+        repairCompanyBean.create("worten", "worten@worten.com");
+        repairCompanyBean.create("lolada", "lolada@lolada.com");
+        repairCompanyBean.create("fnac", "fnac@fnac.com");
 
 
-     occurrenceBean.create(1L,"joao","2");
-     occurrenceBean.create(1L,"joa3o","2");
-        occurrenceBean.create(1L,"joa2o","2");
-        occurrenceBean.create(2L,"joa3o","3");
-        occurrenceBean.create(2L,"joa4o","3");
-        occurrenceBean.create(2L,"joa25o","3");
+        occurrenceBean.create(1L, "joao", "2");
+        occurrenceBean.create(1L, "joa3o", "2");
+        occurrenceBean.create(1L, "joa2o", "2");
+        occurrenceBean.create(2L, "joa3o", "3");
+        occurrenceBean.create(2L, "joa4o", "3");
+        occurrenceBean.create(2L, "joa25o", "3");
 
-        repairManBean.create(2L,1L );
-        repairManBean.create(3L,1L );
-        repairManBean.create(4L,2L );
-        repairManBean.create(5L,2L );
-        repairManBean.create(6L,3L );
-        repairManBean.create(7L,2L );
+        repairManBean.create(2L, 1L);
+        repairManBean.create(3L, 1L);
+        repairManBean.create(4L, 2L);
+        repairManBean.create(5L, 2L);
+        repairManBean.create(6L, 3L);
+        repairManBean.create(7L, 2L);
 
 
         occurrenceBean.findOccurrenceSafe(5L).setOccurrenceState(OccurrenceState.accepted);
@@ -64,7 +63,7 @@ public class ConfigBean {
         occurrenceBean.findOccurrenceSafe(4L).setRepairCompany(repairCompanyBean.find(3L));
 
 
-       repairCompanyBean.findRepairCompanySafe(1L).AddRepair(repairManBean.findRepairSafe(2L));
+        repairCompanyBean.findRepairCompanySafe(1L).AddRepair(repairManBean.findRepairSafe(2L));
         repairCompanyBean.findRepairCompanySafe(1L).AddRepair(repairManBean.findRepairSafe(3L));
 
 
