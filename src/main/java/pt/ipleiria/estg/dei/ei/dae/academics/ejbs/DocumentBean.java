@@ -43,7 +43,7 @@ public class DocumentBean {
     }
 
     public List<Document> getOccurrenceDocuments(Long code){
-        return em.createNamedQuery("getOccurrenceDocuments", Document.class).setParameter("code", code).getResultList();
+        return em.createNamedQuery("getOccurrenceDocuments", Document.class).setParameter("id", code).getResultList();
     }
 
 

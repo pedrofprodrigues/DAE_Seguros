@@ -34,6 +34,9 @@ public class RepairCompany extends Versionable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "repairCompany")
     private List<Occurrence> occurrences;
 
+
+
+
     public RepairCompany(String repairCompany) {
         this();
         this.repairCompany = repairCompany;

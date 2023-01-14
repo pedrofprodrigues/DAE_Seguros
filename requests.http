@@ -32,6 +32,11 @@ GET http://localhost:8080/academics/api/occurrence/2
 Accept: application/json
 
 
+### get Occurrence details
+GET http://localhost:8080/academics/api/documents/4
+Accept: application/json
+
+
 
 
 
