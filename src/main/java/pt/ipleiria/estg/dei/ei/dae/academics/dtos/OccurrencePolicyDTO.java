@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.Document;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
@@ -45,6 +44,7 @@ public class OccurrencePolicyDTO {
                 policyAPIBean.getInsured_object(),
                 policyAPIBean.getCovers(),
                 occurrence.getDocumentsId()
+
         );
     }
 }

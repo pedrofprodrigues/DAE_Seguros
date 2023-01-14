@@ -53,8 +53,6 @@ public class RepairCompanyService {
         return Response.ok(RepairCompanyDTO.from(repairCompanyBean.all())).build();
     }
 
-
-
     @PUT
     @Path("{occurrenceID}")
     public Response updateRepairCompany(@PathParam("occurrenceID") Long occurrenceID, String companyName) {

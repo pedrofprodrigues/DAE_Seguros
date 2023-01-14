@@ -51,7 +51,7 @@ public class Occurrence extends Versionable {
     @JoinColumn(name = "repair_id")
     private RepairCompany repairCompany;
 
-    @OneToMany(mappedBy = "occurrence")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "occurrence")
     private List<Document> documents;
 
     @NotNull
