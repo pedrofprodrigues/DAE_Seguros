@@ -47,7 +47,7 @@ Accept: application/json
 }
 
 ### change Company name
-PUT http://localhost:8080/academics/api/occurrence/2
+PUT http://localhost:8080/academics/api/repairCompany/3
 Content-Type: application/json
 Accept: application/json
 
