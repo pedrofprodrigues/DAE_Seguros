@@ -3,10 +3,8 @@ package pt.ipleiria.estg.dei.ei.dae.academics.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -27,7 +25,7 @@ public class OccurrenceDTO implements Serializable {
 
     private OccurrenceState occurrenceState;
     @NotNull
-    private String repairServiceName;
+    private String repairCompanyName;
     @NotNull
     private String expertNif;
 
@@ -38,7 +36,7 @@ public class OccurrenceDTO implements Serializable {
                 occurrence.getPolicyNumber(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
-                occurrence.getRepairService().getInsuranceCompany(),
+                occurrence.getRepairCompany().getRepairCompany(),
                 occurrence.getExpertNif()
         );
     }

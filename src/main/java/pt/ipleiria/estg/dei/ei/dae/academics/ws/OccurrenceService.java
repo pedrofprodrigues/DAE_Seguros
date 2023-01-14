@@ -1,17 +1,12 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 
-import lombok.val;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrencePolicyDTO;
-import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
-import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairServiceDTO;
+import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairCompanyDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.PolicyAPIBean;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -23,7 +18,6 @@ import javax.ws.rs.core.Response;
 public class OccurrenceService {
     @EJB
     private OccurrenceBean occurrenceBean;
-
     @EJB
     private PolicyAPIBean policyAPIBean;
 
@@ -31,12 +25,10 @@ public class OccurrenceService {
     @Path("")
     //@Authenticated
     //@RolesAllowed({"client"})
-    public Response createOccurrence(OccurrenceDTO occurrence, RepairServiceDTO repairService) {
-
-        occurrenceBean.create(occurrence.getPolicyNumber(), occurrence.getDescription(), occurrence.getExpertNif(), repairService.getId());
+    public Response createOccurrence(OccurrenceDTO occurrence) {
+        occurrenceBean.create(occurrence.getPolicyNumber(), occurrence.getDescription(), occurrence.getExpertNif());
         OccurrenceDTO dto = OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrence.getId()));
         return Response.status(Response.Status.CREATED).entity(dto).build();
-
     }
 
     @GET

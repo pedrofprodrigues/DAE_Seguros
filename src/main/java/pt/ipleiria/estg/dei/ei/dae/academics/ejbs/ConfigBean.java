@@ -1,8 +1,5 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
-
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,7 +16,7 @@ public class ConfigBean {
   @EJB
     private OccurrenceBean occurrenceBean;
   @EJB
-    private RepairServiceBean repairServiceBean;
+    private RepairCompanyBean repairCompanyBean;
 
 
 
@@ -30,13 +27,15 @@ public class ConfigBean {
 
      expertBean.create("a","password","a");
      expertBean.create("b","password1","b");
-     repairServiceBean.create("as","as");
-     occurrenceBean.create(1L,"joao","2",1L);
-     occurrenceBean.create(1L,"joa3o","2",1L);
-     occurrenceBean.create(1L,"joa2o","2",1L);
-     occurrenceBean.create(2L,"joa3o","3",1L);
-     occurrenceBean.create(2L,"joa4o","3",1L);
-     occurrenceBean.create(2L,"joa25o","3",1L);
+
+     repairCompanyBean.create("worten");
+
+     occurrenceBean.create(1L,"joao","2");
+     occurrenceBean.create(1L,"joa3o","2");
+     occurrenceBean.create(1L,"joa2o","2");
+     occurrenceBean.create(2L,"joa3o","3");
+     occurrenceBean.create(2L,"joa4o","3");
+     occurrenceBean.create(2L,"joa25o","3");
 
     }
 

@@ -47,7 +47,7 @@ public class UserAPIBean {
 
 
 
-    public UserAPIBean getUserMockAPI(String way) {
+    public UserAPIBean[] getUserMockAPIList(String way) {
 
         UserAPIBean[] list;
 
@@ -71,12 +71,20 @@ public class UserAPIBean {
                 ObjectMapper mapper = new ObjectMapper();
                 list = mapper.readValue(informationString.toString(), UserAPIBean[].class);
 
-                return list[0];
+                return list;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;}
+
+
+
+    public UserAPIBean getUserMockAPI(String way) {
+        UserAPIBean[] list = getUserMockAPIList( way);
+        return list[0];
+    }
+
 
 
     public String MockAPItoJSON(UserAPIBean userAPIBean)  {
@@ -99,12 +107,6 @@ public class UserAPIBean {
 
 
 
-
-
-
-
-
-
     public PolicyAPIBean[] clientPolicies(Long nif) {
         return policyAPIBean.getAllPoliciesMockAPI("?nif="+nif);
     }
@@ -121,9 +123,9 @@ public class UserAPIBean {
                 .setParameter("expertNif", expertNif.toString())
                 .getResultList();
     }
-    public List<Occurrence> repairServiceOccurrences(Long repairID) {
+    public List<Occurrence> repairCompanyOccurrences(Long repairID) {
 
-        return em.createNamedQuery("getAllRepairServiceOccurrences", Occurrence.class)
+        return em.createNamedQuery("getAllRepairCompanyOccurrences", Occurrence.class)
                 .setParameter("repairID", repairID)
                 .getResultList();
     }

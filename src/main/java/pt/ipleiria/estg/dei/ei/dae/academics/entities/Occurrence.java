@@ -23,8 +23,8 @@ import java.util.List;
                 query = "SELECT s FROM Occurrence s WHERE s.expertNif = : expertNif"
         ),
         @NamedQuery(
-                name = "getAllRepairServiceOccurrences",
-                query = "SELECT s FROM Occurrence s WHERE s.repairService.id = : repairID"
+                name = "getAllRepairCompanyOccurrences",
+                query = "SELECT s FROM Occurrence s WHERE s.repairCompany.id = : repairID"
         )
 })
 
@@ -49,7 +49,7 @@ public class Occurrence extends Versionable {
 
     @ManyToOne
     @JoinColumn(name = "repair_id")
-    private RepairService repairService;
+    private RepairCompany repairCompany;
 
     @OneToMany(mappedBy = "occurrence")
     private List<Document> documents;
@@ -64,12 +64,12 @@ public class Occurrence extends Versionable {
         this.documents = new ArrayList<>();
     }
 
-    public Occurrence(  Long policyNumber, String description, String expertNif, RepairService repairService, OccurrenceState occurrenceState) {
+    public Occurrence(Long policyNumber, String description, String expertNif, OccurrenceState occurrenceState) {
         this();
         this.expertNif = expertNif;
         this.description = description;
         this.occurrenceState = occurrenceState;
-        this.repairService = repairService;
+        this.repairCompany = null;
         this.policyNumber = policyNumber;
         this.documents = new ArrayList<>();
 

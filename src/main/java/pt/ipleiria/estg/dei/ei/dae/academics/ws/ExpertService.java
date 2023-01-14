@@ -2,12 +2,14 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 
 
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
+import pt.ipleiria.estg.dei.ei.dae.academics.dtos.SimpleUserAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/expert")
 @Produces({MediaType.APPLICATION_JSON})
@@ -38,6 +40,13 @@ public class ExpertService {
         return Response.ok(OccurrenceDTO.from(userAPIBean.expertOccurrences(nif))).build();
     }
 
-
+    @GET
+    // @Authenticated
+    // @RolesAllowed({"client"})
+    @Path("")
+    public Response getAllRepair() {
+        UserAPIBean[] userMockAPI = userAPIBean.getUserMockAPIList("?role=expert");
+        return Response.ok(SimpleUserAPIDTO.from(List.of(userMockAPI))).build();
+    }
 
 }

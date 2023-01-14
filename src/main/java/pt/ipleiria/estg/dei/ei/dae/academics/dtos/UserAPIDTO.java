@@ -24,10 +24,14 @@ public class UserAPIDTO {
     @NotNull
     private String role;
 
+    public UserAPIDTO(String nif, String name) {
+        this.nif = nif;
+        this.name = name;
+    }
 
 
 
-    public static UserAPIDTO from(UserAPIBean userAPIbean) {
+    public static UserAPIDTO from (UserAPIBean userAPIbean) {
         return new UserAPIDTO(
                 userAPIbean.getNif(),
                 userAPIbean.getName(),
@@ -38,6 +42,17 @@ public class UserAPIDTO {
 
     public static List<UserAPIDTO> from(List<UserAPIBean> mockAPIDTOList) {
         return mockAPIDTOList.stream().map(UserAPIDTO::from).collect(Collectors.toList());
+    }
+
+
+    public static UserAPIDTO from2(UserAPIBean userAPIbean) {
+        return new UserAPIDTO(
+                userAPIbean.getNif(),
+                userAPIbean.getName()
+        );
+    }
+    public static List<UserAPIDTO> from2(List<UserAPIBean> mockAPIDTOList) {
+        return mockAPIDTOList.stream().map(UserAPIDTO::from2).collect(Collectors.toList());
     }
 
 

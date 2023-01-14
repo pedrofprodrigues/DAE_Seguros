@@ -1,7 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
 import lombok.Data;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.Cover;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
 import javax.persistence.*;
@@ -10,48 +9,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "repairServices")
+@Table(name = "repairCompanies")
 
 
 @NamedQueries({
         @NamedQuery(
-                name = "getAllrepairServices",
-                query = "SELECT repairService FROM RepairService repairService ORDER BY repairService.id"
+                name = "getAllRepairCompanies",
+                query = "SELECT repairCompany FROM RepairCompany repairCompany ORDER BY repairCompany.id"
         )
 })
 
 @Data
-public class RepairService extends Versionable {
+public class RepairCompany extends Versionable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @NotNull
-
-    private String insuranceCompany;
+    private String repairCompany;
 
     @NotNull
     @ElementCollection
     @Enumerated(EnumType.ORDINAL)
     private List<InsuredObject> insuredObjects;
 
-    @NotNull
-    private String client;
-
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "repairService")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "repairCompany")
     private List<Occurrence> occurrences;
 
-
-
-    public RepairService(String insuranceCompany, String client) {
+    public RepairCompany(String repairCompany) {
         this();
-        this.insuranceCompany = insuranceCompany;
-        this.client = client;
-
+        this.repairCompany = repairCompany;
     }
-    public RepairService() {
+    public RepairCompany() {
         this.occurrences = new ArrayList<>();
         this.insuredObjects = new ArrayList<>();
 

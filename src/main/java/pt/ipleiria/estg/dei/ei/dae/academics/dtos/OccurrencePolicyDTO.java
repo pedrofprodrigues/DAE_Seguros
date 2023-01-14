@@ -23,7 +23,7 @@ public class OccurrencePolicyDTO {
 
     private OccurrenceState occurrenceState;
     @NotNull
-    private String repairServiceName;
+    private String repairCompanyName;
     @NotNull
     private String expertNif;
     @NotNull
@@ -37,7 +37,7 @@ public class OccurrencePolicyDTO {
                 occurrence.getId(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
-                occurrence.getRepairService().getInsuranceCompany(),
+                occurrence.getRepairCompany().getRepairCompany(),
                 occurrence.getExpertNif(),
                 policyAPIBean.getPolicy_number(),
                 policyAPIBean.getInsured_object(),

@@ -1,23 +1,22 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ws;
-import pt.ipleiria.estg.dei.ei.dae.academics.dtos.EmailDTO;
-import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
-import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
-import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.*;
+
+import pt.ipleiria.estg.dei.ei.dae.academics.dtos.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.EmailBean;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 
 import javax.ejb.EJB;
 import javax.mail.MessagingException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 import java.util.List;
 
-@Path("/clients")
+@Path("/repair")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
-//@RolesAllowed({"expert","repair"})
 
-public class ClientService {
+public class RepairService {
 
     @EJB
     private UserAPIBean userAPIBean;
@@ -37,11 +36,12 @@ public class ClientService {
                 .build();
     }
     @GET
-   // @Authenticated
-   // @RolesAllowed({"client"})
-    @Path("{nif}/policies")
-    public Response clientPolicies(@PathParam("nif") Long nif) {
-        return Response.ok(PolicyAPIDTO.from(List.of(userAPIBean.clientPolicies(nif)))).build();
+    // @Authenticated
+    // @RolesAllowed({"client"})
+    @Path("")
+    public Response getAllRepair() {
+        UserAPIBean[] userMockAPI = userAPIBean.getUserMockAPIList("?role=repair");
+        return Response.ok(SimpleUserAPIDTO.from(List.of(userMockAPI))).build();
     }
     @GET
     // @Authenticated
@@ -58,4 +58,6 @@ public class ClientService {
         emailBean.send(user.getEmail(), email.getSubject(), email.getMessage());
         return Response.noContent().build();
     }
+
+
 }

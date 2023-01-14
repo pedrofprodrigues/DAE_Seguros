@@ -1,14 +1,12 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.ejbs;
 
-import com.fasterxml.jackson.core.JsonParser;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
-import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairService;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairCompany;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.IOException;
@@ -25,9 +23,11 @@ public class OccurrenceBean {
     @EJB
     PolicyAPIBean policyAPIBean;
     @EJB
-    RepairServiceBean repairServiceBean;
+    RepairCompanyBean repairCompanyBean;
      @EJB
     UserAPIBean userAPIBean;
+    @EJB
+    OccurrenceBean occurrenceBean;
 
     public Occurrence find(Long code) {
         return em.find(Occurrence.class, code);
@@ -42,13 +42,13 @@ public class OccurrenceBean {
 
 
 
-    public void create( Long policyCode, String description, String expertCode,  Long repairServiceCode) {
+    public void create( Long policyCode, String description, String expertCode) {
 
         PolicyAPIBean occurrencePolicy = policyAPIBean.getPolicyMockAPI("?policy_number="+policyCode);
-        RepairService occurrenceRepairService = repairServiceBean.findRepairServiceSafe(repairServiceCode);
+       // RepairCompany occurrenceRepairCompany = repairCompanyBean.findRepairCompanySafe(repairCompanyCode);
         UserAPIBean expertNif = userAPIBean.getUserMockAPI("?nif="+expertCode);
 
-        Occurrence occurrence = new Occurrence(occurrencePolicy.getPolicy_number(),description,expertNif.getNif(), occurrenceRepairService , OccurrenceState.opened);
+        Occurrence occurrence = new Occurrence(occurrencePolicy.getPolicy_number(),description,expertNif.getNif(), OccurrenceState.opened);
 
         em.persist(occurrence);
     }
@@ -81,4 +81,38 @@ public class OccurrenceBean {
         em.merge(occurrence);
 
     }
+
+    public void importOccurrencesFromCSV(){
+
+
+        String filePath = "path/to/your.csv";
+
+        String homedir = System.getProperty("user.home");
+
+        System.out.println(homedir);
+/*
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+
+            String line;
+            while (true) {
+
+                if (!((line = reader.readLine()) != null)) break;
+                String[] values = line.split(",");
+
+                occurrenceBean.create(Long.getLong(values[0]), values[1], values[2], Long.getLong(values[3]));
+            }
+            reader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+*/
+        System.out.println("CSV file imported successfully!");
+
+    }
 }
+
+
+
+
