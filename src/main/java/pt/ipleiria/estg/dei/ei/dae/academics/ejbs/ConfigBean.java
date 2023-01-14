@@ -36,7 +36,7 @@ public class ConfigBean {
 
         repairCompanyBean.create("worten", "worten@worten.com");
         repairCompanyBean.create("lolada", "lolada@lolada.com");
-        repairCompanyBean.create("fnac", "fnac@fnac.com");
+        repairCompanyBean.create("fnac", "fabiolage13@gmail.com");
 
 
         occurrenceBean.create(1L, "joao", "2");

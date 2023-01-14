@@ -29,12 +29,7 @@ public class EmailBean {
 
         String message = "You just received an occurrence: Please check : ";
 
-        try {
-            URI uri = new URI("http", "localhost:3000", "/occurrence/"+occurrenceId.toString(), null);
-            message += uri.toASCIIString();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        message += "http://localhost:3000/occurrence/"+occurrenceId.toString();
         msg.setText(message);
         var timeStamp = new Date();
         msg.setSentDate(timeStamp);

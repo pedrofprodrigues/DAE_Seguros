@@ -46,7 +46,7 @@ public class RepairCompanyService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"client,repair"})
+    //@RolesAllowed({"client,repair"})
     @Path("")
     public Response getAllRepairCompanies() {
         return Response.ok(RepairCompanyDTO.from(repairCompanyBean.all())).build();
