@@ -48,6 +48,10 @@ public class ClientService {
     // @RolesAllowed({"client"})
     @Path("{nif}/{policy}/occurrences")
     public Response clientPolicyOccurrences(@PathParam("nif") Long nif,@PathParam("policy") Long policy) {
+        if(List.of(userAPIBean.clientPolicies(nif)).isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        }
         return Response.ok(OccurrenceDTO.from(userAPIBean.clientPolicyOccurrences(policy))).build();
     }
 

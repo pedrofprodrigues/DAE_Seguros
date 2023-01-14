@@ -28,9 +28,9 @@ public class ConfigBean {
      expertBean.create("a","password","a");
      expertBean.create("b","password1","b");
 
-     repairCompanyBean.create("worten");
-     repairCompanyBean.create("lolada");
-     repairCompanyBean.create("fnac");
+     repairCompanyBean.create("worten", "worten@worten.com");
+     repairCompanyBean.create("lolada","lolada@lolada.com");
+     repairCompanyBean.create("fnac","fnac@fnac.com");
 
 
      occurrenceBean.create(1L,"joao","2");

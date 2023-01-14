@@ -28,7 +28,7 @@ GET http://localhost:8080/academics/api/repairCompany/1/occurrences
 Accept: application/json
 
 ### get Occurrence details
-GET http://localhost:8080/academics/api/occurrence/2
+GET http://localhost:8080/academics/api/occurrence/5
 Accept: application/json
 
 
@@ -43,7 +43,7 @@ Accept: application/json
 
 
 ### change Occurrence status
-PUT http://localhost:8080/academics/api/occurrence/2
+PUT http://localhost:8080/academics/api/occurrence/6
 Content-Type: application/json
 Accept: application/json
 
@@ -57,7 +57,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "repairCompany": "lolada"
+  "repairCompanyID": "2"
 }
 
 

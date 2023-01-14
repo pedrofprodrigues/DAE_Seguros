@@ -14,15 +14,27 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class RepairCompanyDTO {
 
-
+    @NotNull
+    private Long id;
     @NotNull
     private String repairCompany;
+
+    @NotNull
+    private String email;
+
+    @NotNull
+    private List<Long> repairNifs;
+
+
 
 
 
     public static RepairCompanyDTO from(RepairCompany repairCompany) {
         return new RepairCompanyDTO(
-                repairCompany.getRepairCompany()
+                repairCompany.getCompanyID(),
+                repairCompany.getRepairCompany(),
+                repairCompany.getEmail(),
+                repairCompany.getRepairNIFs()
         );
     }
 

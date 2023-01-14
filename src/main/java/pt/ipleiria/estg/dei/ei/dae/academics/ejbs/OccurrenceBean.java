@@ -96,10 +96,10 @@ public class OccurrenceBean {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String newCompanyName = json.get("repairCompany").asText();
+        String newCompanyName = json.get("repairCompanyID").asText();
 
         Occurrence occurrence = findOccurrenceSafe(occurrenceID);
-        RepairCompany repairCompany = repairCompanyBean.findRepairCompanySafe(newCompanyName);
+        RepairCompany repairCompany = repairCompanyBean.findRepairCompanySafe(Long.parseLong(newCompanyName));
         occurrence.setRepairCompany(repairCompany);
         em.merge(occurrence);
 

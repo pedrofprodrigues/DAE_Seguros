@@ -15,7 +15,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "getAllRepairCompanies",
-                query = "SELECT repairCompany FROM RepairCompany repairCompany ORDER BY repairCompany.id"
+                query = "SELECT repairCompany FROM RepairCompany repairCompany ORDER BY repairCompany.companyID"
         )
 })
 
@@ -23,32 +23,50 @@ import java.util.List;
 public class RepairCompany extends Versionable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long companyID;
     @NotNull
     private String repairCompany;
+    @NotNull
+    private String email;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<RepairMan> repairNIFs;
 
     @NotNull
     @ElementCollection
     @Enumerated(EnumType.ORDINAL)
     private List<InsuredObject> insuredObjects;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "repairCompany")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Occurrence> occurrences;
 
 
 
 
-    public RepairCompany(String repairCompany) {
+    public RepairCompany(String repairCompany,String email) {
         this();
         this.repairCompany = repairCompany;
+        this.email = email;
     }
     public RepairCompany() {
-        this.occurrences = new ArrayList<>();
-        this.insuredObjects = new ArrayList<>();
+       repairNIFs = new ArrayList<>();
+       insuredObjects = new ArrayList<>();
+       occurrences = new ArrayList<>();
 
     }
 
 
-    public void addOccurrence(Occurrence occurrence) {
+    public void AddNif(RepairMan nif) {
+        if (! this.repairNIFs.contains(nif)) {
+            this.repairNIFs.add(nif);
+        }
+    }
+
+    public void removeNif(RepairMan nif) {
+        this.repairNIFs.remove(nif);
+    }
+
+        public void AddOccurrence(Occurrence occurrence) {
         if (! this.occurrences.contains(occurrence)) {
             this.occurrences.add(occurrence);
         }
@@ -57,6 +75,27 @@ public class RepairCompany extends Versionable {
     public void removeOccurrence(Occurrence occurrence) {
         this.occurrences.remove(occurrence);
     }
+
+        public void AddInsuredObject(InsuredObject insuredObject) {
+        if (! this.insuredObjects.contains(insuredObject)) {
+            this.insuredObjects.add(insuredObject);
+        }
+    }
+
+    public void RemoveInsuredObject(InsuredObject insuredObject) {
+        this.insuredObjects.remove(insuredObject);
+    }
+
+
+    public ArrayList<Long> getRepairNIFs(){
+        ArrayList<Long>list = new ArrayList<>();
+        for (RepairMan repairMan : repairNIFs) {
+            list.add(repairMan.getNif());
+        }
+        return list;
+
+    }
+
 
 
 }

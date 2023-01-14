@@ -14,9 +14,9 @@ public class RepairCompanyBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String companyName) {
+    public void create(String companyName, String email) {
 
-        RepairCompany repairCompany = new RepairCompany( companyName);
+        RepairCompany repairCompany = new RepairCompany( companyName, email);
         em.persist(repairCompany);
     }
 
@@ -33,14 +33,14 @@ public class RepairCompanyBean {
         return em.find(RepairCompany.class, companyName);
     }
 
-    public RepairCompany findRepairCompanySafe(String companyName) {
-        RepairCompany policy = em.getReference(RepairCompany.class, companyName);
-        Hibernate.initialize(policy);
+    public RepairCompany findRepairCompanySafe(Long id) {
+        RepairCompany repairCompany = em.getReference(RepairCompany.class, id);
+        Hibernate.initialize(repairCompany);
 
-        return policy;
+        return repairCompany;
     }
 
-    public void remove(String companyName) {
-        em.remove(findRepairCompanySafe(companyName));
+    public void remove(Long id) {
+        em.remove(findRepairCompanySafe(id));
     }
 }
