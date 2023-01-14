@@ -46,6 +46,15 @@ Accept: application/json
   "occurrenceState": "cancelled"
 }
 
+### change Company name
+PUT http://localhost:8080/academics/api/occurrence/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "repairCompany": "lolada"
+}
+
 
 
 

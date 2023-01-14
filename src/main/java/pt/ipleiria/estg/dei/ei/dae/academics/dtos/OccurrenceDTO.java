@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Data
 public class OccurrenceDTO implements Serializable {
 
-    @NotNull
+
     private Long id;
     @NotNull
     private Long policyNumber;
@@ -36,7 +36,7 @@ public class OccurrenceDTO implements Serializable {
                 occurrence.getPolicyNumber(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
-                occurrence.getRepairCompany().getRepairCompany(),
+                occurrence.getRepairCompany() != null ? occurrence.getRepairCompany().getRepairCompany() : "",
                 occurrence.getExpertNif()
         );
     }

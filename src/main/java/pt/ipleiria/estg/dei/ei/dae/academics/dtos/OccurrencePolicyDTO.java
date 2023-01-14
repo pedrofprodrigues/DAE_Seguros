@@ -37,7 +37,7 @@ public class OccurrencePolicyDTO {
                 occurrence.getId(),
                 occurrence.getDescription(),
                 occurrence.getOccurrenceState(),
-                occurrence.getRepairCompany().getRepairCompany(),
+                occurrence.getRepairCompany() != null ? occurrence.getRepairCompany().getRepairCompany() : "",
                 occurrence.getExpertNif(),
                 policyAPIBean.getPolicy_number(),
                 policyAPIBean.getInsured_object(),

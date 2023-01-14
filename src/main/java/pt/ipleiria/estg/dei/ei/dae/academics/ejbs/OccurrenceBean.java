@@ -111,6 +111,24 @@ public class OccurrenceBean {
         System.out.println("CSV file imported successfully!");
 
     }
+
+    public void updateRepairCompany(Long occurrenceID, String companyName) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = null;
+        try {
+            json = mapper.readTree(companyName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String newCompanyName = json.get("repairCompany").asText();
+
+        Occurrence occurrence = findOccurrenceSafe(occurrenceID);
+        RepairCompany repairCompany = repairCompanyBean.findRepairCompanySafe(newCompanyName);
+        occurrence.setRepairCompany(repairCompany);
+        em.merge(occurrence);
+
+    }
 }
 
 

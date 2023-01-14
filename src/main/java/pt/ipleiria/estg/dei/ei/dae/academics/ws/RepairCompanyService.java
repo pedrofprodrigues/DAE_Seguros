@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dae.academics.ws;
 
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.RepairCompanyDTO;
+import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.OccurrenceBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairCompanyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
@@ -22,6 +23,9 @@ public class RepairCompanyService {
     private UserAPIBean userAPIBean;
     @EJB
     private RepairCompanyBean repairCompanyBean;
+
+    @EJB
+    private OccurrenceBean occurrenceBean;
 
     @GET
     // @Authenticated
@@ -47,6 +51,15 @@ public class RepairCompanyService {
     @Path("")
     public Response getAllRepairCompanies() {
         return Response.ok(RepairCompanyDTO.from(repairCompanyBean.all())).build();
+    }
+
+
+
+    @PUT
+    @Path("{occurrenceID}")
+    public Response updateRepairCompany(@PathParam("occurrenceID") Long occurrenceID, String companyName) {
+        occurrenceBean.updateRepairCompany(occurrenceID, companyName);
+        return Response.ok(OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(occurrenceID))).build();
     }
 
 
