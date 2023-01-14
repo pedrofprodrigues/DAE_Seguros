@@ -29,7 +29,7 @@ public class RepairCompany extends Versionable {
     private String repairCompany;
     @NotNull
     private String email;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<RepairMan> repairNIFs;
 
     @NotNull

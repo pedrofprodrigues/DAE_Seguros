@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class RepairCompanyDTO {
 
-    @NotNull
     private Long id;
     @NotNull
     private String repairCompany;
