@@ -26,7 +26,7 @@ public class OccurrenceService {
     @POST
     @Path("")
     @Authenticated
-    @RolesAllowed({"client"})
+    //@RolesAllowed({"client"})
     public Response createOccurrence(OccurrenceDTO occurrence) {
         Long newID = occurrenceBean.create(occurrence.getPolicyNumber(), occurrence.getDescription(), occurrence.getExpertNif());
         OccurrenceDTO dto = OccurrenceDTO.from(occurrenceBean.findOccurrenceSafe(newID));
@@ -36,7 +36,7 @@ public class OccurrenceService {
     @GET
     @Path("{occurrenceID}")
     @Authenticated
-    @RolesAllowed({"client,repair,expert"})
+    //@RolesAllowed({"client,repair,expert"})
     public Response getOccurrenceDetails(@PathParam("occurrenceID") Long occurrenceID) {
         Occurrence occurrenceSafe = occurrenceBean.findOccurrenceSafe(occurrenceID);
 

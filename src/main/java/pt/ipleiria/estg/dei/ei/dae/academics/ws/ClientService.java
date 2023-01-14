@@ -8,6 +8,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.RepairCompanyBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.UserAPIBean;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairCompany;
+import pt.ipleiria.estg.dei.ei.dae.academics.security.Authenticated;
 
 import javax.ejb.EJB;
 import javax.mail.MessagingException;
@@ -34,7 +35,7 @@ public class ClientService {
 
 
     @GET
-    //  @Authenticated
+    @Authenticated
     //  @RolesAllowed({"client"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
@@ -51,7 +52,7 @@ public class ClientService {
     }
 
     @GET
-    // @Authenticated
+    @Authenticated
     // @RolesAllowed({"client"})
     @Path("{nif}/policies")
     public Response clientPolicies(@PathParam("nif") Long nif) {
@@ -59,7 +60,7 @@ public class ClientService {
     }
 
     @GET
-    // @Authenticated
+    @Authenticated
     // @RolesAllowed({"client"})
     @Path("{nif}/{policy}/occurrences")
     public Response clientPolicyOccurrences(@PathParam("nif") Long nif, @PathParam("policy") Long policy) {

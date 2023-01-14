@@ -31,7 +31,7 @@ public class RepairService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"repair"})
+    //@RolesAllowed({"repair"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
         UserAPIBean userMockAPI = userAPIBean.getUserMockAPI("?nif=" + nif);
@@ -42,7 +42,7 @@ public class RepairService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"repair"})
+    //@RolesAllowed({"repair"})
     @Path("")
     public Response getAllRepair() {
         UserAPIBean[] userMockAPI = userAPIBean.getUserMockAPIList("?role=repair");
@@ -51,7 +51,7 @@ public class RepairService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"repair,expert"})
+    //@RolesAllowed({"repair,expert"})
     @Path("{nif}/{policy}/occurrences")
     public Response clientPolicyOccurrences(@PathParam("nif") Long nif, @PathParam("policy") Long policy) {
         return Response.ok(OccurrenceDTO.from(userAPIBean.clientPolicyOccurrences(policy))).build();

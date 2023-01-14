@@ -25,7 +25,7 @@ public class ExpertService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"expert"})
+    //@RolesAllowed({"expert"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
         UserAPIBean userMockAPI = null;
@@ -42,7 +42,7 @@ public class ExpertService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"expert"})
+    //@RolesAllowed({"expert"})
     @Path("{nif}/occurrences")
     public Response expertOccurrences(@PathParam("nif") Long nif) {
         return Response.ok(OccurrenceDTO.from(userAPIBean.expertOccurrences(nif))).build();
@@ -50,7 +50,7 @@ public class ExpertService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"client"})
+    //@RolesAllowed({"client"})
     @Path("")
     public Response getAllRepair() {
         UserAPIBean[] userMockAPI = userAPIBean.getUserMockAPIList("?role=expert");

@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Path("documents")
 @Authenticated
-@RolesAllowed({"client", "repair","expert"})
+//@RolesAllowed({"client", "repair","expert"})
 public class DocumentService {
 
     @EJB

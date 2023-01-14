@@ -28,7 +28,7 @@ public class RepairCompanyService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"expert,repair"})
+    //@RolesAllowed({"expert,repair"})
     @Path("{repairID}/occurrences")
     public Response repairCompanyOccurrences(@PathParam("repairID") Long repairID) {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(repairID))).build();
@@ -37,7 +37,7 @@ public class RepairCompanyService {
     @POST
     @Path("")
     @Authenticated
-    @RolesAllowed({"client"})
+    //@RolesAllowed({"client"})
     public Response createRepairCompany(RepairCompanyDTO repairCompany) {
         Long newCompanyId = repairCompanyBean.create(repairCompany.getRepairCompany(), repairCompany.getEmail());
         RepairCompanyDTO dto = RepairCompanyDTO.from(repairCompanyBean.findRepairCompanySafe(newCompanyId));
@@ -54,7 +54,7 @@ public class RepairCompanyService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"expert,repair"})
+    //@RolesAllowed({"expert,repair"})
     @Path("{companyId}")
     public Response getAllRepairFromCompanies(@PathParam("companyId") Long company) {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(company))).build();
@@ -62,7 +62,7 @@ public class RepairCompanyService {
 
     @GET
     @Authenticated
-    @RolesAllowed({"expert,repair"})
+    //@RolesAllowed({"expert,repair"})
     @Path("/repair/{nif}")
     public Response getAllOccurrenceFromRepairCompany(@PathParam("nif") Long nif) {
         return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(repairManBean.findRepairSafe(nif).getNif()))).build();
