@@ -1,6 +1,8 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.OccurrenceState;
 
 import javax.persistence.*;
@@ -24,7 +26,7 @@ import java.util.List;
         ),
         @NamedQuery(
                 name = "getAllRepairCompanyOccurrences",
-                query = "SELECT s FROM Occurrence s WHERE s.repairCompany.id = : repairID"
+                query = "SELECT s FROM Occurrence s WHERE s.repairCompany.companyID = : repairID"
         )
 })
 
@@ -51,7 +53,8 @@ public class Occurrence extends Versionable {
     @JoinColumn(name = "repair_id")
     private RepairCompany repairCompany;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "occurrence")
+    @OneToMany(mappedBy = "occurrence")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Document> documents;
 
     @NotNull

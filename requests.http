@@ -1,7 +1,12 @@
 
 ### get policies from specific client
+GET http://localhost:8080/academics/api/clients/2/
+Accept: application/json
+
+### get policies from specific client
 GET http://localhost:8080/academics/api/clients/1/policies
 Accept: application/json
+
 
 ### get occurrences from specific policy from specific client
 GET http://localhost:8080/academics/api/clients/1/1/occurrences
@@ -32,9 +37,16 @@ GET http://localhost:8080/academics/api/occurrence/5
 Accept: application/json
 
 
-### get Occurrence details
+### get documents
 GET http://localhost:8080/academics/api/documents/4
 Accept: application/json
+
+
+### get Occurrence from a company
+GET http://localhost:8080/academics/api/repairCompany/
+Accept: application/json
+
+
 
 
 
@@ -52,7 +64,7 @@ Accept: application/json
 }
 
 ### change Company name
-PUT http://localhost:8080/academics/api/repairCompany/3
+PUT http://localhost:8080/academics/api/repairCompany/4
 Content-Type: application/json
 Accept: application/json
 

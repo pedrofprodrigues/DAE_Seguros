@@ -32,7 +32,7 @@ public class RepairCompanyService {
     // @RolesAllowed({"expert"})
     @Path("{repairID}/occurrences")
     public Response repairCompanyOccurrences(@PathParam("repairID") Long repairID) {
-        return Response.ok(OccurrenceDTO.from(userAPIBean.repairCompanyOccurrences(repairID))).build();
+        return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(repairID))).build();
     }
 
     @POST
@@ -51,6 +51,13 @@ public class RepairCompanyService {
     @Path("")
     public Response getAllRepairCompanies() {
         return Response.ok(RepairCompanyDTO.from(repairCompanyBean.all())).build();
+    }
+    @GET
+    // @Authenticated
+    // @RolesAllowed({"expert"})
+    @Path("{companyId}")
+    public Response getAllRepairFromCompanies(@PathParam("companyId") Long company) {
+        return Response.ok(OccurrenceDTO.from(repairCompanyBean.repairCompanyOccurrences(company))).build();
     }
 
     @PUT

@@ -1,6 +1,8 @@
 package pt.ipleiria.estg.dei.ei.dae.academics.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.EstadosEnums.InsuredObject;
 
 import javax.persistence.*;
@@ -14,9 +16,10 @@ import java.util.List;
 
 @NamedQueries({
         @NamedQuery(
-                name = "getAllRepairCompanies",
+                name = "getAllCompanies",
                 query = "SELECT repairCompany FROM RepairCompany repairCompany ORDER BY repairCompany.companyID"
         )
+
 })
 
 @Data
@@ -29,7 +32,7 @@ public class RepairCompany extends Versionable {
     private String repairCompany;
     @NotNull
     private String email;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany
     private List<RepairMan> repairNIFs;
 
     @NotNull
@@ -37,7 +40,8 @@ public class RepairCompany extends Versionable {
     @Enumerated(EnumType.ORDINAL)
     private List<InsuredObject> insuredObjects;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Occurrence> occurrences;
 
 
@@ -92,6 +96,7 @@ public class RepairCompany extends Versionable {
         for (RepairMan repairMan : repairNIFs) {
             list.add(repairMan.getNif());
         }
+
         return list;
 
     }

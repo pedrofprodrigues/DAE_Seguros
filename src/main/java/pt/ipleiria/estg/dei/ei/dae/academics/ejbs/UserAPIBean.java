@@ -103,6 +103,7 @@ public class UserAPIBean {
 
     public List<Occurrence> clientPolicyOccurrences(Long policy) {
 
+
         return em.createNamedQuery("getAllPolicyOccurrences", Occurrence.class)
                 .setParameter("policy", policy)
                 .getResultList();
@@ -114,11 +115,6 @@ public class UserAPIBean {
                 .getResultList();
     }
 
-    public List<Occurrence> repairCompanyOccurrences(Long repairID) {
 
-        return em.createNamedQuery("getAllRepairCompanyOccurrences", Occurrence.class)
-                .setParameter("repairID", repairID)
-                .getResultList();
-    }
 
 }

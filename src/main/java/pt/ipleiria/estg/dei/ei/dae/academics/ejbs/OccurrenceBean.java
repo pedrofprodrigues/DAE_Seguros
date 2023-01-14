@@ -56,12 +56,20 @@ public class OccurrenceBean {
         return occurrence.getId();
     }
 
+
+
+
     public List<Occurrence> all(int offset, int limit) {
         return em.createNamedQuery("getAllOccurrences", Occurrence.class)
                 .setFirstResult(offset)
                 .setMaxResults(limit)
                 .getResultList();
     }
+
+
+
+
+
 
     public Long count() {
         return em.createQuery("SELECT COUNT(*) FROM " + Occurrence.class.getSimpleName(), Long.class).getSingleResult();

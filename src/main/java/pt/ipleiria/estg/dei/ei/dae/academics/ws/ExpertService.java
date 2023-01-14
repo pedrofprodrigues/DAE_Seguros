@@ -25,7 +25,13 @@ public class ExpertService {
     //  @RolesAllowed({"expert"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
-        UserAPIBean userMockAPI = userAPIBean.getUserMockAPI("?nif=" + nif);
+        UserAPIBean userMockAPI = null;
+        try {
+            userMockAPI = userAPIBean.getUserMockAPI("?nif=" + nif);
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No User found").build();
+        }
+
         return Response.status(Response.Status.OK)
                 .entity(userMockAPI.toString())
                 .build();

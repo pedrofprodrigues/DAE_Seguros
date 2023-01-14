@@ -34,6 +34,7 @@ public class RepairService {
                 .entity(userMockAPI.toString())
                 .build();
     }
+
     @GET
     // @Authenticated
     // @RolesAllowed({"client"})

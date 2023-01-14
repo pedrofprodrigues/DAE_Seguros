@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import pt.ipleiria.estg.dei.ei.dae.academics.entities.RepairCompany;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 @Data
@@ -20,8 +21,6 @@ public class RepairCompanyDTO {
 
     @NotNull
     private String email;
-
-    @NotNull
     private List<Long> repairNifs;
 
 
@@ -33,8 +32,7 @@ public class RepairCompanyDTO {
                 repairCompany.getCompanyID(),
                 repairCompany.getRepairCompany(),
                 repairCompany.getEmail(),
-                repairCompany.getRepairNIFs()
-        );
+                repairCompany.getRepairNIFs() );
     }
 
     public static List<RepairCompanyDTO> from(List<RepairCompany> repairCompanies) {

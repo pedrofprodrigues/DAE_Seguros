@@ -3,6 +3,7 @@ import pt.ipleiria.estg.dei.ei.dae.academics.dtos.EmailDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.OccurrenceDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.dtos.PolicyAPIDTO;
 import pt.ipleiria.estg.dei.ei.dae.academics.ejbs.*;
+import pt.ipleiria.estg.dei.ei.dae.academics.entities.Occurrence;
 
 import javax.ejb.EJB;
 import javax.mail.MessagingException;
@@ -31,7 +32,13 @@ public class ClientService {
     //  @RolesAllowed({"client"})
     @Path("{nif}")
     public Response getUserDetails(@PathParam("nif") Long nif) {
-        UserAPIBean userMockAPI = userAPIBean.getUserMockAPI("?nif=" + nif);
+        UserAPIBean userMockAPI = null;
+        try {
+            userMockAPI = userAPIBean.getUserMockAPI("?nif=" + nif);
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("No User found").build();
+        }
+
         return Response.status(Response.Status.OK)
                 .entity(userMockAPI.toString())
                 .build();
@@ -49,10 +56,13 @@ public class ClientService {
     @Path("{nif}/{policy}/occurrences")
     public Response clientPolicyOccurrences(@PathParam("nif") Long nif,@PathParam("policy") Long policy) {
         if(List.of(userAPIBean.clientPolicies(nif)).isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
-
+            return Response.status(Response.Status.NOT_FOUND).entity("No User found").build();
         }
-        return Response.ok(OccurrenceDTO.from(userAPIBean.clientPolicyOccurrences(policy))).build();
+        List <Occurrence> exists = userAPIBean.clientPolicyOccurrences(policy);
+        if(exists.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).entity("No policy found").build();
+        }
+        return Response.ok(OccurrenceDTO.from(exists)).build();
     }
 
     @POST
